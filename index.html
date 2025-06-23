@@ -301,16 +301,9 @@
         /* モバイル用の背景画像設定 */
         @media (max-width: 768px) {
             .hero {
-                background-size: contain;
-                background-repeat: no-repeat;
-                background-position: center center;
-                min-height: 100vh;
-            }
-            
-            /* もしくは画像全体を確実に見せたい場合 */
-            .hero.full-view {
-                background-size: 100% auto;
-                background-position: center top;
+                background-size: cover;
+                background-position: center 30%; /* 画像の上部30%の位置を中心に */
+                background-attachment: scroll;
             }
         }
 
