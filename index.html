@@ -288,7 +288,6 @@
                 url('/images/hero-background.jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -297,6 +296,22 @@
             position: relative;
             overflow: hidden;
             padding: 2rem 0;
+        }
+
+        /* モバイル用の背景画像設定 */
+        @media (max-width: 768px) {
+            .hero {
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center center;
+                min-height: 100vh;
+            }
+            
+            /* もしくは画像全体を確実に見せたい場合 */
+            .hero.full-view {
+                background-size: 100% auto;
+                background-position: center top;
+            }
         }
 
         /* 実際の画像を使用する場合のコメント例
