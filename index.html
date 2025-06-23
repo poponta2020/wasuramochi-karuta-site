@@ -155,12 +155,17 @@
         .logo-icon {
             width: 40px;
             height: 40px;
-            background: var(--accent-green);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            overflow: hidden;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .nav-menu {
@@ -324,18 +329,24 @@
         .hero-logo {
             width: 120px;
             height: 120px;
-            background: var(--white);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             position: absolute;
             top: 30px;
             left: 30px;
             opacity: 0;
             animation: logoFadeIn 1s ease-out 0.3s both;
+            overflow: hidden;
+            background: var(--white);
+        }
+
+        .hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         @keyframes logoFadeIn {
@@ -938,7 +949,9 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <div class="logo">
-                <div class="logo-icon">🐰</div>
+                <div class="logo-icon">
+                    <img src="/images/wasuramochi-logo.png" alt="わすらもち会ロゴ">
+                </div>
                 わすらもち会
             </div>
             <ul class="nav-menu">
@@ -973,7 +986,9 @@
                         </text>
                     </svg>
                 </div>
-                <div class="hero-logo">🐰</div>
+                <div class="hero-logo">
+                    <img src="/images/wasuramochi-logo.png" alt="わすらもち会ロゴ">
+                </div>
             </div>
             <h1>わすらもち会</h1>
             <div class="subtitle">札幌百人一首サークル</div>
