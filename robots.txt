@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://wasuramochikarutaclub.com/sitemap.xml
+
+# 特定のページを除外する場合（現在は全て許可）
+# Disallow: /admin/
+# Disallow: /private/
