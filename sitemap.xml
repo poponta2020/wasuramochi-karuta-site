@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://wasuramochikarutaclub.com/</loc>
+    <loc>https://wasuramochikarutaclub.netlify.app/</loc>
     <lastmod>2025-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://wasuramochikarutaclub.com/#about</loc>
+    <loc>https://wasuramochikarutaclub.netlify.app/#about</loc>
     <lastmod>2025-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wasuramochikarutaclub.com/#karuta</loc>
+    <loc>https://wasuramochikarutaclub.netlify.app/#karuta</loc>
     <lastmod>2025-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://wasuramochikarutaclub.com/#activities</loc>
+    <loc>https://wasuramochikarutaclub.netlify.app/#activities</loc>
     <lastmod>2025-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://wasuramochikarutaclub.com/#reports</loc>
+    <loc>https://wasuramochikarutaclub.netlify.app/#reports</loc>
     <lastmod>2025-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://wasuramochikarutaclub.com/#faq</loc>
+    <loc>https://wasuramochikarutaclub.netlify.app/#faq</loc>
     <lastmod>2025-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://wasuramochikarutaclub.com/#contact</loc>
+    <loc>https://wasuramochikarutaclub.netlify.app/#contact</loc>
     <lastmod>2025-06-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
