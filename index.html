@@ -12,39 +12,45 @@
       --deep-navy: #222c3e;
       --bg-light: #f7faff;
       --button-yellow: #ffdd4b;
-      --glass: rgba(255,255,255,0.55);
-      --glass-border: rgba(50,198,134,0.12);
+      --glass: rgba(255,255,255,0.58);
+      --glass-border: rgba(50,198,134,0.15);
+      --text-dark: #222c3e;
+      --gray: #4e586a;
     }
     body {
       background: var(--bg-light);
-      color: var(--deep-navy);
+      color: var(--text-dark);
       font-family: 'Noto Sans JP', 'Montserrat', sans-serif;
       margin: 0;
       padding: 0;
     }
-
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    /* ヒーロー */
     .hero {
-      min-height: 90vh;
+      min-height: 87vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
-      background: 
-        linear-gradient(120deg, rgba(50,198,134,0.12), rgba(0,255,240,0.10)),
+      background:
+        linear-gradient(120deg, rgba(50,198,134,0.14), rgba(0,255,240,0.13)),
         url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
       position: relative;
       overflow: hidden;
     }
     .hero-glass {
-      width: 92vw;
-      max-width: 480px;
+      width: 93vw;
+      max-width: 470px;
       margin: 6vh auto 0;
       background: var(--glass);
       border: 1.5px solid var(--glass-border);
       border-radius: 1.8rem;
       backdrop-filter: blur(11px);
-      box-shadow: 0 8px 28px 0 rgba(50,198,134,0.12);
-      padding: 2.4rem 1.5rem 2rem;
+      box-shadow: 0 8px 28px 0 rgba(50,198,134,0.13);
+      padding: 2.4rem 1.5rem 2.2rem;
       text-align: center;
       z-index: 2;
       position: relative;
@@ -58,7 +64,7 @@
       align-items: center;
       justify-content: center;
       margin: 0 auto 1rem;
-      box-shadow: 0 4px 16px 0 rgba(0,0,0,0.09);
+      box-shadow: 0 4px 16px 0 rgba(0,0,0,0.08);
       overflow: hidden;
     }
     .hero-logo img {
@@ -77,9 +83,9 @@
     }
     .hero-sub {
       color: var(--main-green);
-      font-size: 1.05rem;
+      font-size: 1.04rem;
       font-family: 'Montserrat', sans-serif;
-      letter-spacing: .08em;
+      letter-spacing: .07em;
       margin-bottom: .8rem;
       font-weight: 700;
     }
@@ -96,7 +102,7 @@
     }
     .hero-btn {
       display: inline-block;
-      padding: .85em 2em;
+      padding: .88em 2em;
       border-radius: 2em;
       font-size: 1rem;
       font-weight: 700;
@@ -105,30 +111,35 @@
       border: none;
       outline: none;
       transition: box-shadow .15s, background .22s, color .15s;
-      box-shadow: 0 3px 12px 0 rgba(50,198,134,0.12);
+      box-shadow: 0 3px 12px 0 rgba(50,198,134,0.11);
       cursor: pointer;
     }
     .hero-btn-primary {
       background: linear-gradient(90deg, var(--main-green), var(--accent-mint));
       color: #fff;
-      border: none;
     }
     .hero-btn-secondary {
       background: var(--button-yellow);
       color: var(--deep-navy);
-      border: none;
     }
     .hero-btn:hover {
-      box-shadow: 0 6px 16px 0 rgba(50,198,134,0.19);
-      opacity: .95;
+      box-shadow: 0 6px 16px 0 rgba(50,198,134,0.18);
+      opacity: .94;
     }
-    /* セクション見出し */
+
+    /* 共通セクション */
+    section {
+      padding: 2.1rem 0 1rem 0;
+      margin: 0 auto;
+      width: 97vw;
+      max-width: 480px;
+    }
     .section-title {
       font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
       font-weight: 700;
-      font-size: 1.6rem;
+      font-size: 1.3rem;
       color: var(--main-green);
-      margin: 2.5rem 0 .8rem;
+      margin: 0 0 1.4rem 0;
       text-align: center;
       letter-spacing: .05em;
       position: relative;
@@ -137,17 +148,14 @@
       content: '';
       display: block;
       margin: .5rem auto 0;
-      width: 2.5em;
+      width: 2.3em;
       height: 3px;
       background: linear-gradient(90deg, var(--main-green), var(--accent-mint));
       border-radius: 2px;
     }
-    /* 百人一首とは？ */
+
+    /* 百人一首とは */
     .about-karuta {
-      margin: 0 auto;
-      padding: 1.5rem 0 2.5rem 0;
-      max-width: 480px;
-      width: 93vw;
       display: flex;
       flex-direction: column;
       gap: 1.2rem;
@@ -160,10 +168,10 @@
       display: flex;
       gap: 1em;
       align-items: flex-start;
-      box-shadow: 0 3px 14px 0 rgba(50,198,134,0.08);
+      box-shadow: 0 3px 14px 0 rgba(50,198,134,0.07);
     }
     .karuta-icon {
-      font-size: 1.9rem;
+      font-size: 1.8rem;
       color: var(--main-green);
       flex-shrink: 0;
       margin-top: .2em;
@@ -179,17 +187,260 @@
       margin-bottom: .15em;
     }
     .karuta-card-desc {
-      font-size: .99rem;
-      color: #4e586a;
+      font-size: .98rem;
+      color: var(--gray);
     }
+
+    /* サークル紹介 */
+    .about-club-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.2rem 0 0 0;
+    }
+    .about-feature {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.1em;
+      padding: 1em 1.2em .9em;
+      display: flex;
+      align-items: center;
+      gap: .8em;
+      box-shadow: 0 2px 10px 0 rgba(50,198,134,0.06);
+    }
+    .about-feature-icon {
+      font-size: 1.4rem;
+      color: var(--main-green);
+      margin-right: .3em;
+      flex-shrink: 0;
+    }
+    .about-feature-text {
+      font-size: 1rem;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    /* 活動報告 */
+    .reports-section {
+      padding-top: 2.1rem;
+      padding-bottom: 1.2rem;
+    }
+    .reports-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    .report-card {
+      background: rgba(255,255,255,0.91);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.1em;
+      display: flex;
+      gap: 1em;
+      align-items: center;
+      box-shadow: 0 2px 10px 0 rgba(50,198,134,0.07);
+      overflow: hidden;
+    }
+    .report-thumb {
+      width: 75px;
+      height: 75px;
+      border-radius: .7em;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .report-info {
+      padding: 0.3em 0;
+      flex: 1;
+      min-width: 0;
+    }
+    .report-date {
+      color: var(--main-green);
+      font-size: .91em;
+      font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+      font-weight: 600;
+      margin-bottom: .3em;
+    }
+    .report-title {
+      font-size: 1.07em;
+      font-weight: 700;
+      color: var(--deep-navy);
+      margin-bottom: .2em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .report-desc {
+      color: var(--gray);
+      font-size: .97em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .more-link {
+      display: block;
+      text-align: right;
+      font-weight: 700;
+      margin: .5em 0 0 0;
+      color: var(--accent-mint);
+      font-size: 1em;
+    }
+
+    /* 活動内容 */
+    .activities-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+    }
+    .activity-card {
+      background: rgba(255,255,255,0.83);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.1em;
+      padding: 1em 1.2em .9em;
+      box-shadow: 0 2px 10px 0 rgba(50,198,134,0.07);
+    }
+    .activity-title {
+      font-size: 1.08em;
+      font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+      color: var(--main-green);
+      font-weight: 700;
+      margin-bottom: .2em;
+    }
+    .activity-content {
+      color: var(--gray);
+      font-size: .99em;
+      margin-bottom: .6em;
+    }
+    .activity-map {
+      width: 100%;
+      max-width: 270px;
+      border-radius: .5em;
+      margin: .3em 0;
+      border: 1px solid #eee;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    }
+
+    /* FAQ */
+    .faq-list {
+      margin: 1.2rem 0 0 0;
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+    }
+    .faq-item {
+      background: rgba(255,255,255,0.88);
+      border: 1px solid var(--glass-border);
+      border-radius: .95em;
+      box-shadow: 0 2px 10px 0 rgba(50,198,134,0.06);
+      overflow: hidden;
+    }
+    .faq-question {
+      padding: 1.1em 1em 1.1em .95em;
+      color: var(--main-green);
+      font-weight: 700;
+      font-size: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: background .13s;
+      user-select: none;
+    }
+    .faq-question:hover {
+      background: #f2f9f4;
+    }
+    .faq-answer {
+      padding: 1em 1em 1.1em 1.3em;
+      color: var(--gray);
+      display: none;
+      font-size: .97em;
+      border-top: 1px solid #e7f8e7;
+      background: rgba(255,255,255,0.97);
+    }
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+    .faq-plus {
+      font-size: 1.3em;
+      margin-left: .5em;
+      transition: transform .22s;
+    }
+    .faq-item.active .faq-plus {
+      transform: rotate(45deg);
+    }
+
+    /* 参加方法 */
+    .contact-section {
+      padding-bottom: 2.2rem;
+    }
+    .contact-buttons {
+      margin-top: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 1em 1.4em;
+      border-radius: 2em;
+      font-weight: 700;
+      font-size: 1.09em;
+      box-shadow: 0 3px 11px 0 rgba(50,198,134,0.09);
+      background: linear-gradient(90deg, var(--main-green), var(--accent-mint));
+      color: #fff;
+      border: none;
+      transition: transform .11s, box-shadow .17s;
+      cursor: pointer;
+    }
+    .contact-btn.line { background: #00c300; color: #fff; }
+    .contact-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .contact-btn.x { background: #222c3e; color: #fff; }
+    .contact-btn.email { background: var(--button-yellow); color: var(--deep-navy);}
+    .contact-btn i {
+      font-size: 1.3em;
+    }
+    .contact-btn:hover {
+      transform: translateY(-2px) scale(1.035);
+      box-shadow: 0 6px 15px 0 rgba(50,198,134,0.15);
+      opacity: .97;
+    }
+
+    /* フッター */
+    .footer {
+      padding: 2.3rem 0 .7rem 0;
+      background: transparent;
+      text-align: center;
+      color: #a9b3c1;
+      font-size: .93em;
+      font-weight: 600;
+      letter-spacing: .04em;
+    }
+    .footer .footer-sns {
+      margin-top: .7em;
+      display: flex;
+      justify-content: center;
+      gap: 1.7em;
+      font-size: 1.2em;
+    }
+    .footer .footer-sns a {
+      color: var(--main-green);
+      transition: color .13s;
+    }
+    .footer .footer-sns a:hover {
+      color: var(--accent-mint);
+    }
+
+    /* メディアクエリ */
     @media (max-width: 600px) {
-      .hero-glass, .about-karuta {
+      .hero-glass, section {
         max-width: 99vw;
-        padding-left: 0.6rem;
-        padding-right: 0.6rem;
+        padding-left: 0.3rem;
+        padding-right: 0.3rem;
       }
     }
   </style>
+  <!-- FontAwesome (for icons) CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   <!-- ヒーロー -->
@@ -247,5 +498,182 @@
       </div>
     </div>
   </section>
+
+  <!-- サークル紹介 -->
+  <section>
+    <h2 class="section-title">サークル紹介</h2>
+    <div class="about-club-list">
+      <div class="about-feature">
+        <span class="about-feature-icon"><i class="fa-solid fa-user-group"></i></span>
+        <span class="about-feature-text">大学生・社会人中心、20名ほど在籍</span>
+      </div>
+      <div class="about-feature">
+        <span class="about-feature-icon"><i class="fa-solid fa-face-smile"></i></span>
+        <span class="about-feature-text">初心者・未経験者が7割！みんなでサポート</span>
+      </div>
+      <div class="about-feature">
+        <span class="about-feature-icon"><i class="fa-solid fa-calendar-days"></i></span>
+        <span class="about-feature-text">週2回、札幌市内で楽しく活動中</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 活動報告（新着2件） -->
+  <section class="reports-section">
+    <h2 class="section-title">活動報告（ピックアップ）</h2>
+    <div class="reports-list">
+      <div class="report-card">
+        <img class="report-thumb" src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=300&q=80" alt="活動写真1">
+        <div class="report-info">
+          <div class="report-date">2025/06/15</div>
+          <div class="report-title">春の合宿を開催しました！</div>
+          <div class="report-desc">温泉地で1泊2日練習＆交流。初参加者も多数！</div>
+        </div>
+      </div>
+      <div class="report-card">
+        <img class="report-thumb" src="https://images.unsplash.com/photo-1517964603305-11c74e50e6b2?auto=format&fit=crop&w=300&q=80" alt="活動写真2">
+        <div class="report-info">
+          <div class="report-date">2025/05/10</div>
+          <div class="report-title">大会出場＆入賞！</div>
+          <div class="report-desc">札幌大会E級で2名が初入賞！みんなで祝福</div>
+        </div>
+      </div>
+    </div>
+    <a class="more-link" href="/reports.html">もっと見る &gt;</a>
+  </section>
+
+  <!-- 活動内容 -->
+  <section>
+    <h2 class="section-title">活動内容</h2>
+    <div class="activities-list">
+      <div class="activity-card">
+        <div class="activity-title">練習場所・時間</div>
+        <div class="activity-content">
+          <i class="fa-solid fa-location-dot"></i>
+          かでる2・7／中央区民センター ほか<br>
+          毎週水・金曜 18:00～21:00
+        </div>
+        <img class="activity-map" src="https://maps.googleapis.com/maps/api/staticmap?center=札幌駅&zoom=13&size=270x110&markers=color:green|label:S|札幌駅" alt="地図">
+      </div>
+      <div class="activity-card">
+        <div class="activity-title">参加費・持ち物</div>
+        <div class="activity-content">
+          高校生以下：無料<br>
+          大学生以上：1回100円<br>
+          持ち物：動きやすい服装だけ！
+        </div>
+      </div>
+      <div class="activity-card">
+        <div class="activity-title">写真ギャラリー</div>
+        <div style="display: flex; gap: 7px; overflow-x: auto; padding-top: .4em;">
+          <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=120&q=80" style="width:78px;height:58px;border-radius:.7em;object-fit:cover;">
+          <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=120&q=80" style="width:78px;height:58px;border-radius:.7em;object-fit:cover;">
+          <img src="https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=120&q=80" style="width:78px;height:58px;border-radius:.7em;object-fit:cover;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <h2 class="section-title">よくある質問</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>全くの初心者でも大丈夫？</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-answer">
+          もちろん大歓迎です！ほとんどのメンバーが未経験スタート。ルールや札の覚え方も先輩が丁寧に教えます。
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>参加するのに必要なものは？</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-answer">
+          動きやすい服装でお越しください。札や道具はこちらで用意しています。
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>見学や体験だけでもいい？</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-answer">
+          見学・体験参加もOK！気軽にご相談ください。実際の雰囲気を見てから判断できます。
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>どんな年齢層が多い？</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-answer">
+          18歳～30代前半が中心。大学生・社会人が多いですが、高校生も歓迎です。
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>いつ・どこで活動してる？</span>
+          <span class="faq-plus">+</span>
+        </div>
+        <div class="faq-answer">
+          毎週水・金曜に札幌市中心部で開催しています。詳しくは「活動内容」をご覧ください。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 参加方法・お問い合わせ -->
+  <section class="contact-section" id="contact">
+    <h2 class="section-title">参加方法・お問い合わせ</h2>
+    <div style="text-align:center;margin-top:.2em;font-size:1.01em;">まずは見学・体験参加からどうぞ！<br>お気軽にご連絡ください。</div>
+    <div class="contact-buttons">
+      <a class="contact-btn line" href="https://line.me/ti/p/@721raufe" target="_blank" rel="noopener">
+        <i class="fab fa-line"></i> LINE公式で連絡
+      </a>
+      <a class="contact-btn instagram" href="https://www.instagram.com/sapporo_karuta_syakaijin/" target="_blank" rel="noopener">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+      <a class="contact-btn x" href="https://twitter.com/karuta12346" target="_blank" rel="noopener">
+        <i class="fab fa-x-twitter"></i> X (Twitter)
+      </a>
+      <a class="contact-btn email" href="mailto:poponta2020@gmail.com">
+        <i class="fas fa-envelope"></i> メールで問い合わせ
+      </a>
+    </div>
+  </section>
+
+  <!-- フッター -->
+  <footer class="footer">
+    <div>
+      &copy; 2025 わすらもち会（札幌百人一首サークル）
+    </div>
+    <div class="footer-sns">
+      <a href="https://line.me/ti/p/@721raufe" target="_blank"><i class="fab fa-line"></i></a>
+      <a href="https://www.instagram.com/sapporo_karuta_syakaijin/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://twitter.com/karuta12346" target="_blank"><i class="fab fa-x-twitter"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    // FAQアコーディオン
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', function(){
+        const item = this.parentElement;
+        const isActive = item.classList.contains('active');
+        // 全部閉じる
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('active');
+        });
+        // 開く
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
