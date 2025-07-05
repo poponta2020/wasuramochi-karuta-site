@@ -4,95 +4,87 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>わすらもち会｜札幌競技かるたサークル</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@700&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --main-green: #32c686;
-      --accent-mint: #00fff0;
-      --deep-navy: #222c3e;
-      --bg-light: #f7faff;
-      --button-yellow: #ffdd4b;
-      --glass: rgba(255,255,255,0.58);
-      --glass-border: rgba(50,198,134,0.15);
-      --text-dark: #222c3e;
-      --gray: #4e586a;
+      --main-green: #185942;
+      --accent-red: #e94149;
+      --gold: #e1bc3a;
+      --bg-ivory: #f8f6f0;
+      --text-dark: #212121;
+      --card: #fffdfa;
+      --gray: #5a605b;
+      --card-shadow: 0 2px 10px 0 rgba(25,60,30,0.06);
     }
     body {
-      background: var(--bg-light);
+      background: var(--bg-ivory);
       color: var(--text-dark);
-      font-family: 'Noto Sans JP', 'Montserrat', sans-serif;
+      font-family: 'Noto Sans JP', 'Zen Kaku Gothic New', sans-serif;
       margin: 0;
       padding: 0;
     }
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
+
     /* ヒーロー */
     .hero {
-      min-height: 87vh;
+      min-height: 85vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
       background:
-        linear-gradient(120deg, rgba(50,198,134,0.14), rgba(0,255,240,0.13)),
+        linear-gradient(160deg, rgba(25,89,66,0.12), rgba(225,188,58,0.07)),
         url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
       position: relative;
       overflow: hidden;
     }
-    .hero-glass {
+    .hero-card {
       width: 93vw;
       max-width: 470px;
       margin: 6vh auto 0;
-      background: var(--glass);
-      border: 1.5px solid var(--glass-border);
-      border-radius: 1.8rem;
-      backdrop-filter: blur(11px);
-      box-shadow: 0 8px 28px 0 rgba(50,198,134,0.13);
-      padding: 2.4rem 1.5rem 2.2rem;
+      background: rgba(255,253,250,0.92);
+      border: 2px solid var(--gold);
+      border-radius: 1.8rem 1.8rem 1.3rem 1.3rem / 2.2rem 2.2rem 1.2rem 1.2rem;
+      box-shadow: var(--card-shadow);
+      padding: 2.3rem 1.5rem 2rem;
       text-align: center;
       z-index: 2;
       position: relative;
     }
     .hero-logo {
-      width: 70px;
-      height: 70px;
+      width: 70px; height: 70px;
       border-radius: 50%;
       background: var(--main-green);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       margin: 0 auto 1rem;
-      box-shadow: 0 4px 16px 0 rgba(0,0,0,0.08);
+      box-shadow: 0 4px 16px 0 rgba(25,60,30,0.10);
+      border: 2.5px solid var(--gold);
       overflow: hidden;
     }
     .hero-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
+      width: 100%; height: 100%;
+      object-fit: cover; border-radius: 50%;
     }
     .hero-title {
-      font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
-      font-weight: 700;
-      font-size: 2.1rem;
+      font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+      font-weight: 700; font-size: 2rem;
       letter-spacing: .08em;
-      color: var(--deep-navy);
-      margin-bottom: .4rem;
+      color: var(--main-green);
+      margin-bottom: .5rem;
     }
     .hero-sub {
-      color: var(--main-green);
-      font-size: 1.04rem;
-      font-family: 'Montserrat', sans-serif;
-      letter-spacing: .07em;
-      margin-bottom: .8rem;
+      color: var(--gold);
+      font-size: 1.01rem;
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      margin-bottom: .9rem;
       font-weight: 700;
+      letter-spacing: .06em;
     }
     .hero-desc {
-      color: #3b465c;
-      font-size: 1.1rem;
+      color: var(--gray);
+      font-size: 1.13rem;
       margin-bottom: 1.7rem;
+      font-family: 'Noto Sans JP', sans-serif;
     }
     .hero-buttons {
       display: flex;
@@ -102,44 +94,44 @@
     }
     .hero-btn {
       display: inline-block;
-      padding: .88em 2em;
+      padding: .8em 2.1em;
       border-radius: 2em;
       font-size: 1rem;
       font-weight: 700;
       letter-spacing: .04em;
-      text-decoration: none;
       border: none;
       outline: none;
-      transition: box-shadow .15s, background .22s, color .15s;
-      box-shadow: 0 3px 12px 0 rgba(50,198,134,0.11);
       cursor: pointer;
+      transition: box-shadow .18s, background .21s, color .15s;
+      box-shadow: 0 2px 8px 0 rgba(25,60,30,0.08);
     }
     .hero-btn-primary {
-      background: linear-gradient(90deg, var(--main-green), var(--accent-mint));
+      background: linear-gradient(90deg, var(--main-green) 70%, var(--gold));
       color: #fff;
+      border: 1.8px solid var(--main-green);
     }
     .hero-btn-secondary {
-      background: var(--button-yellow);
-      color: var(--deep-navy);
+      background: var(--accent-red);
+      color: #fff;
+      border: 1.7px solid var(--gold);
     }
     .hero-btn:hover {
-      box-shadow: 0 6px 16px 0 rgba(50,198,134,0.18);
+      box-shadow: 0 5px 14px 0 rgba(25,60,30,0.14);
       opacity: .94;
     }
 
-    /* 共通セクション */
     section {
-      padding: 2.1rem 0 1rem 0;
+      padding: 2.2rem 0 1.1rem 0;
       margin: 0 auto;
       width: 97vw;
       max-width: 480px;
     }
     .section-title {
-      font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+      font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
       font-weight: 700;
-      font-size: 1.3rem;
+      font-size: 1.23rem;
       color: var(--main-green);
-      margin: 0 0 1.4rem 0;
+      margin: 0 0 1.3rem 0;
       text-align: center;
       letter-spacing: .05em;
       position: relative;
@@ -150,7 +142,7 @@
       margin: .5rem auto 0;
       width: 2.3em;
       height: 3px;
-      background: linear-gradient(90deg, var(--main-green), var(--accent-mint));
+      background: linear-gradient(90deg, var(--gold), var(--accent-red));
       border-radius: 2px;
     }
 
@@ -161,33 +153,31 @@
       gap: 1.2rem;
     }
     .karuta-card {
-      background: rgba(255,255,255,0.82);
-      border: 1px solid var(--glass-border);
-      border-radius: 1.2em;
-      padding: 1.2em 1.2em 1em;
+      background: var(--card);
+      border: 1.5px solid var(--main-green);
+      border-radius: 1.1em 1.1em 1em 1em/ 1.4em 1.2em 1em 1em;
+      padding: 1.12em 1.2em 1em;
       display: flex;
       gap: 1em;
       align-items: flex-start;
-      box-shadow: 0 3px 14px 0 rgba(50,198,134,0.07);
+      box-shadow: var(--card-shadow);
     }
     .karuta-icon {
-      font-size: 1.8rem;
-      color: var(--main-green);
+      font-size: 1.7rem;
+      color: var(--gold);
       flex-shrink: 0;
-      margin-top: .2em;
+      margin-top: .25em;
     }
-    .karuta-info {
-      flex: 1;
-    }
+    .karuta-info { flex: 1; }
     .karuta-card-title {
       font-size: 1.07rem;
-      font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+      font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
       font-weight: 700;
-      color: var(--deep-navy);
-      margin-bottom: .15em;
+      color: var(--main-green);
+      margin-bottom: .13em;
     }
     .karuta-card-desc {
-      font-size: .98rem;
+      font-size: .97rem;
       color: var(--gray);
     }
 
@@ -199,18 +189,18 @@
       margin: 1.2rem 0 0 0;
     }
     .about-feature {
-      background: rgba(255,255,255,0.82);
-      border: 1px solid var(--glass-border);
-      border-radius: 1.1em;
+      background: var(--card);
+      border: 1.5px solid var(--gold);
+      border-radius: 1em 1em .9em .9em/ 1.3em 1.2em .9em .9em;
       padding: 1em 1.2em .9em;
       display: flex;
       align-items: center;
       gap: .8em;
-      box-shadow: 0 2px 10px 0 rgba(50,198,134,0.06);
+      box-shadow: var(--card-shadow);
     }
     .about-feature-icon {
-      font-size: 1.4rem;
-      color: var(--main-green);
+      font-size: 1.3rem;
+      color: var(--accent-red);
       margin-right: .3em;
       flex-shrink: 0;
     }
@@ -221,115 +211,75 @@
     }
 
     /* 活動報告 */
-    .reports-section {
-      padding-top: 2.1rem;
-      padding-bottom: 1.2rem;
-    }
-    .reports-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.1rem;
-    }
+    .reports-section { padding-top: 2.2rem; padding-bottom: 1.2rem; }
+    .reports-list { display: flex; flex-direction: column; gap: 1.1rem; }
     .report-card {
-      background: rgba(255,255,255,0.91);
-      border: 1px solid var(--glass-border);
-      border-radius: 1.1em;
-      display: flex;
-      gap: 1em;
-      align-items: center;
-      box-shadow: 0 2px 10px 0 rgba(50,198,134,0.07);
+      background: var(--card);
+      border: 1.5px solid var(--main-green);
+      border-radius: 1em 1em .8em .8em/ 1.2em 1.1em .8em .8em;
+      display: flex; gap: 1em; align-items: center;
+      box-shadow: var(--card-shadow);
       overflow: hidden;
     }
     .report-thumb {
-      width: 75px;
-      height: 75px;
-      border-radius: .7em;
-      object-fit: cover;
-      flex-shrink: 0;
+      width: 75px; height: 75px; border-radius: .7em;
+      object-fit: cover; flex-shrink: 0;
     }
-    .report-info {
-      padding: 0.3em 0;
-      flex: 1;
-      min-width: 0;
-    }
+    .report-info { padding: 0.3em 0; flex: 1; min-width: 0; }
     .report-date {
       color: var(--main-green);
-      font-size: .91em;
-      font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
-      font-weight: 600;
-      margin-bottom: .3em;
+      font-size: .93em;
+      font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
+      font-weight: 600; margin-bottom: .3em;
     }
     .report-title {
-      font-size: 1.07em;
-      font-weight: 700;
-      color: var(--deep-navy);
-      margin-bottom: .2em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 1.07em; font-weight: 700; color: var(--accent-red);
+      margin-bottom: .2em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .report-desc {
       color: var(--gray);
       font-size: .97em;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
     .more-link {
       display: block;
       text-align: right;
       font-weight: 700;
       margin: .5em 0 0 0;
-      color: var(--accent-mint);
+      color: var(--main-green);
       font-size: 1em;
     }
 
     /* 活動内容 */
-    .activities-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.3rem;
-    }
+    .activities-list { display: flex; flex-direction: column; gap: 1.3rem; }
     .activity-card {
-      background: rgba(255,255,255,0.83);
-      border: 1px solid var(--glass-border);
-      border-radius: 1.1em;
+      background: var(--card);
+      border: 1.5px solid var(--gold);
+      border-radius: 1em 1em .9em .9em/ 1.3em 1.2em .9em .9em;
       padding: 1em 1.2em .9em;
-      box-shadow: 0 2px 10px 0 rgba(50,198,134,0.07);
+      box-shadow: var(--card-shadow);
     }
     .activity-title {
-      font-size: 1.08em;
-      font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+      font-size: 1.07em;
+      font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif;
       color: var(--main-green);
       font-weight: 700;
-      margin-bottom: .2em;
+      margin-bottom: .22em;
     }
-    .activity-content {
-      color: var(--gray);
-      font-size: .99em;
-      margin-bottom: .6em;
-    }
+    .activity-content { color: var(--gray); font-size: .98em; margin-bottom: .6em; }
     .activity-map {
-      width: 100%;
-      max-width: 270px;
-      border-radius: .5em;
-      margin: .3em 0;
+      width: 100%; max-width: 270px; border-radius: .5em; margin: .3em 0;
       border: 1px solid #eee;
       box-shadow: 0 1px 5px rgba(0,0,0,0.05);
     }
 
     /* FAQ */
-    .faq-list {
-      margin: 1.2rem 0 0 0;
-      display: flex;
-      flex-direction: column;
-      gap: .85rem;
-    }
+    .faq-list { margin: 1.2rem 0 0 0; display: flex; flex-direction: column; gap: .85rem; }
     .faq-item {
-      background: rgba(255,255,255,0.88);
-      border: 1px solid var(--glass-border);
-      border-radius: .95em;
-      box-shadow: 0 2px 10px 0 rgba(50,198,134,0.06);
+      background: var(--card);
+      border: 1.3px solid var(--main-green);
+      border-radius: .9em;
+      box-shadow: var(--card-shadow);
       overflow: hidden;
     }
     .faq-question {
@@ -341,67 +291,51 @@
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
-      transition: background .13s;
       user-select: none;
     }
-    .faq-question:hover {
-      background: #f2f9f4;
-    }
+    .faq-question:hover { background: #f2f9f4; }
     .faq-answer {
       padding: 1em 1em 1.1em 1.3em;
       color: var(--gray);
       display: none;
       font-size: .97em;
       border-top: 1px solid #e7f8e7;
-      background: rgba(255,255,255,0.97);
+      background: var(--card);
     }
-    .faq-item.active .faq-answer {
-      display: block;
-    }
+    .faq-item.active .faq-answer { display: block; }
     .faq-plus {
-      font-size: 1.3em;
-      margin-left: .5em;
-      transition: transform .22s;
+      font-size: 1.3em; margin-left: .5em; transition: transform .22s;
     }
-    .faq-item.active .faq-plus {
-      transform: rotate(45deg);
-    }
+    .faq-item.active .faq-plus { transform: rotate(45deg); }
 
     /* 参加方法 */
-    .contact-section {
-      padding-bottom: 2.2rem;
-    }
+    .contact-section { padding-bottom: 2.2rem; }
     .contact-buttons {
-      margin-top: 1.4rem;
+      margin-top: 1.3rem;
       display: flex;
       flex-direction: column;
       gap: 1.1rem;
     }
     .contact-btn {
-      display: flex;
-      align-items: center;
-      gap: 13px;
+      display: flex; align-items: center; gap: 13px;
       padding: 1em 1.4em;
       border-radius: 2em;
-      font-weight: 700;
-      font-size: 1.09em;
-      box-shadow: 0 3px 11px 0 rgba(50,198,134,0.09);
-      background: linear-gradient(90deg, var(--main-green), var(--accent-mint));
+      font-weight: 700; font-size: 1.08em;
+      box-shadow: var(--card-shadow);
+      border: 1.5px solid var(--main-green);
+      background: linear-gradient(90deg, var(--main-green), var(--gold));
       color: #fff;
-      border: none;
-      transition: transform .11s, box-shadow .17s;
+      transition: transform .11s, box-shadow .16s;
       cursor: pointer;
     }
-    .contact-btn.line { background: #00c300; color: #fff; }
-    .contact-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-    .contact-btn.x { background: #222c3e; color: #fff; }
-    .contact-btn.email { background: var(--button-yellow); color: var(--deep-navy);}
-    .contact-btn i {
-      font-size: 1.3em;
-    }
+    .contact-btn.line { background: #00c300; color: #fff; border-color: #0b9200;}
+    .contact-btn.instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border-color: #cc2366;}
+    .contact-btn.x { background: var(--main-green); color: #fff; border-color: #212121;}
+    .contact-btn.email { background: var(--gold); color: var(--text-dark); border-color: var(--gold);}
+    .contact-btn i { font-size: 1.3em; }
     .contact-btn:hover {
-      transform: translateY(-2px) scale(1.035);
-      box-shadow: 0 6px 15px 0 rgba(50,198,134,0.15);
+      transform: translateY(-2px) scale(1.033);
+      box-shadow: 0 6px 15px 0 rgba(25,60,30,0.12);
       opacity: .97;
     }
 
@@ -410,8 +344,8 @@
       padding: 2.3rem 0 .7rem 0;
       background: transparent;
       text-align: center;
-      color: #a9b3c1;
-      font-size: .93em;
+      color: #958b65;
+      font-size: .95em;
       font-weight: 600;
       letter-spacing: .04em;
     }
@@ -427,12 +361,11 @@
       transition: color .13s;
     }
     .footer .footer-sns a:hover {
-      color: var(--accent-mint);
+      color: var(--gold);
     }
 
-    /* メディアクエリ */
     @media (max-width: 600px) {
-      .hero-glass, section {
+      .hero-card, section {
         max-width: 99vw;
         padding-left: 0.3rem;
         padding-right: 0.3rem;
@@ -445,16 +378,16 @@
 <body>
   <!-- ヒーロー -->
   <div class="hero">
-    <div class="hero-glass">
+    <div class="hero-card">
       <div class="hero-logo">
         <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=256&q=80" alt="サークルロゴ">
       </div>
       <div class="hero-title">わすらもち会</div>
-      <div class="hero-sub">Sapporo Karuta Circle</div>
+      <div class="hero-sub">札幌百人一首サークル</div>
       <div class="hero-desc">
-        若者が集う、札幌の新しい<br>
+        伝統を今風に楽しむ<br>
         <b>競技かるたサークル</b>。<br>
-        「未経験」から大歓迎！
+        未経験・学生も大歓迎！
       </div>
       <div class="hero-buttons">
         <a class="hero-btn hero-btn-primary" href="#contact">体験参加</a>
@@ -472,7 +405,7 @@
         <div class="karuta-info">
           <div class="karuta-card-title">百人一首</div>
           <div class="karuta-card-desc">
-            100首の日本古典和歌集。和歌の美しさを楽しみつつ、現代でも人気。
+            100首の日本古典和歌集。和歌の美しさを味わいながら、幅広い世代に親しまれる伝統文化です。
           </div>
         </div>
       </div>
@@ -481,18 +414,16 @@
         <div class="karuta-info">
           <div class="karuta-card-title">競技かるた</div>
           <div class="karuta-card-desc">
-            記憶力・瞬発力・集中力を競う“畳の上のスポーツ”。<br>
-            誰でも挑戦できる頭脳系エンタメ！
+            記憶力・瞬発力・集中力を競う“畳の上のスポーツ”。誰でも挑戦できる頭脳系競技です。
           </div>
         </div>
       </div>
       <div class="karuta-card">
-        <div class="karuta-icon">🥇</div>
+        <div class="karuta-icon">🌸</div>
         <div class="karuta-info">
           <div class="karuta-card-title">初心者大歓迎</div>
           <div class="karuta-card-desc">
-            札幌で「初めて」から始める仲間が多数。<br>
-            サークル内でルールも丁寧に教えます！
+            札幌で「初めて」から始めた仲間が多数。ルールも丁寧に教えます！
           </div>
         </div>
       </div>
@@ -664,14 +595,8 @@
       q.addEventListener('click', function(){
         const item = this.parentElement;
         const isActive = item.classList.contains('active');
-        // 全部閉じる
-        document.querySelectorAll('.faq-item').forEach(i => {
-          i.classList.remove('active');
-        });
-        // 開く
-        if (!isActive) {
-          item.classList.add('active');
-        }
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        if (!isActive) { item.classList.add('active'); }
       });
     });
   </script>
