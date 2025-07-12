@@ -700,98 +700,89 @@
             background: var(--white);
         }
 
-      .timeline {
-      position: relative;
-      padding: 2rem 0;
-    }
+        .timeline-content {
+            flex: 1;
+            padding: 1rem;
+            background: var(--bg-green);
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary-green);
+            position: relative;
+        }
 
-    .timeline::after {
-      content: '';
-      position: absolute;
-      width: 4px;
-      background: linear-gradient(var(--primary-green), var(--accent-green));
-      top: 0;
-      bottom: 0;
-      left: 50%;
-      margin-left: -2px;
-    }
+        .timeline-content h4 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+            font-weight: 500;
+        }
 
-    .timeline-item {
-      position: relative;
-      width: 50%;
-      padding: 1rem 2rem;
-      background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      border: 1px solid var(--accent-green);
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
+        .timeline-image {
+            width: 100%;
+            height: 100%;
+            background: #f0f0f0;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.9rem;
+            overflow: hidden;
+        }
 
-    .timeline-item:hover {
-      background: var(--bg-green);
-      transform: translateY(-5px);
-    }
+        .timeline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
 
-    .timeline-item.left {
-      left: 0;
-    }
+        /* 実際の画像を使用する場合のコメント例 */
+        /* .timeline-image.spring-camp {
+            background-image: url('./images/IMG_6700.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+        */
+        
 
-    .timeline-item.right {
-      left: 50%;
-    }
+        .reports-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
 
-    .timeline-item::after {
-      content: attr(data-date);
-      position: absolute;
-      top: 1rem;
-      font-weight: bold;
-      color: var(--primary-green);
-    }
+        .timeline-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+        }
 
-    .timeline-item.left::after {
-      right: -6rem;
-    }
+        .timeline-date {
+            min-width: 120px;
+            padding: 0.5rem 1rem;
+            background: var(--primary-green);
+            color: var(--white);
+            border-radius: 20px;
+            text-align: center;
+            font-weight: 600;
+            margin-right: 2rem;
+        }
 
-    .timeline-item.right::after {
-      left: -6rem;
-    }
+        .timeline-content {
+            flex: 1;
+            padding: 1rem;
+            background: var(--bg-green);
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary-green);
+        }
 
-    .toggle-icon {
-      position: absolute;
-      top: 1.5rem;
-      right: 1rem;
-      transition: transform 0.3s;
-    }
-
-    .timeline-content {
-      display: none;
-      margin-top: 1rem;
-    }
-
-    .timeline-item.open .timeline-content {
-      display: block;
-    }
-
-    .timeline-item.open .toggle-icon {
-      transform: rotate(90deg);
-    }
-
-    @media (max-width: 768px) {
-      .timeline::after {
-        left: 10px;
-      }
-
-      .timeline-item {
-        width: calc(100% - 40px);
-        left: 30px !important;
-        margin-bottom: 1rem;
-      }
-
-      .timeline-item::after {
-        left: -5rem;
-      }
-    }
+        .timeline-content h4 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+            font-weight: 500;
+        }
 
         /* FAQ セクション */
         .faq {
@@ -1104,49 +1095,59 @@
     </section>
 
     <!-- 活動報告・過去の様子 -->
-     <section class="section reports fade-in" id="reports">
-    <h2>活動報告</h2>
-    <div class="timeline">
-
-      <div class="timeline-item left" data-date="2025年7月">
-        <div class="toggle-icon">▶</div>
-        <h4>かでる２・７様に取り上げて頂きました🙌</h4>
-        <div class="timeline-content">
-          <p>いつも素晴らしい和室を使わせて頂きありがとうございます！</p>
-          <blockquote class="twitter-tweet">
-            <a href="https://twitter.com/kaderu_27/status/1941107393578033549"></a>
-          </blockquote>
+    <section class="section reports fade-in" id="reports">
+        <h2>活動報告</h2>
+        <div class="reports-timeline">
+             <div class="timeline-item">
+                <div class="timeline-date">2025年7月</div>
+                <div class="timeline-content">
+                    <h4>かでる２・７様に取り上げて頂きました🙌</h4>
+                    <p>いつも素晴らしい和室を使わせて頂きありがとうございます！</p>
+                    <blockquote class="twitter-tweet">
+                        <p lang="ja" dir="ltr">【利用例のご紹介】<br>
+                            <br>
+                            本日かでる2・7の和室（夜間）で、社会人のかるたサークル「わすらもち会（<a href="https://twitter.com/karuta12346?ref_src=twsrc%5Etfw">@karuta12346</a>）」様が活動していました！<br>
+                            <br>
+                            「4月に料金改定があり利用しやすくなった」と好評いただきました<br>
+                            <br>
+                            ちなみにサークル参加者受付中！とのこと<br>
+                            ご興味ある方は連絡してみてはいかがでしょうか😎 <a href="https://t.co/24VIZDkqJe">https://t.co/24VIZDkqJe</a> <a href="https://t.co/RKEci71eO6">pic.twitter.com/RKEci71eO6</a>
+                        </p>&mdash; 北海道立道民活動センター　かでる2・7 (@kaderu_27) <a href="https://twitter.com/kaderu_27/status/1941107393578033549?ref_src=twsrc%5Etfw">July 4, 2025</a>
+                    </blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2025年6月</div>
+                <div class="timeline-content">
+                    <h4>福井大会</h4>
+                    <p>6/29に行われました第78回福井大会B級で当会会長？が4位入賞を果たしました！</p>
+                    <!-- <div class="timeline-image">
+                        <img src="/images/IMG_6700.jpeg" alt="福井B">
+                    </div> -->
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2025年6月</div>
+                <div class="timeline-content">
+                    <h4>新Tシャツ作成</h4>
+                    <p>わすらもち会のTシャツに紫verが加わりました！20名以上から欲しいとの声が入り、大好評でした🙌</p>
+                    <div class="timeline-image">
+                        <img src="/images/IMG_6700.jpeg" alt="Tシャツ">
+                    </div>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2024年12月</div>
+                <div class="timeline-content">
+                    <h4>2024円山合宿</h4>
+                    <p>円山の施設をお借りし2泊3日の合宿を行いました！道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました！かるたや親睦会を通じ交流を深めました</p>
+                    <div class="timeline-image">
+                        <img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" alt="円山合宿">
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-      <div class="timeline-item right" data-date="2025年6月">
-        <div class="toggle-icon">▶</div>
-        <h4>福井大会</h4>
-        <div class="timeline-content">
-          <p>6/29に行われました第78回福井大会B級で当会会長が4位入賞を果たしました！</p>
-        </div>
-      </div>
-
-      <div class="timeline-item left" data-date="2025年6月">
-        <div class="toggle-icon">▶</div>
-        <h4>新Tシャツ作成</h4>
-        <div class="timeline-content">
-          <p>わすらもち会のTシャツに紫verが加わりました！20名以上から欲しいとの声が入り、大好評でした🙌</p>
-          <img src="/images/IMG_6700.jpeg" alt="Tシャツ">
-        </div>
-      </div>
-
-      <div class="timeline-item right" data-date="2024年12月">
-        <div class="toggle-icon">▶</div>
-        <h4>2024円山合宿</h4>
-        <div class="timeline-content">
-          <p>円山の施設をお借りし2泊3日の合宿を行いました！道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました！</p>
-          <img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" alt="円山合宿">
-        </div>
-      </div>
-
-    </div>
-  </section>
+    </section>
 
     <!-- よくある質問 -->
     <section class="section faq fade-in" id="faq">
@@ -1252,19 +1253,6 @@
         document.querySelectorAll('.mobile-menu a').forEach(link => {
             link.addEventListener('click', closeMenu);
         });
-
-        //ツイッターの表示方法？挿入しました
-         <script async src="https://platform.twitter.com/widgets.js"></script>
-         <script>
-            document.querySelectorAll('.timeline-item').forEach(item => {
-              item.addEventListener('click', () => {
-                document.querySelectorAll('.timeline-item').forEach(i => {
-                  if (i !== item) i.classList.remove('open');
-                });
-                item.classList.toggle('open');
-                twttr.widgets.load();
-              });
-           });
 
         // ナビゲーション表示制御
         window.addEventListener('scroll', () => {
