@@ -695,206 +695,617 @@
             font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
         }
 
-        /* 活動報告セクション - モダンタイムライン型 */
+        /* 活動報告セクション - 画像表示対応 */
         .reports {
             background: var(--white);
         }
 
-        .modern-timeline {
-            position: relative;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem 0;
-        }
-
-        /* タイムラインの中央線 */
-        .timeline-line {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, var(--secondary-green), var(--light-green));
-            transform: translateX(-50%);
-        }
-
-        /* タイムラインアイテム */
-        .timeline-item-modern {
-            position: relative;
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: fadeInTimeline 0.6s ease forwards;
-        }
-
-        .timeline-item-modern:nth-child(odd) {
-            padding-right: calc(50% + 40px);
-            text-align: right;
-        }
-
-        .timeline-item-modern:nth-child(even) {
-            padding-left: calc(50% + 40px);
-            margin-left: 0;
-        }
-
-        /* タイムラインのドット */
-        .timeline-dot {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--secondary-green);
-            border: 4px solid var(--white);
-            border-radius: 50%;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 0 5px rgba(74, 124, 89, 0.2);
-        }
-
-        .timeline-item-modern:hover .timeline-dot,
-        .timeline-item-modern.active .timeline-dot {
-            transform: translateX(-50%) scale(1.3);
-            background: var(--primary-green);
-            box-shadow: 0 0 0 8px rgba(45, 80, 22, 0.2);
-        }
-
-        /* タイムラインカード */
-        .timeline-card {
+        .timeline-content {
+            flex: 1;
+            padding: 1rem;
             background: var(--bg-green);
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 20px rgba(45, 80, 22, 0.1);
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary-green);
             position: relative;
-            border: 2px solid transparent;
         }
 
-        .timeline-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(45, 80, 22, 0.15);
-            border-color: var(--secondary-green);
-        }
-
-        .timeline-item-modern.active .timeline-card {
-            background: var(--white);
-            border-color: var(--secondary-green);
-        }
-
-        /* タイムラインヘッダー */
-        .timeline-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-date-badge {
-            background: var(--primary-green);
-            color: var(--white);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            display: inline-block;
-        }
-
-        .timeline-expand-icon {
-            font-size: 1.2rem;
-            color: var(--secondary-green);
-            transition: transform 0.3s ease;
-            display: inline-block;
-            margin-left: 1rem;
-        }
-
-        .timeline-item-modern:nth-child(odd) .timeline-expand-icon {
-            margin-left: 0;
-            margin-right: 1rem;
-        }
-
-        .timeline-item-modern.active .timeline-expand-icon {
-            transform: rotate(90deg);
-        }
-
-        .timeline-title {
-            font-size: 1.1rem;
+        .timeline-content h4 {
             color: var(--primary-green);
-            font-weight: 600;
             margin-bottom: 0.5rem;
             font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
-        }
-
-        /* タイムラインコンテンツ（展開部分） */
-        .timeline-content-modern {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease, padding 0.3s ease;
-            padding: 0 1rem;
-        }
-
-        .timeline-item-modern.active .timeline-content-modern {
-            max-height: 2000px;
-            padding: 1rem;
-        }
-
-        .timeline-content-inner {
-            padding-top: 1rem;
-            border-top: 1px solid var(--accent-green);
+            font-weight: 500;
         }
 
         .timeline-image {
             width: 100%;
-            height: auto;
-            max-height: 300px;
-            object-fit: cover;
-            border-radius: 10px;
+            height: 100%;
+            background: #f0f0f0;
+            border-radius: 8px;
             margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.9rem;
+            overflow: hidden;
         }
 
-        /* モバイル対応 */
+        .timeline-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* 実際の画像を使用する場合のコメント例 */
+        /* .timeline-image.spring-camp {
+            background-image: url('./images/IMG_6700.jpeg');
+            background-size: cover;
+            background-position: center;
+        }
+        */
+        
+
+        .reports-timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-date {
+            min-width: 120px;
+            padding: 0.5rem 1rem;
+            background: var(--primary-green);
+            color: var(--white);
+            border-radius: 20px;
+            text-align: center;
+            font-weight: 600;
+            margin-right: 2rem;
+        }
+
+        .timeline-content {
+            flex: 1;
+            padding: 1rem;
+            background: var(--bg-green);
+            border-radius: 10px;
+            border-left: 4px solid var(--secondary-green);
+        }
+
+        .timeline-content h4 {
+            color: var(--primary-green);
+            margin-bottom: 0.5rem;
+            font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+            font-weight: 500;
+        }
+
+        /* FAQ セクション */
+        .faq {
+            background: var(--bg-green);
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(45, 80, 22, 0.1);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            background: var(--secondary-green);
+            color: var(--white);
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question:hover {
+            background: var(--primary-green);
+        }
+
+        .faq-answer {
+            padding: 1.5rem;
+            color: var(--dark);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* お問い合わせセクション */
+        .contact {
+            background: var(--white);
+            text-align: center;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .contact-btn.line {
+            background: #00c851;
+            color: var(--white);
+        }
+
+        .contact-btn.instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: var(--white);
+        }
+
+        .contact-btn.email {
+            background: var(--secondary-green);
+            color: var(--white);
+        }
+
+        .contact-btn.twitter {
+            background: #1da1f2;
+            color: var(--white);
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+        }
+
+        .contact-btn i {
+            font-size: 1.2em;
+            margin-right: 8px;
+        }
+
+        /* フッター */
+        .footer {
+            background: var(--primary-green);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* レスポンシブ対応 */
         @media (max-width: 768px) {
-            .timeline-line {
-                left: 30px;
+            .nav-menu {
+                display: none;
             }
 
-            .timeline-item-modern,
-            .timeline-item-modern:nth-child(odd),
-            .timeline-item-modern:nth-child(even) {
-                padding-left: 60px;
-                padding-right: 20px;
-                text-align: left;
-                margin-left: 0;
+            .hamburger {
+                display: flex;
             }
 
-            .timeline-dot {
-                left: 30px;
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
             }
 
-            .timeline-expand-icon {
-                margin-left: 1rem !important;
-                margin-right: 0 !important;
+            .about-features {
+                grid-template-columns: 1fr;
             }
 
-            .timeline-header {
+            .explanation-grid,
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-methods {
                 flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
+                gap: 1rem;
             }
 
-            .timeline-date-badge {
-                font-size: 0.8rem;
-                padding: 0.3rem 0.8rem;
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+            }
+
+            .timeline-date {
+                margin-right: 0;
+                margin-bottom: 1rem;
+                align-self: flex-start;
             }
         }
 
-        @keyframes fadeInTimeline {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* スクロールアニメーション */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
         }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- オーバーレイ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- モバイルメニュー -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#about">サークル紹介</a></li>
+            <li><a href="#karuta">百人一首とは</a></li>
+            <li><a href="#activities">活動内容</a></li>
+            <li><a href="#reports">活動報告</a></li>
+            <li><a href="#faq">よくある質問</a></li>
+            <li><a href="#contact">参加方法</a></li>
+        </ul>
+    </div>
+
+    <!-- ナビゲーション -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="/images/wasuramochi-logo.png" alt="わすらもち会ロゴ">
+                </div>
+                わすらもち会
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#about">サークル紹介</a></li>
+                <li><a href="#karuta">百人一首とは</a></li>
+                <li><a href="#activities">活動内容</a></li>
+                <li><a href="#reports">活動報告</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+                <li><a href="#contact">参加方法</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-logo-container">
+                <div class="rotating-text">
+                    <svg viewBox="0 0 180 180">
+                        <defs>
+                            <path id="circle" d="M 90, 90 m -60, 0 a 60,60 0 1,1 120,0 a 60,60 0 1,1 -120,0"/>
+                        </defs>
+                        <text font-size="12">
+                            <textPath href="#circle">
+                                wasuramochi karuta club • wasuramochi karuta club • 
+                            </textPath>
+                        </text>
+                    </svg>
+                </div>
+                <div class="hero-logo">
+                    <img src="/images/wasuramochi-logo.png" alt="わすらもち会ロゴ">
+                </div>
+            </div>
+            <h1>わすらもち会</h1>
+            <div class="subtitle">競技かるたサークル</div>
+            <p>札幌市で活動する社会人サークルです</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">体験参加申し込み</a>
+                <a href="#about" class="btn btn-secondary">サークルについて</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- わすらもち会について -->
+    <section class="section about fade-in" id="about">
+        <h2>わすらもち会について</h2>
+        <div class="intro-text">
+            札幌で競技かるたを楽しむ仲間が集まるサークルです
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <p>「わすらもち会」では<span class="highlight">高校生から社会人まで、A級からE級まで</span>たくさんの人達が一緒に百人一首を楽しんでいます。現在<span class="highlight">20名程で</span>活動しています。</p>
+                
+                <p style="margin-top: 2rem; text-align: center; font-size: 1rem; color: var(--gray);">
+                    かるた好き同士、気軽に集まって競技かるたを楽しんでいます。
+                </p>
+            </div>
+            <div class="about-image">
+                <img src="/images/rensyuu_huukei.jpeg" alt="練習風景">
+            </div>
+        </div>
+    </section>
+
+    <!-- 百人一首・競技かるたとは -->
+    <section class="section karuta-explanation fade-in" id="karuta">
+        <h2>百人一首・競技かるたとは？</h2>
+        <div class="explanation-grid">
+            <div class="explanation-card">
+                <h3>百人一首</h3>
+                <p>平安時代から伝わる100首の和歌。美しい日本語の響きと深い情感を味わえる古典文学の宝庫です。</p>
+            </div>
+            <div class="explanation-card">
+                <h3>競技かるた</h3>
+                <p>百人一首を使った競技スポーツ。瞬発力、記憶力、集中力が求められる「畳の上の格闘技」とも呼ばれます。</p>
+            </div>
+            <div class="explanation-card">
+                <h3>段級位制度</h3>
+                <p>E級からA級まで明確な段級位制度があり、目標をもって成長できます。</p>
+            </div>
+            <div class="explanation-card">
+                <h3>文化と競技</h3>
+                <p>古典文学の教養を深めながら、スポーツとしての面白さも味わえる、他にはない魅力的な世界です。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 活動内容 -->
+    <section class="section activities fade-in" id="activities">
+        <h2>活動内容</h2>
+        <div class="activities-grid">
+            <div class="activity-card">
+                <h3>📍 練習場所</h3>
+                <p><strong>かでる2・7</strong><br>中央区北2条西7丁目<br>17:00-21:00</p>
+                <br>
+                <p><strong>東区民センター</strong><br>東区北11条東7丁目<br>18:00-22:00</p>
+                <br>
+                <p><strong>中央区民センター</strong><br>中央区南2条西10丁目<br>18:00-21:00</p>
+            </div>
+            <div class="activity-card">
+                <h3>📅 活動頻度</h3>
+                <p><strong>週2回</strong>の練習<br>（曜日は流動的）</p>
+                <br>
+                <p>メンバーの都合に合わせて柔軟にスケジュールを調整しています。</p>
+            </div>
+            <div class="activity-card">
+                <h3>💰 参加費用</h3>
+                <p><strong>年会費：無料</strong></p>
+                <p><strong>高校生以下：完全無料</strong></p>
+                <p><strong>大学生以上：1回100円</strong></p>
+                <br>
+                <p>気軽に始められる手頃な料金設定です。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 活動報告・過去の様子 -->
+    <section class="section reports fade-in" id="reports">
+        <h2>活動報告・過去の様子</h2>
+        <div class="reports-timeline">
+             <div class="timeline-item">
+                <div class="timeline-date">2025年7月</div>
+                <div class="timeline-content">
+                    <h4>かでる２・７様に取り上げて頂きました🙌</h4>
+                    <blockquote class="twitter-tweet">
+                        <p lang="ja" dir="ltr">【利用例のご紹介】<br><br>本日かでる2・7の和室（夜間）で、社会人のかるたサークル「わすらもち会（<a href="https://twitter.com/karuta12346?ref_src=twsrc%5Etfw">@karuta12346</a>）」様が活動していました！<br><br>「4月に料金改定があり利用しやすくなった」と好評いただきました<br><br>ちなみにサークル参加者受付中！とのこと<br>ご興味ある方は連絡してみてはいかがでしょうか😎 <a href="https://t.co/24VIZDkqJe">https://t.co/24VIZDkqJe</a> <a href="https://t.co/RKEci71eO6">pic.twitter.com/RKEci71eO6</a>
+                        </p>&mdash; 北海道立道民活動センター　かでる2・7 (@kaderu_27) <a href="https://twitter.com/kaderu_27/status/1941107393578033549?ref_src=twsrc%5Etfw">July 4, 2025</a>
+                    </blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <p>札幌市内で開催された競技かるた大会に10名が参加。E級の部で2名が入賞を果たしました。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2025年6月</div>
+                <div class="timeline-content">
+                    <h4>福井大会</h4>
+                    <div class="timeline-image">
+                        <img src="/images/IMG_6700.jpeg" alt="福井B">
+                    </div>
+                    <p>6/29に行われました第78回福井大会B級で当会会員が4位入賞しました！</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2025年1月</div>
+                <div class="timeline-content">
+                    <h4>新年会・初詠み</h4>
+                    <div class="timeline-image">
+                        <img src="/images/new-year-2025.jpg" alt="新年会の様子">
+                    </div>
+                    <p>新年の初練習として「初詠み」を実施。みんなでお正月の和歌を楽しみ、今年の目標を共有しました。</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2024年12月</div>
+                <div class="timeline-content">
+                    <h4>忘年会開催</h4>
+                    <div class="timeline-image">
+                        <img src="/images/year-end-party-2024.jpg" alt="忘年会の様子">
+                    </div>
+                    <p>1年間の活動を振り返る忘年会を開催。新入会員も5名加わり、ますます賑やかになりました。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- よくある質問 -->
+    <section class="section faq fade-in" id="faq">
+        <h2>よくある質問</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>百人一首を全く知らないのですが、参加できますか？</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>もちろんです！初心者大歓迎です。百人一首の基本的なルールから和歌の覚え方まで、先輩メンバーが丁寧に教えます。まずは体験参加してみてください。</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>どのくらいで上達できますか？</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>個人差はありますが、週2回程度の参加で3-6ヶ月もあれば基本的な試合ができるようになります。1年程度でE級、2-3年でD級を目指せます。</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>必要な道具はありますか？</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>練習用の札はサークルで用意しているので、特に必要ありません。慣れてきたら自分専用の札を購入される方もいらっしゃいます。</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>年齢制限はありますか？</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>高校生から参加可能です。現在のメンバーは高校生から40代まで幅広い年齢層の方が参加されています。</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>見学だけでも大丈夫ですか？</span>
+                    <span>+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>見学だけでも大歓迎です！実際の練習風景を見ていただけば、雰囲気がよく分かると思います。事前にご連絡いただければと思います。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 参加方法・お問い合わせ -->
+    <section class="section contact fade-in" id="contact">
+        <h2>参加方法・お問い合わせ</h2>
+        <p>百人一首に興味を持たれた方、ぜひお気軽にご連絡ください！<br>体験参加や見学も大歓迎です。</p>
+        <div class="contact-methods">
+            <a href="https://line.me/ti/p/@721raufe" class="contact-btn line" target="_blank" rel="noopener">
+                <i class="fab fa-line"></i> LINE公式アカウント
+            </a>
+            <a href="https://www.instagram.com/sapporo_karuta_syakaijin/" class="contact-btn instagram" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+            <a href="https://twitter.com/karuta12346" class="contact-btn twitter" target="_blank" rel="noopener">
+                <i class="fab fa-x-twitter"></i> X (Twitter)
+            </a>
+            <a href="mailto:poponta2020@gmail.com" class="contact-btn email">
+                <i class="fas fa-envelope"></i> メールでお問い合わせ
+            </a>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <p>&copy; 2025 わすらもち会（札幌百人一首サークル）. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // ハンバーガーメニュー制御
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        // モバイルメニューのリンククリック時にメニューを閉じる
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // ナビゲーション表示制御
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('show');
+            } else {
+                navbar.classList.remove('show');
+            }
+        });
+
+        // スクロールアニメーション
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // スムーススクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // FAQ アコーディオン
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // すべてのFAQアイテムを閉じる
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-question span:last-child').textContent = '+';
+                });
+                
+                // クリックされたアイテムのみ開く/閉じる
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                    question.querySelector('span:last-child').textContent = '-';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
