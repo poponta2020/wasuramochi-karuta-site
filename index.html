@@ -649,6 +649,32 @@
             box-shadow: 0 20px 40px rgba(45, 80, 22, 0.15);
         }
 
+        /* 百人一首説明カード用の画像スタイル追加 */
+.explanation-image {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 1.5rem;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(45, 80, 22, 0.2);
+}
+
+.explanation-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.explanation-card:hover .explanation-image img {
+    transform: scale(1.05);
+}
+
+/* 既存の explanation-card スタイルから explanation-icon を削除または調整 */
+.explanation-icon {
+    display: none; /* 画像を使用する場合は削除 */
+}
+
         .explanation-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
@@ -1041,28 +1067,25 @@
     </section>
 
     <!-- 百人一首・競技かるたとは -->
-    <section class="section karuta-explanation fade-in" id="karuta">
-        <h2>百人一首・競技かるたとは？</h2>
-        <div class="explanation-grid">
-            <div class="explanation-card">
-                <h3>小倉百人一首</h3>
-                <p>平安時代から伝わる100首の和歌。美しい日本語の響きと深い情感を味わえる古典文学の宝庫です。</p>
+ <section class="section karuta-explanation fade-in" id="karuta">
+    <h2>百人一首・競技かるたとは？</h2>
+    <div class="explanation-grid">
+        <div class="explanation-card">
+            <div class="explanation-image">
+                <img src="/images/hyakunin_isshu.jpg" alt="小倉百人一首">
             </div>
-            <div class="explanation-card">
-                <h3>競技かるた</h3>
-                <p>百人一首を使った競技スポーツ。瞬発力、記憶力、集中力が求められる「畳の上の格闘技」とも呼ばれます。</p>
-            </div>
-            <!--
-            <div class="explanation-card">
-                <h3>段級位制度</h3>
-                <p>E級からA級まで明確な段級位制度があり、目標をもって成長できます。</p>
-            </div>
-            <div class="explanation-card">
-                <h3>文化と競技</h3>
-                <p>古典文学の教養を深めながら、スポーツとしての面白さも味わえる、他にはない魅力的な世界です。</p>
-            </div>　-->
+            <h3>小倉百人一首</h3>
+            <p>平安時代から伝わる100首の和歌。美しい日本語の響きと深い情感を味わえる古典文学の宝庫です。</p>
         </div>
-    </section>
+        <div class="explanation-card">
+            <div class="explanation-image">
+                <img src="/images/kyougi_karuta.jpg" alt="競技かるた">
+            </div>
+            <h3>競技かるた</h3>
+            <p>百人一首を使った競技スポーツ。瞬発力、記憶力、集中力が求められる「畳の上の格闘技」とも呼ばれます。</p>
+        </div>
+    </div>
+</section>
 
     <!-- 活動内容 -->
     <section class="section activities fade-in" id="activities">
