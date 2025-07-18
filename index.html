@@ -307,28 +307,7 @@
             }
         }
 
-        /* 実際の画像を使用する場合のコメント例
-        .hero {
-            background: 
-                linear-gradient(rgba(45, 80, 22, 0.8), rgba(74, 124, 89, 0.8)),
-                url('./images/karuta-practice-main.jpg');
-        }
-        */
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
-            animation: float 25s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
 
         .hero-content {
             z-index: 2;
