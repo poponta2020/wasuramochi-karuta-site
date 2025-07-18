@@ -893,10 +893,17 @@
             color: var(--white);
         }
 
-        .contact-btn.twitter {
-            background: #1da1f2;
-            color: var(--white);
-        }
+        /* Xボタンの色を黒に変更 */
+.contact-btn.twitter {
+    background: #000000;
+    color: var(--white);
+}
+
+.contact-btn.twitter:hover {
+    background: #333333;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+}
 
         .contact-btn:hover {
             transform: translateY(-5px);
