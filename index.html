@@ -893,16 +893,31 @@
             color: var(--white);
         }
 
-        /* Xボタンの色を黒に変更 */
-.contact-btn.twitter {
+        .contact-btn.twitter {
     background: #000000;
     color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .contact-btn.twitter:hover {
     background: #333333;
     transform: translateY(-5px);
     box-shadow: 0 15px 25px rgba(0,0,0,0.3);
+}
+
+.contact-btn.twitter i {
+    font-size: 1.2em;
+    margin-right: 0; /* 既存のmargin-rightをリセット */
+}
+
+/* Font Awesomeが読み込まれていない場合の代替アイコン */
+.contact-btn.twitter i::before {
+    content: "𝕏"; /* Xのユニコード文字 */
+    font-family: inherit;
+    font-style: normal;
+    font-weight: bold;
 }
 
         .contact-btn:hover {
@@ -1245,8 +1260,8 @@
                 <i class="fab fa-instagram"></i> Instagram
             </a>
             <a href="https://twitter.com/karuta12346" class="contact-btn twitter" target="_blank" rel="noopener">
-                <i class="fab fa-x-twitter"></i> X
-            </a>
+    <i class="fab fa-x-twitter"></i> X (Twitter)
+</a>
             <a href="mailto:poponta2020@gmail.com" class="contact-btn email">
                 <i class="fas fa-envelope"></i> メールでお問い合わせ
             </a>
