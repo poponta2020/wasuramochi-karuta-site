@@ -707,93 +707,170 @@
         }
 
         /* 活動報告セクション - 画像表示対応 */
-        .reports {
-            background: var(--white);
-        }
+/* =========================
+   活動報告（コンパクトカード版）
+   ========================= */
+.reports {
+  --c-bg: var(--white, #fff);
+  --c-surface: var(--bg-green, #f6fbf8);
+  --c-primary: var(--primary-green, #15926b);
+  --c-secondary: var(--secondary-green, #9ad2bf);
+  --c-text: var(--text-color, #20322e);
+  --c-muted: #6b7f78;
 
-        .timeline-content {
-            flex: 1;
-            padding: 1rem;
-            background: var(--bg-green);
-            border-radius: 10px;
-            border-left: 4px solid var(--secondary-green);
-            position: relative;
-        }
+  --radius: 12px;
+  --shadow: 0 4px 20px rgba(0,0,0,.06);
+  --gap: 1rem;
 
-        .timeline-content h4 {
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-            font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
-            font-weight: 500;
-        }
+  background: var(--c-bg);
+  padding: clamp(1rem, 3vw, 2rem) 0;
+}
 
-        .timeline-image {
-            width: 100%;
-            height: 100%;
-            background: #f0f0f0;
-            border-radius: 8px;
-            margin: 1rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 0.9rem;
-            overflow: hidden;
-        }
+.reports__head {
+  max-width: 1100px;
+  margin: 0 auto clamp(1rem, 2.5vw, 1.5rem);
+  padding: 0 clamp(1rem, 3vw, 1.25rem);
+}
+.reports__head h2 {
+  margin: 0 0 .25rem;
+}
+.reports__lead {
+  margin: 0;
+  color: var(--c-muted);
+  font-size: .95rem;
+}
 
-        .timeline-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 8px;
-        }
+/* グリッド：自動で2〜3列（横幅に応じて） */
+.reports__grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 1.25rem);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(.9rem, 2vw, 1.25rem);
+}
 
-        /* 実際の画像を使用する場合のコメント例 */
-        /* .timeline-image.spring-camp {
-            background-image: url('./images/IMG_6700.jpeg');
-            background-size: cover;
-            background-position: center;
-        }
-        */
-        
+/* 各カード */
+.report-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: .6rem;
+  background: var(--c-surface);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--c-secondary);
+  box-shadow: var(--shadow);
+  padding: .9rem;
+  position: relative;
+}
 
-        .reports-timeline {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
+/* ヘッダー（タイトル + 月バッジ） */
+.report-card__header {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: .6rem .75rem;
+}
+.report-card__date {
+  grid-column: 1 / 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .25rem .6rem;
+  background: var(--c-primary);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: .8rem;
+  white-space: nowrap;
+}
+.report-card__title {
+  grid-column: 2 / 3;
+  margin: 0;
+  color: var(--c-primary);
+  font-weight: 600;
+  line-height: 1.35;
+  font-size: 1.05rem;
+  font-family: 'Zen Maru Gothic','Noto Sans JP',system-ui,sans-serif;
+}
 
-        .timeline-item {
-            display: flex;
-            margin-bottom: 2rem;
-            position: relative;
-        }
+/* メディア（高さを一定にして省スペース＆CLS対策） */
+.report-card__media {
+  margin: .25rem 0 0;
+  border-radius: calc(var(--radius) - 2px);
+  overflow: hidden;
+  background: #eef4f2;
+  aspect-ratio: 16 / 9;        /* ★ 固定枠 */
+}
+.report-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;            /* ★ サムネ切り抜き */
+  display: block;
+}
 
-        .timeline-date {
-            min-width: 120px;
-            padding: 0.5rem 1rem;
-            background: var(--primary-green);
-            color: var(--white);
-            border-radius: 20px;
-            text-align: center;
-            font-weight: 600;
-            margin-right: 2rem;
-        }
+/* サマリーは2行で省略 */
+.report-card__summary {
+  margin: .25rem 0 0;
+  color: var(--c-text);
+  font-size: .95rem;
+}
+.line-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;        /* ★ 2行表示 */
+  overflow: hidden;
+}
 
-        .timeline-content {
-            flex: 1;
-            padding: 1rem;
-            background: var(--bg-green);
-            border-radius: 10px;
-            border-left: 4px solid var(--secondary-green);
-        }
+/* 詳細は開閉（CSSだけでOK） */
+.report-card__details {
+  margin-top: .1rem;
+}
+.report-card__summary-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .4rem .65rem;
+  background: #fff;
+  border-radius: 999px;
+  font-size: .9rem;
+  color: var(--c-primary);
+  cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--c-primary), #000 10%);
+  transition: transform .08s ease, background-color .2s ease, border-color .2s ease;
+}
+.report-card__summary-toggle:hover {
+  transform: translateY(-1px);
+  background: #fdfefe;
+}
+.report-card__summary-toggle:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--c-primary), #fff 40%);
+  outline-offset: 2px;
+}
 
-        .timeline-content h4 {
-            color: var(--primary-green);
-            margin-bottom: 0.5rem;
-            font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
-            font-weight: 500;
-        }
+.report-card__details[open] .report-card__body {
+  margin-top: .6rem;
+}
+.report-card__body {
+  font-size: .95rem;
+  color: var(--c-text);
+}
+
+/* Twitter埋め込みは折りたたみ内で余白調整 */
+.report-card__body .twitter-tweet {
+  margin: .25rem auto !important;
+}
+
+/* ちょっとしたホバー効果（ポインタ環境のみ） */
+@media (hover: hover) and (pointer: fine) {
+  .report-card:hover { box-shadow: 0 6px 28px rgba(0,0,0,.08); }
+}
+
+/* モバイル寄りの最適化 */
+@media (max-width: 480px) {
+  .report-card__title { font-size: 1rem; }
+  .report-card__date { font-size: .78rem; }
+}
+
 
         /* FAQ セクション */
         .faq {
@@ -1127,59 +1204,110 @@
     </section>
 
     <!-- 活動報告・過去の様子 -->
-    <section class="section reports fade-in" id="reports">
-        <h2>活動報告</h2>
-        <div class="reports-timeline">
-             <div class="timeline-item">
-                <div class="timeline-date">2025年7月</div>
-                <div class="timeline-content">
-                    <h4>かでる２・７様に取り上げて頂きました🙌</h4>
-                    <p>いつも素晴らしい和室を使わせて頂きありがとうございます！</p>
-                    <blockquote class="twitter-tweet">
-                        <p lang="ja" dir="ltr">【利用例のご紹介】<br>
-                            <br>
-                            本日かでる2・7の和室（夜間）で、社会人のかるたサークル「わすらもち会（<a href="https://twitter.com/karuta12346?ref_src=twsrc%5Etfw">@karuta12346</a>）」様が活動していました！<br>
-                            <br>
-                            「4月に料金改定があり利用しやすくなった」と好評いただきました<br>
-                            <br>
-                            ちなみにサークル参加者受付中！とのこと<br>
-                            ご興味ある方は連絡してみてはいかがでしょうか😎 <a href="https://t.co/24VIZDkqJe">https://t.co/24VIZDkqJe</a> <a href="https://t.co/RKEci71eO6">pic.twitter.com/RKEci71eO6</a>
-                        </p>&mdash; 北海道立道民活動センター　かでる2・7 (@kaderu_27) <a href="https://twitter.com/kaderu_27/status/1941107393578033549?ref_src=twsrc%5Etfw">July 4, 2025</a>
-                    </blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2025年6月</div>
-                <div class="timeline-content">
-                    <h4>福井大会</h4>
-                    <p>6/29に行われました第78回福井大会B級で当会会長？が4位入賞を果たしました！</p>
-                    <div class="timeline-image">
-                        <img src="/images/IMG_6700.jpeg" alt="福井B">
-                    </div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2025年6月</div>
-                <div class="timeline-content">
-                    <h4>新Tシャツ作成</h4>
-                    <p>わすらもち会のTシャツに紫verが加わりました！20名以上から欲しいとの声が入り、大好評でした🙌</p>
-                    <div class="timeline-image">
-                        <img src="/images/IMG_7169.jpeg" alt="Tシャツ">
-                    </div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-date">2024年12月</div>
-                <div class="timeline-content">
-                    <h4>2024円山合宿</h4>
-                    <p>円山の施設をお借りし2泊3日の合宿を行いました！道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました！かるたや親睦会を通じ交流を深めました</p>
-                    <div class="timeline-image">
-                        <img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" alt="円山合宿">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="section reports" id="reports" aria-label="活動報告">
+  <header class="reports__head">
+    <h2>活動報告</h2>
+    <p class="reports__lead">最新の活動をダイジェスト表示。詳細は各カードの「もっと見る」から。</p>
+  </header>
+
+  <ol class="reports__grid" role="list">
+    <!-- 2025/07 -->
+    <li class="reports__item">
+      <article class="report-card">
+        <header class="report-card__header">
+          <time class="report-card__date" datetime="2025-07">2025年7月</time>
+          <h3 class="report-card__title">かでる２・７様に取り上げて頂きました🙌</h3>
+        </header>
+
+        <p class="report-card__summary line-clamp">
+          いつも素晴らしい和室を使わせて頂きありがとうございます！
+        </p>
+
+        <details class="report-card__details">
+          <summary class="report-card__summary-toggle">もっと見る</summary>
+          <div class="report-card__body">
+            <blockquote class="twitter-tweet">
+              <p lang="ja" dir="ltr">【利用例のご紹介】<br><br>
+                本日かでる2・7の和室（夜間）で、社会人のかるたサークル「わすらもち会（
+                <a href="https://twitter.com/karuta12346?ref_src=twsrc%5Etfw">@karuta12346</a>）」様が活動していました！<br><br>
+                「4月に料金改定があり利用しやすくなった」と好評いただきました<br><br>
+                ちなみにサークル参加者受付中！とのこと<br>
+                ご興味ある方は連絡してみてはいかがでしょうか😎
+                <a href="https://t.co/24VIZDkqJe">https://t.co/24VIZDkqJe</a>
+                <a href="https://t.co/RKEci71eO6">pic.twitter.com/RKEci71eO6</a>
+              </p>— 北海道立道民活動センター　かでる2・7 (@kaderu_27)
+              <a href="https://twitter.com/kaderu_27/status/1941107393578033549?ref_src=twsrc%5Etfw">July 4, 2025</a>
+            </blockquote>
+            <!-- Twitterは折りたたみを開いた時だけ視認させる -->
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+          </div>
+        </details>
+      </article>
+    </li>
+
+    <!-- 2025/06 福井大会 -->
+    <li class="reports__item">
+      <article class="report-card">
+        <header class="report-card__header">
+          <time class="report-card__date" datetime="2025-06">2025年6月</time>
+          <h3 class="report-card__title">福井大会</h3>
+        </header>
+
+        <figure class="report-card__media">
+          <img src="/images/IMG_6700.jpeg" alt="福井B" loading="lazy" decoding="async" />
+        </figure>
+
+        <p class="report-card__summary line-clamp">
+          6/29に行われました第78回福井大会B級で当会会長？が4位入賞を果たしました！
+        </p>
+
+        <details class="report-card__details">
+          <summary class="report-card__summary-toggle">もっと見る</summary>
+          <div class="report-card__body">
+            <p>写真のほか、対局の詳細・使用札の傾向なども追記予定です。</p>
+          </div>
+        </details>
+      </article>
+    </li>
+
+    <!-- 2025/06 Tシャツ -->
+    <li class="reports__item">
+      <article class="report-card">
+        <header class="report-card__header">
+          <time class="report-card__date" datetime="2025-06">2025年6月</time>
+          <h3 class="report-card__title">新Tシャツ作成</h3>
+        </header>
+
+        <figure class="report-card__media">
+          <img src="/images/IMG_7169.jpeg" alt="Tシャツ" loading="lazy" decoding="async" />
+        </figure>
+
+        <p class="report-card__summary line-clamp">
+          わすらもち会のTシャツに紫verが加わりました！20名以上から欲しいとの声が入り、大好評でした🙌
+        </p>
+      </article>
+    </li>
+
+    <!-- 2024/12 円山合宿 -->
+    <li class="reports__item">
+      <article class="report-card">
+        <header class="report-card__header">
+          <time class="report-card__date" datetime="2024-12">2024年12月</time>
+          <h3 class="report-card__title">2024円山合宿</h3>
+        </header>
+
+        <figure class="report-card__media">
+          <img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" alt="円山合宿" loading="lazy" decoding="async" />
+        </figure>
+
+        <p class="report-card__summary line-clamp">
+          円山の施設をお借りし2泊3日の合宿を行いました！道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました！かるたや親睦会を通じ交流を深めました
+        </p>
+      </article>
+    </li>
+  </ol>
+</section>
+
 
     <!-- よくある質問 -->
     <section class="section faq fade-in" id="faq">
