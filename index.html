@@ -777,12 +777,17 @@
 
 /* ========= スライダー（カード内フィット） ========= */
 .slider { position: relative; background: #0b0f0e; color: #e6f3ee; border-radius: 10px; }
-.slider__viewport {
+.slider__viewport{
   position: relative;
-  height: min(60vh, 520px);     /* ★ カードの中での高さ（画面に合わせる） */
+  /* 高さはJSで決定（画像比率に合わせる） */
+  height: auto;
+  min-height: 180px;          /* 極端に小さい画像でも最低高さを確保 */
+  max-height: 80vh;           /* 画面外にはみ出しにくい上限 */
   overflow: hidden;
-  display: grid; place-items: center;
+  display: grid;
+  place-items: center;
   outline: none;
+  transition: height .25s ease; /* スライド切替時にスムーズに伸縮 */
 }
 .slider__track { position: absolute; inset: 0; }
 .slide {
@@ -1578,6 +1583,77 @@
     const counter = $('.slider__counter', root);
     let idx = 0;
 
+       const MAX_VH = 0.80;        // 画面高の何割まで許容するか
+const FALLBACK_RATIO = 16/9; // 画像未ロードやツイート用の仮比率
+let resizeObsAttached = false;
+
+function setViewportHeightFor(index){
+  if (!slides.length) return;
+  const slide = slides[index];
+  const vp = viewport;
+  if (!vp) return;
+
+  const vw = vp.clientWidth || vp.getBoundingClientRect().width || 600;
+  const maxH = Math.min(window.innerHeight * MAX_VH, 10000); // 安全な上限
+
+  // 画像スライド
+  if (slide.classList.contains('image')) {
+    const img = slide.querySelector('img');
+    const apply = (w, h) => {
+      if (!w || !h) return;
+      const ideal = vw * (h / w);
+      const finalH = Math.min(Math.max(ideal, 180), maxH);
+      vp.style.height = finalH + 'px';
+    };
+
+    if (img && img.naturalWidth && img.naturalHeight) {
+      apply(img.naturalWidth, img.naturalHeight);
+    } else if (img) {
+      // まだ未ロードの場合
+      vp.style.height = Math.min(vw * (1 / FALLBACK_RATIO), maxH) + 'px';
+      img.addEventListener('load', () => {
+        apply(img.naturalWidth, img.naturalHeight);
+      }, { once: true });
+    } else {
+      // 想定外だが保険
+      vp.style.height = Math.min(vw * (1 / FALLBACK_RATIO), maxH) + 'px';
+    }
+  }
+  // ツイート等の埋め込み
+  else if (slide.classList.contains('embed')) {
+    // まずは16:9相当でセット
+    let h = Math.min(vw * (9/16), maxH);
+    vp.style.height = Math.max(h, 220) + 'px';
+
+    // widgets.js により内容が描画された後の実高を反映
+    setTimeout(() => {
+      const box = slide.querySelector('.twitter-tweet');
+      if (box) {
+        const rect = box.getBoundingClientRect();
+        if (rect.height) {
+          const innerPad = parseFloat(getComputedStyle(vp).paddingTop || 0)
+                         + parseFloat(getComputedStyle(vp).paddingBottom || 0);
+          const finalH = Math.min(rect.height + innerPad + 16, maxH);
+          vp.style.height = Math.max(finalH, 220) + 'px';
+        }
+      }
+    }, 400);
+  }
+  else {
+    // 未分類はフォールバック
+    vp.style.height = Math.min(vw * (9/16), maxH) + 'px';
+  }
+}
+
+function handleResize(){
+  setViewportHeightFor(idx);
+}
+// 同一スライダで重複アタッチしない
+if (!resizeObsAttached) {
+  window.addEventListener('resize', handleResize);
+  resizeObsAttached = true;
+}
+
     // ページャ生成
     slides.forEach((_, i) => {
       const dot = document.createElement('div');
@@ -1587,10 +1663,13 @@
     });
 
     function update() {
-      slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
-      $$('.dot', pager).forEach((d, i) => d.classList.toggle('is-active', i === idx));
-      if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
-    }
+  slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+  $$('.dot', pager).forEach((d, i) => d.classList.toggle('is-active', i === idx));
+  if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
+
+  // ★ 追加：この行を末尾に
+  setViewportHeightFor(idx);
+}
     function next() { idx = (idx + 1) % slides.length; update(); }
     function prev() { idx = (idx - 1 + slides.length) % slides.length; update(); }
 
