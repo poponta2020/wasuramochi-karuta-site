@@ -742,12 +742,24 @@
 .report-card--open { box-shadow: 0 10px 40px rgba(0,0,0,.12); transform: translateY(-1px); }
 
 .report-card__header { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: .6rem .75rem; }
-.report-card__date{
+.report-card__date {
+  /* 中央揃えをより確実に（inline-flex→inline-grid） */
   display: inline-grid;
   place-items: center;
+
+  /* 元の見た目（消えた原因の装飾を全部入れ直し） */
+  padding: .25rem .6rem;
+  background: var(--c-primary);
+  color: #fff;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: .8rem;
+  white-space: nowrap;
+
+  /* 視覚的ズレ対策（追加） */
   line-height: 1;
-  text-indent: 0;
   letter-spacing: normal;
+  text-indent: 0;
   text-align: center;
 }
 .report-card__title { margin: 0; color: var(--c-primary); font-weight: 600; line-height: 1.35; font-size: 1.05rem; font-family: 'Zen Maru Gothic','Noto Sans JP',system-ui,sans-serif; }
