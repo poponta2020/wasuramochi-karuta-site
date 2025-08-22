@@ -707,10 +707,6 @@
         }
 
         /* 活動報告セクション - 画像表示対応 */
-/* =========================
-   活動報告（コンパクトカード版）
-   ========================= */
-/* ========= ベース（既存変数にフォールバック） ========= */
 .reports {
   --c-bg: var(--white, #fff);
   --c-surface: var(--bg-green, #f6fbf8);
@@ -725,6 +721,7 @@
 }
 .reports__head { max-width: 1100px; margin: 0 auto clamp(1rem, 2.5vw, 1.5rem); padding: 0 clamp(1rem, 3vw, 1.25rem); }
 .reports__lead { margin: 0; color: #6b7f78; font-size: .95rem; }
+.u-em { font-weight: 600; color: var(--c-primary); }
 
 /* ========= カード・グリッド ========= */
 .reports__grid {
@@ -764,94 +761,115 @@
 .btn-view:hover { transform: translateY(-1px); background: #fdfefe; }
 .btn-view:focus-visible { outline: 3px solid color-mix(in srgb, var(--c-primary), #fff 40%); outline-offset: 2px; }
 
-/* ========= Lightbox ========= */
-.lightbox { position: fixed; inset: 0; z-index: 9990; display: none; }
-.lightbox[aria-hidden="false"] { display: block; }
-.lightbox__backdrop { position: absolute; inset: 0; background: rgba(16,20,18,.75); backdrop-filter: blur(2px); }
-.lightbox__stage {
-  position: absolute; inset: 4vh 4vw; background: #0b0f0e; color: #e6f3ee;
-  border-radius: 14px; box-shadow: 0 10px 35px rgba(0,0,0,.35);
-  display: grid; grid-template-rows: auto 1fr auto; gap: .5rem;
+/* ========= サイト内ビューア ========= */
+.reports-viewer {
+  max-width: 1100px;
+  margin: clamp(0.75rem, 2vw, 1rem) auto 0;
+  padding: 0 clamp(1rem, 3vw, 1.25rem);
+  display: none; /* 初期は非表示 */
+}
+.reports-viewer[aria-hidden="false"] { display: block; }
+
+.viewer__inner {
+  background: #0b0f0e;
+  color: #e6f3ee;
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0,0,0,.12);
   overflow: hidden;
 }
-@media (max-width: 640px) { .lightbox__stage { inset: 0; border-radius: 0; } }
 
-.lightbox__close {
-  position: absolute; top: .5rem; right: .5rem;
-  background: #fff; color: #000; border-radius: 999px; padding: .25rem .6rem;
-  border: 1px solid rgba(0,0,0,.15); font-size: 1.1rem; cursor: pointer;
+/* ヘッダー */
+.viewer__header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .5rem; padding: .5rem .75rem;
+  background: rgba(255,255,255,.04);
 }
-.lightbox__close:focus-visible { outline: 3px solid #9ad2bf; outline-offset: 2px; }
+.viewer__title { font-size: .95rem; }
+.viewer__toolbar { display: inline-flex; gap: .35rem; align-items: center; }
+.viewer__btn {
+  background: #fff; color: #000; border: 1px solid rgba(0,0,0,.15);
+  border-radius: 999px; padding: .25rem .6rem; font-size: .85rem; cursor: pointer;
+}
+.viewer__btn[aria-pressed="true"] { background: #cfe6dd; }
+.viewer__close {
+  background: #fff; color: #000; border: 1px solid rgba(0,0,0,.15);
+  border-radius: 999px; padding: .25rem .6rem; font-size: 1rem; cursor: pointer;
+  margin-left: .25rem;
+}
 
-/* スライド領域：常に画面にフィット（contain） */
-.lightbox__slides {
-  position: relative; height: 100%; width: 100%;
-  display: grid; place-items: center;
-  overflow: hidden;
+/* ステージ（サイト内に収まる高さ） */
+.viewer__stage {
+  position: relative;
+  height: min(80vh, 860px);   /* ★ 画面に合わせつつ、サイト内に収める */
+  outline: none;
 }
-.lightbox__slides .slide {
+.viewer__slides {
   position: absolute; inset: 0;
   display: grid; place-items: center;
+  overflow: hidden;
   padding: clamp(.5rem, 2vw, 1rem);
-  opacity: 0; transform: translateX(6%); transition: opacity .15s ease, transform .15s ease;
 }
-.lightbox__slides .slide.is-active { opacity: 1; transform: translateX(0); }
+.viewer__slides .slide {
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  opacity: 0; transform: translateX(6%); transition: opacity .18s ease, transform .18s ease;
+}
+.viewer__slides .slide.is-active { opacity: 1; transform: translateX(0); }
 
-/* 画像は“画面に合わせる” */
-.lightbox__slides .slide.image img {
-  max-width: 100%;
-  max-height: 100%;
+/* 画像：Fit／100%切替 */
+.viewer__slides .slide.image img {
   width: auto; height: auto;
-  object-fit: contain;   /* ★ fit */
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;               /* Fit（デフォルト） */
   box-shadow: 0 6px 24px rgba(0,0,0,.35);
   border-radius: 8px;
 }
-.lightbox__slides .slide.image figcaption { margin-top: .5rem; font-size: .9rem; color: #cfe6dd; text-align: center; }
+.viewer__slides.fit .slide.image img { object-fit: contain; }
+.viewer__slides.orig .slide.image img {
+  max-width: none; max-height: none;   /* 原寸 */
+}
 
 /* ツイートは枠にフィット */
-.lightbox__slides .slide.embed {
-  width: min(92vw, 640px);
-  height: min(82vh, 900px);
+.viewer__slides .slide.embed {
+  width: min(92vw, 920px);
+  height: min(72vh, 780px);
   overflow: auto;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 6px 24px rgba(0,0,0,.35);
   padding: .5rem;
 }
-.lightbox__slides .slide.embed .twitter-tweet { margin: .25rem auto !important; }
+.viewer__slides.orig .slide.embed { width: auto; height: auto; }
 
 /* ナビゲーション */
-.lightbox__controls {
+.viewer__controls {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: space-between;
   pointer-events: none;
 }
-.lightbox__controls .nav {
+.viewer__controls .nav {
   pointer-events: auto;
   width: 44px; height: 44px; border-radius: 50%;
-  border: 1px solid rgba(255,255,255,.3); background: rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.35); background: rgba(0,0,0,.35);
   color: #fff; font-size: 28px; line-height: 42px; text-align: center;
   margin: auto .5rem; cursor: pointer;
 }
-.lightbox__controls .nav:focus-visible { outline: 3px solid #9ad2bf; outline-offset: 2px; }
 
-.lightbox__pager {
+/* ページャ＆カウンタ */
+.viewer__pager {
   position: absolute; bottom: .6rem; left: 50%; transform: translateX(-50%);
   display: flex; gap: .35rem;
 }
-.lightbox__pager::before { content: ""; }
-.lightbox__pager .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: rgba(255,255,255,.45);
-}
-.lightbox__pager .dot.is-active { background: #fff; }
+.viewer__pager .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.45); }
+.viewer__pager .dot.is-active { background: #fff; }
+.viewer__meta { position: absolute; bottom: .6rem; right: .75rem; font-size: .9rem; opacity: .9; }
 
-.lightbox__meta {
-  position: absolute; bottom: .6rem; right: .75rem; font-size: .9rem; opacity: .9;
+/* モバイル微調整 */
+@media (max-width: 480px) {
+  .report-card__title { font-size: 1rem; }
+  .report-card__date { font-size: .78rem; }
+  .viewer__stage { height: min(80vh, 640px); }
 }
-
-/* 背面スクロール抑止（対応ブラウザ） */
-body.lb-open { overflow: hidden; }
 
 
         /* FAQ セクション */
@@ -1186,11 +1204,11 @@ body.lb-open { overflow: hidden; }
     </section>
 
     <!-- 活動報告・過去の様子 -->
-   <!-- ===== 活動報告（本文常時表示 + 「写真を見る」= フィット表示ライトボックス + スライド） ===== -->
+  <!-- ===== 活動報告（本文常時表示 + 「写真を見る」＝サイト内ビューア + スライド） ===== -->
 <section class="section reports" id="reports" aria-label="活動報告">
   <header class="reports__head">
     <h2>活動報告</h2>
-    <p class="reports__lead">本文は常時表示。写真／ツイートは「写真を見る」で全画面・画面に合わせて表示、左右スライド対応。</p>
+    <p class="reports__lead">本文は常時表示。写真／ツイートは「写真を見る」で<span class="u-em">サイト内のビューア</span>に表示し、画面にフィット＆左右スライドできます。</p>
   </header>
 
   <ol class="reports__grid" role="list">
@@ -1205,7 +1223,7 @@ body.lb-open { overflow: hidden; }
           いつも素晴らしい和室を使わせて頂きありがとうございます！
         </p>
         <p class="report-card__actions">
-          <a class="btn-view" href="#!" data-gallery="gal-2025-07-kaderu">写真を見る</a>
+          <a class="btn-view" href="#!" data-gallery="gal-2025-07-kaderu" data-title="かでる２・７様に取り上げて頂きました🙌">写真を見る</a>
         </p>
 
         <!-- 隠しギャラリー（ツイート 1枚） -->
@@ -1239,7 +1257,7 @@ body.lb-open { overflow: hidden; }
           6/29に行われました第78回福井大会B級で当会会長？が4位入賞を果たしました！
         </p>
         <p class="report-card__actions">
-          <a class="btn-view" href="#!" data-gallery="gal-2025-06-fukui">写真を見る</a>
+          <a class="btn-view" href="#!" data-gallery="gal-2025-06-fukui" data-title="福井大会">写真を見る</a>
         </p>
 
         <!-- 隠しギャラリー（画像。複数可） -->
@@ -1248,9 +1266,10 @@ body.lb-open { overflow: hidden; }
             <img src="/images/IMG_6700.jpeg" alt="福井大会B級 入賞の写真">
             <figcaption>第78回福井大会B級 入賞</figcaption>
           </figure>
-          <!-- 追加したい場合は以下のように複数枚OK
+          <!-- 追加例
           <figure class="slide image">
-            <img src="/images/another.jpeg" alt="別アングル写真">
+            <img src="/images/another.jpeg" alt="別アングル">
+            <figcaption>別アングル</figcaption>
           </figure>
           -->
         </div>
@@ -1268,7 +1287,7 @@ body.lb-open { overflow: hidden; }
           わすらもち会のTシャツに紫verが加わりました！20名以上から欲しいとの声が入り、大好評でした🙌
         </p>
         <p class="report-card__actions">
-          <a class="btn-view" href="#!" data-gallery="gal-2025-06-tshirt">写真を見る</a>
+          <a class="btn-view" href="#!" data-gallery="gal-2025-06-tshirt" data-title="新Tシャツ作成">写真を見る</a>
         </p>
 
         <div class="report-card__gallery" id="gal-2025-06-tshirt" hidden>
@@ -1291,7 +1310,7 @@ body.lb-open { overflow: hidden; }
           円山の施設をお借りし2泊3日の合宿を行いました！道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました！かるたや親睦会を通じ交流を深めました
         </p>
         <p class="report-card__actions">
-          <a class="btn-view" href="#!" data-gallery="gal-2024-12-camp">写真を見る</a>
+          <a class="btn-view" href="#!" data-gallery="gal-2024-12-camp" data-title="2024円山合宿">写真を見る</a>
         </p>
 
         <div class="report-card__gallery" id="gal-2024-12-camp" hidden>
@@ -1304,30 +1323,35 @@ body.lb-open { overflow: hidden; }
     </li>
   </ol>
 
-  <!-- ====== Lightbox（1つだけ用意。クリックされたギャラリーをここに展開） ====== -->
-  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="lightbox__backdrop" data-close></div>
-    <div class="lightbox__stage" role="document">
-      <button class="lightbox__close" type="button" title="閉じる" aria-label="閉じる" data-close>×</button>
-
-      <div class="lightbox__slides" aria-live="polite"></div>
-
-      <div class="lightbox__controls">
-        <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
-        <div class="lightbox__pager" aria-hidden="true"></div>
-        <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
+  <!-- ====== サイト内ビューア（セクションの中で展開） ====== -->
+  <div class="reports-viewer" id="reports-viewer" aria-hidden="true">
+    <div class="viewer__inner">
+      <div class="viewer__header">
+        <strong class="viewer__title">メディアビューア</strong>
+        <div class="viewer__toolbar">
+          <button class="viewer__btn" type="button" data-zoom="fit" aria-pressed="true" title="画面に合わせる">Fit</button>
+          <button class="viewer__btn" type="button" data-zoom="orig" aria-pressed="false" title="原寸で表示">100%</button>
+          <button class="viewer__close" type="button" title="閉じる" aria-label="閉じる">×</button>
+        </div>
       </div>
 
-      <div class="lightbox__meta">
-        <span class="lightbox__counter" aria-live="polite" aria-atomic="true">1 / 1</span>
+      <div class="viewer__stage" tabindex="0" aria-live="polite" aria-atomic="true">
+        <div class="viewer__slides"></div>
+        <div class="viewer__controls">
+          <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
+          <div class="viewer__pager"></div>
+          <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
+        </div>
+        <div class="viewer__meta">
+          <span class="viewer__counter">1 / 1</span>
+        </div>
       </div>
     </div>
   </div>
 
-     <!-- Twitterウィジェット（1回だけ読み込み） -->
+  <!-- Twitterウィジェット（1回だけ読み込み） -->
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </section>
-
 
     <!-- よくある質問 -->
     <section class="section faq fade-in" id="faq">
@@ -1496,25 +1520,27 @@ body.lb-open { overflow: hidden; }
             });
         });
     </script>
-     <script>
+    <script>
 (() => {
   const $ = (sel, el=document) => el.querySelector(sel);
   const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
 
-  const lightbox = $('#lightbox');
-  const slidesRoot = $('.lightbox__slides', lightbox);
-  const pagerRoot = $('.lightbox__pager', lightbox);
-  const counterEl = $('.lightbox__counter', lightbox);
+  const viewer = $('#reports-viewer');
+  const slidesRoot = $('.viewer__slides', viewer);
+  const pagerRoot = $('.viewer__pager', viewer);
+  const counterEl = $('.viewer__counter', viewer);
+  const titleEl = $('.viewer__title', viewer);
+  const btnFit = $('[data-zoom="fit"]', viewer);
+  const btnOrig = $('[data-zoom="orig"]', viewer);
 
   let current = 0;
   let slides = [];
 
-  // 開く
-  function openLightbox(galleryId) {
+  function openViewer(galleryId, titleText) {
     const gallery = document.getElementById(galleryId);
     if (!gallery) return;
 
-    // 既存クリア
+    // クリア
     slidesRoot.innerHTML = '';
     pagerRoot.innerHTML = '';
     slides = [];
@@ -1526,88 +1552,101 @@ body.lb-open { overflow: hidden; }
       slidesRoot.appendChild(clone);
       slides.push(clone);
 
-      // ページャ
       const dot = document.createElement('div');
       dot.className = 'dot' + (idx === 0 ? ' is-active' : '');
       dot.dataset.index = idx;
       pagerRoot.appendChild(dot);
     });
 
-    current = 0;
-    updateSlides();
-    lightbox.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('lb-open');
-    lightbox.focus();
+    // タイトル
+    titleEl.textContent = titleText || 'メディアビューア';
 
-    // ツイートの再初期化（widgets.jsが読まれていれば再描画される）
+    // 状態
+    current = 0;
+    setZoomMode('fit');
+    updateSlides();
+    viewer.setAttribute('aria-hidden', 'false');
+
+    // ビューアへスクロール（サイト内表示を強調）
+    viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Twitterの再初期化
     if (window.twttr && window.twttr.widgets) {
-      window.twttr.widgets.load(lightbox);
+      window.twttr.widgets.load(viewer);
     }
+
+    // フォーカス
+    $('.viewer__stage', viewer).focus();
   }
 
-  // 閉じる
-  function closeLightbox() {
-    lightbox.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('lb-open');
+  function closeViewer() {
+    viewer.setAttribute('aria-hidden', 'true');
     slidesRoot.innerHTML = '';
     pagerRoot.innerHTML = '';
     slides = [];
     current = 0;
   }
 
-  // 表示更新
   function updateSlides() {
     slides.forEach((s, i) => s.classList.toggle('is-active', i === current));
     const dots = $$('.dot', pagerRoot);
     dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
-    counterEl.textContent = `${current + 1} / ${slides.length}`;
+    if (counterEl) counterEl.textContent = `${current + 1} / ${slides.length}`;
   }
 
-  // 次・前
   function next() { if (!slides.length) return; current = (current + 1) % slides.length; updateSlides(); }
   function prev() { if (!slides.length) return; current = (current - 1 + slides.length) % slides.length; updateSlides(); }
 
-  // クリックイベント
+  // ズーム（Fit / 原寸）
+  function setZoomMode(mode) {
+    slidesRoot.classList.remove('fit', 'orig');
+    if (mode === 'orig') {
+      slidesRoot.classList.add('orig');
+      btnOrig.setAttribute('aria-pressed', 'true');
+      btnFit.setAttribute('aria-pressed', 'false');
+    } else {
+      slidesRoot.classList.add('fit');
+      btnFit.setAttribute('aria-pressed', 'true');
+      btnOrig.setAttribute('aria-pressed', 'false');
+    }
+  }
+
+  // ボタンイベント
   document.addEventListener('click', (e) => {
-    const target = e.target.closest('[data-gallery]');
-    if (target) {
+    const opener = e.target.closest('.btn-view[data-gallery]');
+    if (opener) {
       e.preventDefault();
-      openLightbox(target.dataset.gallery);
+      openViewer(opener.dataset.gallery, opener.dataset.title);
       return;
     }
-    if (e.target.closest('[data-close]')) {
-      e.preventDefault();
-      closeLightbox();
-      return;
-    }
+    if (e.target.closest('.viewer__close')) { e.preventDefault(); closeViewer(); return; }
     if (e.target.closest('[data-next]')) { e.preventDefault(); next(); return; }
     if (e.target.closest('[data-prev]')) { e.preventDefault(); prev(); return; }
-
-    // ページャ
     const dot = e.target.closest('.dot');
-    if (dot && dot.dataset.index) {
-      current = parseInt(dot.dataset.index, 10) || 0;
-      updateSlides();
-    }
+    if (dot && dot.dataset.index) { current = parseInt(dot.dataset.index, 10) || 0; updateSlides(); }
+    if (e.target.closest('[data-zoom="fit"]')) { setZoomMode('fit'); }
+    if (e.target.closest('[data-zoom="orig"]')) { setZoomMode('orig'); }
   });
 
   // キーボード
   document.addEventListener('keydown', (e) => {
-    if (lightbox.getAttribute('aria-hidden') === 'true') return;
-    if (e.key === 'Escape') closeLightbox();
+    if (viewer.getAttribute('aria-hidden') === 'true') return;
+    if (e.key === 'Escape') closeViewer();
     if (e.key === 'ArrowRight') next();
     if (e.key === 'ArrowLeft') prev();
+    if (e.key.toLowerCase() === 'f') setZoomMode('fit');
+    if (e.key === '0') setZoomMode('orig');
   });
 
   // スワイプ
   let startX = 0, startY = 0, isTouch = false;
-  lightbox.addEventListener('touchstart', (e) => {
-    if (lightbox.getAttribute('aria-hidden') === 'true') return;
+  viewer.addEventListener('touchstart', (e) => {
+    if (viewer.getAttribute('aria-hidden') === 'true') return;
     isTouch = true;
     const t = e.touches[0];
     startX = t.clientX; startY = t.clientY;
   }, {passive:true});
-  lightbox.addEventListener('touchend', (e) => {
+  viewer.addEventListener('touchend', (e) => {
     if (!isTouch) return;
     const t = e.changedTouches[0];
     const dx = t.clientX - startX;
@@ -1617,9 +1656,6 @@ body.lb-open { overflow: hidden; }
     }
     isTouch = false;
   });
-
-  // 初期状態
-  closeLightbox();
 })();
 </script>
 </body>
