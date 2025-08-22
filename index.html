@@ -743,22 +743,12 @@
 
 .report-card__header { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: .6rem .75rem; }
 .report-card__date{
-  /* 中央寄せをより確実に：テキストノード1個なら grid の方がブレにくい */
   display: inline-grid;
-  place-items: center;               /* 垂直・水平ともに中央 */
-
-  /* 左右の内側余白を揃える（pxよりemの方が文字幅に追従） */
-  padding: .25rem .6rem;             /* ここは従来通りでもOK */
-  padding-inline: .6rem;             /* 念のため左右を同値で上書き */
-
-  /* 視覚ズレ要因のリセット */
-  line-height: 1;                    /* 行ボックス余白を圧縮 */
-  letter-spacing: normal;            /* 親からの字間を打ち消し */
-  text-indent: 0;                    /* 文章先頭の字下げを打ち消し */
-  text-align: center;                /* 念押し（gridでも無害） */
-
-  /* 数字の揺れが気になる場合（対応フォントなら） */
-  font-variant-numeric: tabular-nums lining-nums;
+  place-items: center;
+  line-height: 1;
+  text-indent: 0;
+  letter-spacing: normal;
+  text-align: center;
 }
 .report-card__title { margin: 0; color: var(--c-primary); font-weight: 600; line-height: 1.35; font-size: 1.05rem; font-family: 'Zen Maru Gothic','Noto Sans JP',system-ui,sans-serif; }
 .report-card__text { margin: .25rem 0 0; color: var(--c-text); font-size: .95rem; }
