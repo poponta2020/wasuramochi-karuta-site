@@ -721,7 +721,6 @@
 }
 .reports__head { max-width: 1100px; margin: 0 auto clamp(1rem, 2.5vw, 1.5rem); padding: 0 clamp(1rem, 3vw, 1.25rem); }
 .reports__lead { margin: 0; color: #6b7f78; font-size: .95rem; }
-.u-em { font-weight: 600; color: var(--c-primary); }
 
 /* ========= カード・グリッド ========= */
 .reports__grid {
@@ -738,7 +737,10 @@
   border-left: 4px solid var(--c-secondary);
   box-shadow: var(--shadow);
   padding: .9rem;
+  transition: box-shadow .2s ease, transform .12s ease;
 }
+.report-card--open { box-shadow: 0 10px 40px rgba(0,0,0,.12); transform: translateY(-1px); }
+
 .report-card__header { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: .6rem .75rem; }
 .report-card__date {
   display: inline-flex; align-items: center; justify-content: center;
@@ -761,114 +763,87 @@
 .btn-view:hover { transform: translateY(-1px); background: #fdfefe; }
 .btn-view:focus-visible { outline: 3px solid color-mix(in srgb, var(--c-primary), #fff 40%); outline-offset: 2px; }
 
-/* ========= サイト内ビューア ========= */
-.reports-viewer {
-  max-width: 1100px;
-  margin: clamp(0.75rem, 2vw, 1rem) auto 0;
-  padding: 0 clamp(1rem, 3vw, 1.25rem);
-  display: none; /* 初期は非表示 */
-}
-.reports-viewer[aria-hidden="false"] { display: block; }
-
-.viewer__inner {
-  background: #0b0f0e;
-  color: #e6f3ee;
-  border-radius: 14px;
-  box-shadow: 0 10px 35px rgba(0,0,0,.12);
+/* ========= カード内：展開メディア ========= */
+.report-card__media {
   overflow: hidden;
+  max-height: 0;              /* 閉じているとき */
+  padding: 0;                  /* 閉じているとき余白ゼロ */
+  transition: max-height .28s ease, padding .2s ease;
+}
+.report-card--open .report-card__media {
+  padding: .6rem .4rem .4rem;
+  max-height: 80vh;           /* 大きすぎるときの上限（スライダ内でフィット） */
 }
 
-/* ヘッダー */
-.viewer__header {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: .5rem; padding: .5rem .75rem;
-  background: rgba(255,255,255,.04);
-}
-.viewer__title { font-size: .95rem; }
-.viewer__toolbar { display: inline-flex; gap: .35rem; align-items: center; }
-.viewer__btn {
-  background: #fff; color: #000; border: 1px solid rgba(0,0,0,.15);
-  border-radius: 999px; padding: .25rem .6rem; font-size: .85rem; cursor: pointer;
-}
-.viewer__btn[aria-pressed="true"] { background: #cfe6dd; }
-.viewer__close {
-  background: #fff; color: #000; border: 1px solid rgba(0,0,0,.15);
-  border-radius: 999px; padding: .25rem .6rem; font-size: 1rem; cursor: pointer;
-  margin-left: .25rem;
-}
-
-/* ステージ（サイト内に収まる高さ） */
-.viewer__stage {
+/* ========= スライダー（カード内フィット） ========= */
+.slider { position: relative; background: #0b0f0e; color: #e6f3ee; border-radius: 10px; }
+.slider__viewport {
   position: relative;
-  height: min(80vh, 860px);   /* ★ 画面に合わせつつ、サイト内に収める */
+  height: min(60vh, 520px);     /* ★ カードの中での高さ（画面に合わせる） */
+  overflow: hidden;
+  display: grid; place-items: center;
   outline: none;
 }
-.viewer__slides {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  overflow: hidden;
-  padding: clamp(.5rem, 2vw, 1rem);
-}
-.viewer__slides .slide {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
+.slider__track { position: absolute; inset: 0; }
+.slide {
+  position: absolute; inset: 0; display: grid; place-items: center;
   opacity: 0; transform: translateX(6%); transition: opacity .18s ease, transform .18s ease;
+  padding: clamp(.4rem, 2vw, .8rem);
 }
-.viewer__slides .slide.is-active { opacity: 1; transform: translateX(0); }
+.slide.is-active { opacity: 1; transform: translateX(0); }
 
-/* 画像：Fit／100%切替 */
-.viewer__slides .slide.image img {
-  width: auto; height: auto;
+/* 画像はフィット（contain） */
+.slide.image img {
   max-width: 100%; max-height: 100%;
-  object-fit: contain;               /* Fit（デフォルト） */
+  width: auto; height: auto; object-fit: contain;
   box-shadow: 0 6px 24px rgba(0,0,0,.35);
   border-radius: 8px;
 }
-.viewer__slides.fit .slide.image img { object-fit: contain; }
-.viewer__slides.orig .slide.image img {
-  max-width: none; max-height: none;   /* 原寸 */
-}
+.slide.image figcaption { margin-top: .4rem; font-size: .9rem; color: #cfe6dd; text-align: center; }
 
-/* ツイートは枠にフィット */
-.viewer__slides .slide.embed {
-  width: min(92vw, 920px);
-  height: min(72vh, 780px);
-  overflow: auto;
-  background: #fff;
-  border-radius: 10px;
+/* ツイートも枠に収める */
+.slide.embed {
+  width: min(92%, 920px);
+  height: min(90%, 780px);
+  overflow: auto; background: #fff; border-radius: 10px; padding: .5rem;
   box-shadow: 0 6px 24px rgba(0,0,0,.35);
-  padding: .5rem;
 }
-.viewer__slides.orig .slide.embed { width: auto; height: auto; }
+.slide.embed .twitter-tweet { margin: .25rem auto !important; }
 
 /* ナビゲーション */
-.viewer__controls {
+.slider__controls {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: space-between;
   pointer-events: none;
 }
-.viewer__controls .nav {
+.slider__controls .nav {
   pointer-events: auto;
-  width: 44px; height: 44px; border-radius: 50%;
+  width: 40px; height: 40px; border-radius: 50%;
   border: 1px solid rgba(255,255,255,.35); background: rgba(0,0,0,.35);
-  color: #fff; font-size: 28px; line-height: 42px; text-align: center;
-  margin: auto .5rem; cursor: pointer;
+  color: #fff; font-size: 24px; line-height: 38px; text-align: center;
+  margin: auto .4rem; cursor: pointer;
 }
+.slider__controls .nav:focus-visible { outline: 3px solid #9ad2bf; outline-offset: 2px; }
 
-/* ページャ＆カウンタ */
-.viewer__pager {
-  position: absolute; bottom: .6rem; left: 50%; transform: translateX(-50%);
-  display: flex; gap: .35rem;
+.slider__pager {
+  position: absolute; bottom: .55rem; left: 50%; transform: translateX(-50%);
+  display: flex; gap: .3rem;
 }
-.viewer__pager .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.45); }
-.viewer__pager .dot.is-active { background: #fff; }
-.viewer__meta { position: absolute; bottom: .6rem; right: .75rem; font-size: .9rem; opacity: .9; }
+.slider__pager .dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,.45);
+}
+.slider__pager .dot.is-active { background: #fff; }
+
+.slider__meta {
+  position: absolute; bottom: .55rem; right: .6rem; font-size: .85rem; opacity: .9;
+}
 
 /* モバイル微調整 */
 @media (max-width: 480px) {
   .report-card__title { font-size: 1rem; }
   .report-card__date { font-size: .78rem; }
-  .viewer__stage { height: min(80vh, 640px); }
+  .slider__viewport { height: min(56vh, 420px); }
 }
 
 
@@ -1203,18 +1178,17 @@
         </div>
     </section>
 
-    <!-- 活動報告・過去の様子 -->
-  <!-- ===== 活動報告（本文常時表示 + 「写真を見る」＝サイト内ビューア + スライド） ===== -->
+   <!-- ===== 活動報告（カード内で「写真を見る」→カードが展開して写真/ツイートを表示・スライド可） ===== -->
 <section class="section reports" id="reports" aria-label="活動報告">
   <header class="reports__head">
     <h2>活動報告</h2>
-    <p class="reports__lead">本文は常時表示。写真／ツイートは「写真を見る」で<span class="u-em">サイト内のビューア</span>に表示し、画面にフィット＆左右スライドできます。</p>
+    <p class="reports__lead">本文は常時表示。各カードの「写真を見る」でカード自体がひろがり、その中に写真/ツイートを表示します（左右スライド対応・画面にフィット）。</p>
   </header>
 
   <ol class="reports__grid" role="list">
     <!-- 2025/07 ツイート -->
     <li class="reports__item">
-      <article class="report-card">
+      <article class="report-card" data-card>
         <header class="report-card__header">
           <time class="report-card__date" datetime="2025-07">2025年7月</time>
           <h3 class="report-card__title">かでる２・７様に取り上げて頂きました🙌</h3>
@@ -1223,24 +1197,38 @@
           いつも素晴らしい和室を使わせて頂きありがとうございます！
         </p>
         <p class="report-card__actions">
-          <a class="btn-view" href="#!" data-gallery="gal-2025-07-kaderu" data-title="かでる２・７様に取り上げて頂きました🙌">写真を見る</a>
+          <button class="btn-view" type="button" data-toggle aria-expanded="false" aria-controls="media-2025-07-kaderu">写真を見る</button>
         </p>
 
-        <!-- 隠しギャラリー（ツイート 1枚） -->
-        <div class="report-card__gallery" id="gal-2025-07-kaderu" hidden>
-          <div class="slide embed">
-            <blockquote class="twitter-tweet">
-              <p lang="ja" dir="ltr">【利用例のご紹介】<br><br>
-                本日かでる2・7の和室（夜間）で、社会人のかるたサークル「わすらもち会（
-                <a href="https://twitter.com/karuta12346?ref_src=twsrc%5Etfw">@karuta12346</a>）」様が活動していました！<br><br>
-                「4月に料金改定があり利用しやすくなった」と好評いただきました<br><br>
-                ちなみにサークル参加者受付中！とのこと<br>
-                ご興味ある方は連絡してみてはいかがでしょうか😎
-                <a href="https://t.co/24VIZDkqJe">https://t.co/24VIZDkqJe</a>
-                <a href="https://t.co/RKEci71eO6">pic.twitter.com/RKEci71eO6</a>
-              </p>— 北海道立道民活動センター　かでる2・7 (@kaderu_27)
-              <a href="https://twitter.com/kaderu_27/status/1941107393578033549?ref_src=twsrc%5Etfw">July 4, 2025</a>
-            </blockquote>
+        <!-- 展開エリア（ツイート1枚） -->
+        <div class="report-card__media" id="media-2025-07-kaderu" hidden>
+          <div class="slider" data-slider>
+            <div class="slider__viewport" tabindex="0">
+              <div class="slider__track">
+                <div class="slide embed" aria-roledescription="tweet">
+                  <blockquote class="twitter-tweet">
+                    <p lang="ja" dir="ltr">【利用例のご紹介】<br><br>
+                      本日かでる2・7の和室（夜間）で、社会人のかるたサークル「わすらもち会（
+                      <a href="https://twitter.com/karuta12346?ref_src=twsrc%5Etfw">@karuta12346</a>）」様が活動していました！<br><br>
+                      「4月に料金改定があり利用しやすくなった」と好評いただきました<br><br>
+                      ちなみにサークル参加者受付中！とのこと<br>
+                      ご興味ある方は連絡してみてはいかがでしょうか😎
+                      <a href="https://t.co/24VIZDkqJe">https://t.co/24VIZDkqJe</a>
+                      <a href="https://t.co/RKEci71eO6">pic.twitter.com/RKEci71eO6</a>
+                    </p>— 北海道立道民活動センター　かでる2・7 (@kaderu_27)
+                    <a href="https://twitter.com/kaderu_27/status/1941107393578033549?ref_src=twsrc%5Etfw">July 4, 2025</a>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+            <div class="slider__controls">
+              <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
+              <div class="slider__pager" aria-hidden="true"></div>
+              <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
+            </div>
+            <div class="slider__meta">
+              <span class="slider__counter" aria-live="polite" aria-atomic="true">1 / 1</span>
+            </div>
           </div>
         </div>
       </article>
@@ -1248,7 +1236,7 @@
 
     <!-- 2025/06 福井大会（画像） -->
     <li class="reports__item">
-      <article class="report-card">
+      <article class="report-card" data-card>
         <header class="report-card__header">
           <time class="report-card__date" datetime="2025-06">2025年6月</time>
           <h3 class="report-card__title">福井大会</h3>
@@ -1257,28 +1245,40 @@
           6/29に行われました第78回福井大会B級で当会会長？が4位入賞を果たしました！
         </p>
         <p class="report-card__actions">
-          <a class="btn-view" href="#!" data-gallery="gal-2025-06-fukui" data-title="福井大会">写真を見る</a>
+          <button class="btn-view" type="button" data-toggle aria-expanded="false" aria-controls="media-2025-06-fukui">写真を見る</button>
         </p>
 
-        <!-- 隠しギャラリー（画像。複数可） -->
-        <div class="report-card__gallery" id="gal-2025-06-fukui" hidden>
-          <figure class="slide image">
-            <img src="/images/IMG_6700.jpeg" alt="福井大会B級 入賞の写真">
-            <figcaption>第78回福井大会B級 入賞</figcaption>
-          </figure>
-          <!-- 追加例
-          <figure class="slide image">
-            <img src="/images/another.jpeg" alt="別アングル">
-            <figcaption>別アングル</figcaption>
-          </figure>
-          -->
+        <div class="report-card__media" id="media-2025-06-fukui" hidden>
+          <div class="slider" data-slider>
+            <div class="slider__viewport" tabindex="0">
+              <div class="slider__track">
+                <figure class="slide image">
+                  <img src="/images/IMG_6700.jpeg" alt="第78回福井大会B級 入賞の写真">
+                  <figcaption>第78回福井大会B級 入賞</figcaption>
+                </figure>
+                <!-- 追加したい場合
+                <figure class="slide image">
+                  <img src="/images/another.jpeg" alt="別アングル">
+                </figure>
+                -->
+              </div>
+            </div>
+            <div class="slider__controls">
+              <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
+              <div class="slider__pager" aria-hidden="true"></div>
+              <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
+            </div>
+            <div class="slider__meta">
+              <span class="slider__counter" aria-live="polite" aria-atomic="true">1 / 1</span>
+            </div>
+          </div>
         </div>
       </article>
     </li>
 
     <!-- 2025/06 新Tシャツ（画像） -->
     <li class="reports__item">
-      <article class="report-card">
+      <article class="report-card" data-card>
         <header class="report-card__header">
           <time class="report-card__date" datetime="2025-06">2025年6月</time>
           <h3 class="report-card__title">新Tシャツ作成</h3>
@@ -1287,21 +1287,35 @@
           わすらもち会のTシャツに紫verが加わりました！20名以上から欲しいとの声が入り、大好評でした🙌
         </p>
         <p class="report-card__actions">
-          <a class="btn-view" href="#!" data-gallery="gal-2025-06-tshirt" data-title="新Tシャツ作成">写真を見る</a>
+          <button class="btn-view" type="button" data-toggle aria-expanded="false" aria-controls="media-2025-06-tshirt">写真を見る</button>
         </p>
 
-        <div class="report-card__gallery" id="gal-2025-06-tshirt" hidden>
-          <figure class="slide image">
-            <img src="/images/IMG_7169.jpeg" alt="わすらもち会 新Tシャツ 紫ver">
-            <figcaption>新Tシャツ（紫ver）</figcaption>
-          </figure>
+        <div class="report-card__media" id="media-2025-06-tshirt" hidden>
+          <div class="slider" data-slider>
+            <div class="slider__viewport" tabindex="0">
+              <div class="slider__track">
+                <figure class="slide image">
+                  <img src="/images/IMG_7169.jpeg" alt="わすらもち会 新Tシャツ 紫ver">
+                  <figcaption>新Tシャツ（紫ver）</figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="slider__controls">
+              <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
+              <div class="slider__pager" aria-hidden="true"></div>
+              <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
+            </div>
+            <div class="slider__meta">
+              <span class="slider__counter" aria-live="polite" aria-atomic="true">1 / 1</span>
+            </div>
+          </div>
         </div>
       </article>
     </li>
 
     <!-- 2024/12 円山合宿（画像） -->
     <li class="reports__item">
-      <article class="report-card">
+      <article class="report-card" data-card>
         <header class="report-card__header">
           <time class="report-card__date" datetime="2024-12">2024年12月</time>
           <h3 class="report-card__title">2024円山合宿</h3>
@@ -1310,44 +1324,32 @@
           円山の施設をお借りし2泊3日の合宿を行いました！道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました！かるたや親睦会を通じ交流を深めました
         </p>
         <p class="report-card__actions">
-          <a class="btn-view" href="#!" data-gallery="gal-2024-12-camp" data-title="2024円山合宿">写真を見る</a>
+          <button class="btn-view" type="button" data-toggle aria-expanded="false" aria-controls="media-2024-12-camp">写真を見る</button>
         </p>
 
-        <div class="report-card__gallery" id="gal-2024-12-camp" hidden>
-          <figure class="slide image">
-            <img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" alt="2024年 円山合宿の様子">
-            <figcaption>2024年 円山合宿</figcaption>
-          </figure>
+        <div class="report-card__media" id="media-2024-12-camp" hidden>
+          <div class="slider" data-slider>
+            <div class="slider__viewport" tabindex="0">
+              <div class="slider__track">
+                <figure class="slide image">
+                  <img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" alt="2024年 円山合宿の様子">
+                  <figcaption>2024年 円山合宿</figcaption>
+                </figure>
+              </div>
+            </div>
+            <div class="slider__controls">
+              <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
+              <div class="slider__pager" aria-hidden="true"></div>
+              <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
+            </div>
+            <div class="slider__meta">
+              <span class="slider__counter" aria-live="polite" aria-atomic="true">1 / 1</span>
+            </div>
+          </div>
         </div>
       </article>
     </li>
   </ol>
-
-  <!-- ====== サイト内ビューア（セクションの中で展開） ====== -->
-  <div class="reports-viewer" id="reports-viewer" aria-hidden="true">
-    <div class="viewer__inner">
-      <div class="viewer__header">
-        <strong class="viewer__title">メディアビューア</strong>
-        <div class="viewer__toolbar">
-          <button class="viewer__btn" type="button" data-zoom="fit" aria-pressed="true" title="画面に合わせる">Fit</button>
-          <button class="viewer__btn" type="button" data-zoom="orig" aria-pressed="false" title="原寸で表示">100%</button>
-          <button class="viewer__close" type="button" title="閉じる" aria-label="閉じる">×</button>
-        </div>
-      </div>
-
-      <div class="viewer__stage" tabindex="0" aria-live="polite" aria-atomic="true">
-        <div class="viewer__slides"></div>
-        <div class="viewer__controls">
-          <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
-          <div class="viewer__pager"></div>
-          <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
-        </div>
-        <div class="viewer__meta">
-          <span class="viewer__counter">1 / 1</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Twitterウィジェット（1回だけ読み込み） -->
   <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -1525,137 +1527,103 @@
   const $ = (sel, el=document) => el.querySelector(sel);
   const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
 
-  const viewer = $('#reports-viewer');
-  const slidesRoot = $('.viewer__slides', viewer);
-  const pagerRoot = $('.viewer__pager', viewer);
-  const counterEl = $('.viewer__counter', viewer);
-  const titleEl = $('.viewer__title', viewer);
-  const btnFit = $('[data-zoom="fit"]', viewer);
-  const btnOrig = $('[data-zoom="orig"]', viewer);
+  // 1) カードの開閉（他カードは自動で閉じる）
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-toggle]');
+    if (!btn) return;
 
-  let current = 0;
-  let slides = [];
+    const card = e.target.closest('[data-card]');
+    const media = card && $('#' + btn.getAttribute('aria-controls'));
+    if (!card || !media) return;
 
-  function openViewer(galleryId, titleText) {
-    const gallery = document.getElementById(galleryId);
-    if (!gallery) return;
+    const isOpen = card.classList.toggle('report-card--open');
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    media.hidden = !isOpen;
 
-    // クリア
-    slidesRoot.innerHTML = '';
-    pagerRoot.innerHTML = '';
-    slides = [];
-
-    // スライド複製
-    $$('.slide', gallery).forEach((node, idx) => {
-      const clone = node.cloneNode(true);
-      clone.classList.remove('is-active');
-      slidesRoot.appendChild(clone);
-      slides.push(clone);
-
-      const dot = document.createElement('div');
-      dot.className = 'dot' + (idx === 0 ? ' is-active' : '');
-      dot.dataset.index = idx;
-      pagerRoot.appendChild(dot);
+    // 他カードは閉じる（同時開き不要なら）
+    $$('[data-card].report-card--open').forEach(c => {
+      if (c !== card) {
+        c.classList.remove('report-card--open');
+        const b = c.querySelector('[data-toggle][aria-controls]');
+        const m = b && $('#' + b.getAttribute('aria-controls'));
+        if (b) b.setAttribute('aria-expanded', 'false');
+        if (m) m.hidden = true;
+      }
     });
 
-    // タイトル
-    titleEl.textContent = titleText || 'メディアビューア';
-
-    // 状態
-    current = 0;
-    setZoomMode('fit');
-    updateSlides();
-    viewer.setAttribute('aria-hidden', 'false');
-
-    // ビューアへスクロール（サイト内表示を強調）
-    viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    // Twitterの再初期化
-    if (window.twttr && window.twttr.widgets) {
-      window.twttr.widgets.load(viewer);
+    // 初回オープン時にスライダ初期化
+    if (isOpen) {
+      const slider = $('[data-slider]', media);
+      initSlider(slider);
+      // ツイートのレンダリング（widgets.jsが読まれていればOK）
+      if (window.twttr && window.twttr.widgets) {
+        window.twttr.widgets.load(slider);
+      }
+      // ビューポートへフォーカス
+      const vp = $('.slider__viewport', slider);
+      vp && vp.focus({preventScroll:true});
+      // スクロール位置調整（カードが見切れないように）
+      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-
-    // フォーカス
-    $('.viewer__stage', viewer).focus();
-  }
-
-  function closeViewer() {
-    viewer.setAttribute('aria-hidden', 'true');
-    slidesRoot.innerHTML = '';
-    pagerRoot.innerHTML = '';
-    slides = [];
-    current = 0;
-  }
-
-  function updateSlides() {
-    slides.forEach((s, i) => s.classList.toggle('is-active', i === current));
-    const dots = $$('.dot', pagerRoot);
-    dots.forEach((d, i) => d.classList.toggle('is-active', i === current));
-    if (counterEl) counterEl.textContent = `${current + 1} / ${slides.length}`;
-  }
-
-  function next() { if (!slides.length) return; current = (current + 1) % slides.length; updateSlides(); }
-  function prev() { if (!slides.length) return; current = (current - 1 + slides.length) % slides.length; updateSlides(); }
-
-  // ズーム（Fit / 原寸）
-  function setZoomMode(mode) {
-    slidesRoot.classList.remove('fit', 'orig');
-    if (mode === 'orig') {
-      slidesRoot.classList.add('orig');
-      btnOrig.setAttribute('aria-pressed', 'true');
-      btnFit.setAttribute('aria-pressed', 'false');
-    } else {
-      slidesRoot.classList.add('fit');
-      btnFit.setAttribute('aria-pressed', 'true');
-      btnOrig.setAttribute('aria-pressed', 'false');
-    }
-  }
-
-  // ボタンイベント
-  document.addEventListener('click', (e) => {
-    const opener = e.target.closest('.btn-view[data-gallery]');
-    if (opener) {
-      e.preventDefault();
-      openViewer(opener.dataset.gallery, opener.dataset.title);
-      return;
-    }
-    if (e.target.closest('.viewer__close')) { e.preventDefault(); closeViewer(); return; }
-    if (e.target.closest('[data-next]')) { e.preventDefault(); next(); return; }
-    if (e.target.closest('[data-prev]')) { e.preventDefault(); prev(); return; }
-    const dot = e.target.closest('.dot');
-    if (dot && dot.dataset.index) { current = parseInt(dot.dataset.index, 10) || 0; updateSlides(); }
-    if (e.target.closest('[data-zoom="fit"]')) { setZoomMode('fit'); }
-    if (e.target.closest('[data-zoom="orig"]')) { setZoomMode('orig'); }
   });
 
-  // キーボード
-  document.addEventListener('keydown', (e) => {
-    if (viewer.getAttribute('aria-hidden') === 'true') return;
-    if (e.key === 'Escape') closeViewer();
-    if (e.key === 'ArrowRight') next();
-    if (e.key === 'ArrowLeft') prev();
-    if (e.key.toLowerCase() === 'f') setZoomMode('fit');
-    if (e.key === '0') setZoomMode('orig');
-  });
+  // 2) シンプルスライダ
+  function initSlider(root) {
+    if (!root || root.dataset.ready === '1') return;
 
-  // スワイプ
-  let startX = 0, startY = 0, isTouch = false;
-  viewer.addEventListener('touchstart', (e) => {
-    if (viewer.getAttribute('aria-hidden') === 'true') return;
-    isTouch = true;
-    const t = e.touches[0];
-    startX = t.clientX; startY = t.clientY;
-  }, {passive:true});
-  viewer.addEventListener('touchend', (e) => {
-    if (!isTouch) return;
-    const t = e.changedTouches[0];
-    const dx = t.clientX - startX;
-    const dy = t.clientY - startY;
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-      dx < 0 ? next() : prev();
+    const viewport = $('.slider__viewport', root);
+    const track = $('.slider__track', root);
+    const slides = $$('.slide', track);
+    const pager = $('.slider__pager', root);
+    const counter = $('.slider__counter', root);
+    let idx = 0;
+
+    // ページャ生成
+    slides.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === 0 ? ' is-active' : '');
+      dot.dataset.index = i;
+      pager.appendChild(dot);
+    });
+
+    function update() {
+      slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+      $$('.dot', pager).forEach((d, i) => d.classList.toggle('is-active', i === idx));
+      if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
     }
-    isTouch = false;
-  });
+    function next() { idx = (idx + 1) % slides.length; update(); }
+    function prev() { idx = (idx - 1 + slides.length) % slides.length; update(); }
+
+    // クリック
+    root.addEventListener('click', (e) => {
+      if (e.target.closest('[data-next]')) { next(); }
+      else if (e.target.closest('[data-prev]')) { prev(); }
+      const dot = e.target.closest('.dot');
+      if (dot && dot.dataset.index) { idx = parseInt(dot.dataset.index, 10) || 0; update(); }
+    });
+
+    // キー操作（左右）
+    viewport.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+      if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
+    });
+
+    // スワイプ
+    let sx = 0, sy = 0, touching = false;
+    viewport.addEventListener('touchstart', (e) => {
+      const t = e.touches[0]; sx = t.clientX; sy = t.clientY; touching = true;
+    }, {passive:true});
+    viewport.addEventListener('touchend', (e) => {
+      if (!touching) return;
+      const t = e.changedTouches[0]; const dx = t.clientX - sx; const dy = t.clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? next() : prev(); }
+      touching = false;
+    });
+
+    // 初期表示
+    update();
+    root.dataset.ready = '1';
+  }
 })();
 </script>
 </body>
