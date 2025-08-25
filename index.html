@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
      <!-- favicon -->
     <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
@@ -1051,6 +1053,10 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+         .date-picture{
+		  font-family: cursive;
+		}
         
     </style>
 </head>
@@ -1198,181 +1204,41 @@
         </div>
     </section>
 
-   <!-- ===== 活動報告（カード内で「写真を見る」→カードが展開して写真/ツイートを表示・スライド可） ===== -->
-<section class="section reports" id="reports" aria-label="活動報告">
-  <header class="reports__head">
-    <h2>活動報告</h2>
-  </header>
-
-  <ol class="reports__grid" role="list">
-    <!-- 2025/07 ツイート -->
-    <li class="reports__item">
-      <article class="report-card" data-card>
-        <header class="report-card__header">
-          <time class="report-card__date" datetime="2025-07">2025年7月</time>
-          <h3 class="report-card__title">かでる２・７様に取り上げて頂きました🙌</h3>
-        </header>
-        <p class="report-card__text">
-          いつも素晴らしい和室を使わせて頂きありがとうございます！
-        </p>
-        <p class="report-card__actions">
-          <button class="btn-view" type="button" data-toggle aria-expanded="false" aria-controls="media-2025-07-kaderu">写真を見る</button>
-        </p>
-
-        <!-- 展開エリア（ツイート1枚） -->
-        <div class="report-card__media" id="media-2025-07-kaderu" hidden>
-          <div class="slider" data-slider>
-            <div class="slider__viewport" tabindex="0">
-              <div class="slider__track">
-                <div class="slide embed" aria-roledescription="tweet">
-                  <blockquote class="twitter-tweet">
-                    <p lang="ja" dir="ltr">【利用例のご紹介】<br><br>
-                      本日かでる2・7の和室（夜間）で、社会人のかるたサークル「わすらもち会（
-                      <a href="https://twitter.com/karuta12346?ref_src=twsrc%5Etfw">@karuta12346</a>）」様が活動していました！<br><br>
-                      「4月に料金改定があり利用しやすくなった」と好評いただきました<br><br>
-                      ちなみにサークル参加者受付中！とのこと<br>
-                      ご興味ある方は連絡してみてはいかがでしょうか😎
-                      <a href="https://t.co/24VIZDkqJe">https://t.co/24VIZDkqJe</a>
-                      <a href="https://t.co/RKEci71eO6">pic.twitter.com/RKEci71eO6</a>
-                    </p>— 北海道立道民活動センター　かでる2・7 (@kaderu_27)
-                    <a href="https://twitter.com/kaderu_27/status/1941107393578033549?ref_src=twsrc%5Etfw">July 4, 2025</a>
-                  </blockquote>
-                </div>
-              </div>
-            </div>
-            <div class="slider__controls">
-              <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
-              <div class="slider__pager" aria-hidden="true"></div>
-              <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
-            </div>
-            <div class="slider__meta">
-              <span class="slider__counter" aria-live="polite" aria-atomic="true">1 / 1</span>
-            </div>
-          </div>
-        </div>
-      </article>
-    </li>
-
-    <!-- 2025/06 福井大会（画像） -->
-    <li class="reports__item">
-      <article class="report-card" data-card>
-        <header class="report-card__header">
-          <time class="report-card__date" datetime="2025-06">2025年6月</time>
-          <h3 class="report-card__title">福井大会</h3>
-        </header>
-        <p class="report-card__text">
-          6/29に行われました第78回福井大会B級で当会会長？が4位入賞を果たしました！
-        </p>
-        <p class="report-card__actions">
-          <button class="btn-view" type="button" data-toggle aria-expanded="false" aria-controls="media-2025-06-fukui">写真を見る</button>
-        </p>
-
-        <div class="report-card__media" id="media-2025-06-fukui" hidden>
-          <div class="slider" data-slider>
-            <div class="slider__viewport" tabindex="0">
-              <div class="slider__track">
-                <figure class="slide image">
-                  <img src="/images/IMG_6700.jpeg" alt="第78回福井大会B級 入賞の写真">
-                  <figcaption>第78回福井大会B級 入賞</figcaption>
-                </figure>
-                <!-- 追加したい場合
-                <figure class="slide image">
-                  <img src="/images/another.jpeg" alt="別アングル">
-                </figure>
-                -->
-              </div>
-            </div>
-            <div class="slider__controls">
-              <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
-              <div class="slider__pager" aria-hidden="true"></div>
-              <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
-            </div>
-            <div class="slider__meta">
-              <span class="slider__counter" aria-live="polite" aria-atomic="true">1 / 1</span>
-            </div>
-          </div>
-        </div>
-      </article>
-    </li>
-
-    <!-- 2025/06 新Tシャツ（画像） -->
-    <li class="reports__item">
-      <article class="report-card" data-card>
-        <header class="report-card__header">
-          <time class="report-card__date" datetime="2025-06">2025年6月</time>
-          <h3 class="report-card__title">新Tシャツ作成</h3>
-        </header>
-        <p class="report-card__text">
-          わすらもち会のTシャツに紫verが加わりました！20名以上から欲しいとの声が入り、大好評でした🙌
-        </p>
-        <p class="report-card__actions">
-          <button class="btn-view" type="button" data-toggle aria-expanded="false" aria-controls="media-2025-06-tshirt">写真を見る</button>
-        </p>
-
-        <div class="report-card__media" id="media-2025-06-tshirt" hidden>
-          <div class="slider" data-slider>
-            <div class="slider__viewport" tabindex="0">
-              <div class="slider__track">
-                <figure class="slide image">
-                  <img src="/images/IMG_7169.jpeg" alt="わすらもち会 新Tシャツ 紫ver">
-                  <figcaption>新Tシャツ（紫ver）</figcaption>
-                </figure>
-              </div>
-            </div>
-            <div class="slider__controls">
-              <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
-              <div class="slider__pager" aria-hidden="true"></div>
-              <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
-            </div>
-            <div class="slider__meta">
-              <span class="slider__counter" aria-live="polite" aria-atomic="true">1 / 1</span>
-            </div>
-          </div>
-        </div>
-      </article>
-    </li>
-
-    <!-- 2024/12 円山合宿（画像） -->
-    <li class="reports__item">
-      <article class="report-card" data-card>
-        <header class="report-card__header">
-          <time class="report-card__date" datetime="2024-12">2024年12月</time>
-          <h3 class="report-card__title">2024円山合宿</h3>
-        </header>
-        <p class="report-card__text">
-          円山の施設をお借りし2泊3日の合宿を行いました！道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました！かるたや親睦会を通じ交流を深めました
-        </p>
-        <p class="report-card__actions">
-          <button class="btn-view" type="button" data-toggle aria-expanded="false" aria-controls="media-2024-12-camp">写真を見る</button>
-        </p>
-
-        <div class="report-card__media" id="media-2024-12-camp" hidden>
-          <div class="slider" data-slider>
-            <div class="slider__viewport" tabindex="0">
-              <div class="slider__track">
-                <figure class="slide image">
-                  <img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" alt="2024年 円山合宿の様子">
-                  <figcaption>2024年 円山合宿</figcaption>
-                </figure>
-              </div>
-            </div>
-            <div class="slider__controls">
-              <button class="nav prev" type="button" aria-label="前へ" data-prev>‹</button>
-              <div class="slider__pager" aria-hidden="true"></div>
-              <button class="nav next" type="button" aria-label="次へ" data-next>›</button>
-            </div>
-            <div class="slider__meta">
-              <span class="slider__counter" aria-live="polite" aria-atomic="true">1 / 1</span>
-            </div>
-          </div>
-        </div>
-      </article>
-    </li>
-  </ol>
-
-  <!-- Twitterウィジェット（1回だけ読み込み） -->
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</section>
+     <section class="section reports" id="reports" aria-label="活動報告">
+		<header class="reports__head">
+			<h2>活動報告</h2>
+		</header>
+		<div class="d-flex flex-column">
+			<div class="container-fluid">
+				<div class="row">
+						<span class="text-secondary date-picture">2025.08.23</span>
+						<img src="image/favicon.png" width="350" alt="第78回福井大会B級 入賞の写真">
+						<span class="my-3">わすらもち会のロゴです。ここにいろいろと説明を書き込みたい。改行されるといいな</span>
+				</div>
+			</div>
+			<div class="container-fluid mt-3">
+				<div class="row">
+						<span class="text-secondary date-picture">2025.06.29</span>
+                         <img src="/images/IMG_6700.jpeg"　width="350" alt="第78回福井大会B級 入賞の写真">
+						<span class="my-3">第78回福井大会B級で当会会長？が4位入賞を果たしました！おめでとうございます</span>
+				</div>
+			</div>
+			<div class="container-fluid mt-3">
+				<div class="row">
+						<span class="text-secondary date-picture">2025.06.11</span>
+						<img src="/images/IMG_7169.jpeg" width="350" alt="新Tシャツお披露目会">
+						<span class="my-3">わすらもち会のTシャツに紫色が加わりました！！</span>
+				</div>
+			</div>
+			<div class="container-fluid mt-3">
+				<div class="row">
+						<span class="text-secondary date-picture">2024.10.12~</span>
+						<img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" width="350" alt="2024円山合宿">
+						<span class="my-3"> 円山にて2泊3日の合宿を行いました。道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました。かるたや親睦会を通じ交流を深めました！</span>
+				</div>
+			</div>
+		</div>
+	</section>
 
     <!-- よくある質問 -->
     <section class="section faq fade-in" id="faq">
