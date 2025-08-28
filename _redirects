@@ -1,1 +1,16 @@
-/*    https://wasuramochi-karuta.com/:splat    301!
+# HTTPからHTTPSへのリダイレクト
+http://wasuramochikarutaclub.com/*  https://wasuramochikarutaclub.com/:splat  301!
+http://www.wasuramochikarutaclub.com/*  https://wasuramochikarutaclub.com/:splat  301!
+
+# wwwありからwwwなしへのリダイレクト
+https://www.wasuramochikarutaclub.com/*  https://wasuramochikarutaclub.com/:splat  301!
+
+# SPAのルーティング対応（将来的な拡張用）
+/*    /index.html   200
+
+# セキュリティヘッダー設定
+/*
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
