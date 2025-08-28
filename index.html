@@ -227,41 +227,69 @@
         </div>
     </section>
 
-     <section class="section reports" id="reports" aria-label="活動報告">
-		<header class="reports__head">
-			<h2>活動報告</h2>
-		</header>
-		<div class="d-flex flex-column">
-			<div class="container-fluid">
-				<div class="row">
-						<span class="text-secondary date-picture">2025.08.23</span>
-						<img src="images/IMG_7474.jpeg" width="350" alt="第32回多摩大会B級">
-						<span class="my-3">第32回多摩大会B級で、当会会長が6回戦を勝ち抜き見事優勝を収めました！！A級昇級です！おめでとうございます！！！</span>
-				</div>
-			</div>
-			<div class="container-fluid mt-3">
-				<div class="row">
-						<span class="text-secondary date-picture">2025.06.29</span>
-                         <img src="/images/IMG_6700.jpeg" width="350" alt="第78回福井大会B級">
-						<span class="my-3">第78回福井大会B級で当会会長？が4位入賞を果たしました！おめでとうございます！</span>
-				</div>
-			</div>
-			<div class="container-fluid mt-3">
-				<div class="row">
-						<span class="text-secondary date-picture">2025.06.11</span>
-						<img src="/images/IMG_7169.jpeg" width="350" alt="新Tシャツお披露目会">
-						<span class="my-3">わすらもち会のTシャツに紫色が加わりました！！</span>
-				</div>
-			</div>
-			<div class="container-fluid mt-3">
-				<div class="row">
-						<span class="text-secondary date-picture">2024.10.12~</span>
-						<img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" width="350" alt="2024円山合宿">
-						<span class="my-3"> 円山にて2泊3日の合宿を行いました。道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました。かるたや親睦会を通じ交流を深めました！</span>
-				</div>
-			</div>
-		</div>
-	</section>
+    <section class="section reports fade-in" id="reports">
+        <h2>活動報告</h2>
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <div class="carousel-slide">
+                    <div class="activity-image">
+                        <img src="/images/IMG_7474.jpeg" alt="第32回多摩大会B級">
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-date">2025.08.23</div>
+                        <h3>第32回多摩大会B級 優勝！</h3>
+                        <p>当会会長が6回戦を勝ち抜き見事優勝を収めました！！A級昇級です！おめでとうございます！！！</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="activity-image">
+                        <img src="/images/IMG_6700.jpeg" alt="第78回福井大会B級">
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-date">2025.06.29</div>
+                        <h3>第78回福井大会B級 4位入賞</h3>
+                        <p>第78回福井大会B級で当会会長が4位入賞を果たしました！おめでとうございます！</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="activity-image">
+                        <img src="/images/IMG_7169.jpeg" alt="新Tシャツお披露目会">
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-date">2025.06.11</div>
+                        <h3>新Tシャツお披露目</h3>
+                        <p>わすらもち会のTシャツに紫色が加わりました！！</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="activity-image">
+                        <img src="/images/F8D552FB-6583-488D-AA21-2888D4DBBF9E.jpeg" alt="2024円山合宿">
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-date">2024.10.12~</div>
+                        <h3>円山合宿 2024</h3>
+                        <p>円山にて2泊3日の合宿を行いました。道内２会、道外４会の計６かるた会、人数にして２６名の参加がありました。かるたや親睦会を通じ交流を深めました！</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation arrows -->
+            <button class="carousel-btn carousel-btn-prev" id="prevBtn" aria-label="前の写真">
+                <span>&lt;</span>
+            </button>
+            <button class="carousel-btn carousel-btn-next" id="nextBtn" aria-label="次の写真">
+                <span>&gt;</span>
+            </button>
+            
+            <!-- Dots indicator -->
+            <div class="carousel-dots" id="carouselDots">
+                <button class="carousel-dot active" data-slide="0"></button>
+                <button class="carousel-dot" data-slide="1"></button>
+                <button class="carousel-dot" data-slide="2"></button>
+                <button class="carousel-dot" data-slide="3"></button>
+            </div>
+        </div>
+    </section>
 
     <!-- よくある質問 -->
     <section class="section faq fade-in" id="faq">
@@ -429,6 +457,84 @@
                 }
             });
         });
+
+        // Carousel functionality
+        const carouselTrack = document.getElementById('carouselTrack');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = document.querySelectorAll('.carousel-dot');
+        
+        let currentSlide = 0;
+        const totalSlides = dots.length;
+
+        function updateCarousel(slideIndex) {
+            const translateX = -slideIndex * 100;
+            carouselTrack.style.transform = `translateX(${translateX}%)`;
+            
+            // Update dots
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === slideIndex);
+            });
+            
+            currentSlide = slideIndex;
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % totalSlides;
+            updateCarousel(nextIndex);
+        }
+
+        function prevSlide() {
+            const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel(prevIndex);
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Dot navigation
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => updateCarousel(index));
+        });
+
+        // Touch/Swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carouselTrack.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        carouselTrack.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe left - go to next
+                } else {
+                    prevSlide(); // Swipe right - go to previous
+                }
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+
+        // Auto-play (optional - uncomment to enable)
+        // setInterval(nextSlide, 5000);
     </script>
 </body>
 </html>
