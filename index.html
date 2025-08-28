@@ -153,7 +153,6 @@
             </div>
             <h1>わすらもち会</h1>
             <div class="subtitle">札幌市で活動する競技かるたサークルです</div>
-<!--             <p>札幌市で活動する社会人サークルです</p> -->
             <div class="cta-buttons">
                 <a href="#contact" class="btn btn-primary">体験参加申し込み</a>
                 <a href="#about" class="btn btn-secondary">サークルについて</a>
@@ -170,10 +169,6 @@
         <div class="about-content">
             <div class="about-text">
                 <p><span class="highlight">高校生から社会人まで、</span>たくさんの人達が一緒に競技かるたを楽しんでいます。現在<span class="highlight">約20名程で</span>活動しています。</p>
-                
-               <!-- <p style="margin-top: 2rem; text-align: center; font-size: 1rem; color: var(--gray);">
-                    かるた好き同士、気軽に集まって競技かるたを楽しんでいます。
-                </p> -->
             </div>
             <div class="about-image">
                 <img src="/images/rensyuu_huukei.jpeg" alt="練習風景">
@@ -227,9 +222,7 @@
                 <p><strong>年会費：無料</strong></p>
                 <p><strong>高校生以下：完全無料</strong></p>
                 <p><strong>大学生以上：参加人数によって変動します。<br>
-                社会人：大学生＝３：１の割合で和室使用料を按分します。
-                </strong></p>
-                <br>
+                社会人：大学生＝３：１の割合で和室使用料を按分します。</strong></p>
             </div>
         </div>
     </section>
@@ -249,7 +242,7 @@
 			<div class="container-fluid mt-3">
 				<div class="row">
 						<span class="text-secondary date-picture">2025.06.29</span>
-                         <img src="/images/IMG_6700.jpeg"　width="350" alt="第78回福井大会B級">
+                         <img src="/images/IMG_6700.jpeg" width="350" alt="第78回福井大会B級">
 						<span class="my-3">第78回福井大会B級で当会会長？が4位入賞を果たしました！おめでとうございます！</span>
 				</div>
 			</div>
@@ -437,183 +430,5 @@
             });
         });
     </script>
-    <script>
-(() => {
-  const $ = (sel, el=document) => el.querySelector(sel);
-  const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
-
-  // 1) カードの開閉（他カードは自動で閉じる）
-  document.addEventListener('click', (e) => {
-    const btn = e.target.closest('[data-toggle]');
-    if (!btn) return;
-
-    const card = e.target.closest('[data-card]');
-    const media = card && $('#' + btn.getAttribute('aria-controls'));
-    if (!card || !media) return;
-
-    const isOpen = card.classList.toggle('report-card--open');
-    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    media.hidden = !isOpen;
-
-    // 他カードは閉じる（同時開き不要なら）
-    $$('[data-card].report-card--open').forEach(c => {
-      if (c !== card) {
-        c.classList.remove('report-card--open');
-        const b = c.querySelector('[data-toggle][aria-controls]');
-        const m = b && $('#' + b.getAttribute('aria-controls'));
-        if (b) b.setAttribute('aria-expanded', 'false');
-        if (m) m.hidden = true;
-      }
-    });
-
-    // 初回オープン時にスライダ初期化
-    if (isOpen) {
-      const slider = $('[data-slider]', media);
-      initSlider(slider);
-      // ツイートのレンダリング（widgets.jsが読まれていればOK）
-      if (window.twttr && window.twttr.widgets) {
-        window.twttr.widgets.load(slider);
-      }
-      // ビューポートへフォーカス
-      const vp = $('.slider__viewport', slider);
-      vp && vp.focus({preventScroll:true});
-      // スクロール位置調整（カードが見切れないように）
-      card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-  });
-
-  // 2) シンプルスライダ
-  function initSlider(root) {
-    if (!root || root.dataset.ready === '1') return;
-
-    const viewport = $('.slider__viewport', root);
-    const track = $('.slider__track', root);
-    const slides = $$('.slide', track);
-    const pager = $('.slider__pager', root);
-    const counter = $('.slider__counter', root);
-    let idx = 0;
-
-       const MAX_VH = 0.80;        // 画面高の何割まで許容するか
-const FALLBACK_RATIO = 16/9; // 画像未ロードやツイート用の仮比率
-let resizeObsAttached = false;
-
-function setViewportHeightFor(index){
-  if (!slides.length) return;
-  const slide = slides[index];
-  const vp = viewport;
-  if (!vp) return;
-
-  const vw = vp.clientWidth || vp.getBoundingClientRect().width || 600;
-  const maxH = Math.min(window.innerHeight * MAX_VH, 10000); // 安全な上限
-
-  // 画像スライド
-  if (slide.classList.contains('image')) {
-    const img = slide.querySelector('img');
-    const apply = (w, h) => {
-      if (!w || !h) return;
-      const ideal = vw * (h / w);
-      const finalH = Math.min(Math.max(ideal, 180), maxH);
-      vp.style.height = finalH + 'px';
-    };
-
-    if (img && img.naturalWidth && img.naturalHeight) {
-      apply(img.naturalWidth, img.naturalHeight);
-    } else if (img) {
-      // まだ未ロードの場合
-      vp.style.height = Math.min(vw * (1 / FALLBACK_RATIO), maxH) + 'px';
-      img.addEventListener('load', () => {
-        apply(img.naturalWidth, img.naturalHeight);
-      }, { once: true });
-    } else {
-      // 想定外だが保険
-      vp.style.height = Math.min(vw * (1 / FALLBACK_RATIO), maxH) + 'px';
-    }
-  }
-  // ツイート等の埋め込み
-  else if (slide.classList.contains('embed')) {
-    // まずは16:9相当でセット
-    let h = Math.min(vw * (9/16), maxH);
-    vp.style.height = Math.max(h, 220) + 'px';
-
-    // widgets.js により内容が描画された後の実高を反映
-    setTimeout(() => {
-      const box = slide.querySelector('.twitter-tweet');
-      if (box) {
-        const rect = box.getBoundingClientRect();
-        if (rect.height) {
-          const innerPad = parseFloat(getComputedStyle(vp).paddingTop || 0)
-                         + parseFloat(getComputedStyle(vp).paddingBottom || 0);
-          const finalH = Math.min(rect.height + innerPad + 16, maxH);
-          vp.style.height = Math.max(finalH, 220) + 'px';
-        }
-      }
-    }, 400);
-  }
-  else {
-    // 未分類はフォールバック
-    vp.style.height = Math.min(vw * (9/16), maxH) + 'px';
-  }
-}
-
-function handleResize(){
-  setViewportHeightFor(idx);
-}
-// 同一スライダで重複アタッチしない
-if (!resizeObsAttached) {
-  window.addEventListener('resize', handleResize);
-  resizeObsAttached = true;
-}
-
-    // ページャ生成
-    slides.forEach((_, i) => {
-      const dot = document.createElement('div');
-      dot.className = 'dot' + (i === 0 ? ' is-active' : '');
-      dot.dataset.index = i;
-      pager.appendChild(dot);
-    });
-
-    function update() {
-  slides.forEach((s, i) => s.classList.toggle('is-active', i === idx));
-  $$('.dot', pager).forEach((d, i) => d.classList.toggle('is-active', i === idx));
-  if (counter) counter.textContent = `${idx + 1} / ${slides.length}`;
-
-  // ★ 追加：この行を末尾に
-  setViewportHeightFor(idx);
-}
-    function next() { idx = (idx + 1) % slides.length; update(); }
-    function prev() { idx = (idx - 1 + slides.length) % slides.length; update(); }
-
-    // クリック
-    root.addEventListener('click', (e) => {
-      if (e.target.closest('[data-next]')) { next(); }
-      else if (e.target.closest('[data-prev]')) { prev(); }
-      const dot = e.target.closest('.dot');
-      if (dot && dot.dataset.index) { idx = parseInt(dot.dataset.index, 10) || 0; update(); }
-    });
-
-    // キー操作（左右）
-    viewport.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
-      if (e.key === 'ArrowLeft')  { e.preventDefault(); prev(); }
-    });
-
-    // スワイプ
-    let sx = 0, sy = 0, touching = false;
-    viewport.addEventListener('touchstart', (e) => {
-      const t = e.touches[0]; sx = t.clientX; sy = t.clientY; touching = true;
-    }, {passive:true});
-    viewport.addEventListener('touchend', (e) => {
-      if (!touching) return;
-      const t = e.changedTouches[0]; const dx = t.clientX - sx; const dy = t.clientY - sy;
-      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { dx < 0 ? next() : prev(); }
-      touching = false;
-    });
-
-    // 初期表示
-    update();
-    root.dataset.ready = '1';
-  }
-})();
-</script>
 </body>
 </html>
