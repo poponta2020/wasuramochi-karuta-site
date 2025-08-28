@@ -1,18 +1,36 @@
-# Netlify リダイレクト設定
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# SPAのルーティング対応（将来的な拡張用）
-/*    /index.html   200
+# Build outputs
+dist/
+build/
 
-# HTTPからHTTPSへのリダイレクト
-http://wasuramochikarutaclub.com/*  https://wasuramochikarutaclub.com/:splat  301!
-http://www.wasuramochikarutaclub.com/*  https://wasuramochikarutaclub.com/:splat  301!
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# wwwありからwwwなしへのリダイレクト
-https://www.wasuramochikarutaclub.com/*  https://wasuramochikarutaclub.com/:splat  301!
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# セキュリティヘッダー設定
-/*
-  X-Frame-Options: DENY
-  X-XSS-Protection: 1; mode=block
-  X-Content-Type-Options: nosniff
-  Referrer-Policy: strict-origin-when-cross-origin
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs/
+*.log
