@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理画面 | わすらもち会</title>
+
+    <!-- favicon -->
+    <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+
+    <!-- フォント -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- スタイルシート -->
+    <link rel="stylesheet" href="/css/admin.css">
+
+    <!-- robots noindex -->
+    <meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+    <!-- ログイン画面 -->
+    <div id="login-section" class="login-container">
+        <div class="login-box">
+            <div class="login-logo">
+                <img src="/images/wasuramochi-logo.png" alt="わすらもち会">
+            </div>
+            <h1>管理画面</h1>
+            <p>パスワードを入力してログイン</p>
+
+            <form id="login-form" class="login-form">
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="パスワード" required autocomplete="current-password">
+                </div>
+                <p id="login-error" class="login-error">パスワードが正しくありません</p>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-sign-in-alt"></i> ログイン
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 管理画面本体 -->
+    <div id="admin-section" style="display: none;">
+        <!-- ヘッダー -->
+        <header class="admin-header">
+            <div class="admin-header-content">
+                <h1>
+                    <a href="/admin/">
+                        <i class="fas fa-cog"></i> わすらもち会 管理画面
+                    </a>
+                </h1>
+                <nav class="admin-nav">
+                    <a href="/" target="_blank">
+                        <i class="fas fa-external-link-alt"></i> サイトを見る
+                    </a>
+                    <a href="#" id="logout-btn" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> ログアウト
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- アラートコンテナ -->
+        <div id="alert-container" style="position: fixed; top: 80px; right: 20px; z-index: 1000; width: 300px;"></div>
+
+        <!-- メインコンテンツ -->
+        <main class="admin-main">
+            <!-- ダッシュボードビュー -->
+            <div id="dashboard-view">
+                <div class="dashboard-header">
+                    <h2><i class="fas fa-list"></i> 活動報告一覧</h2>
+                    <button id="create-new-btn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> 新規作成
+                    </button>
+                </div>
+
+                <div class="reports-table-container">
+                    <table class="reports-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px;">画像</th>
+                                <th style="width: 120px;">日付</th>
+                                <th>タイトル</th>
+                                <th>説明</th>
+                                <th style="width: 180px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reports-table-body">
+                            <!-- JavaScriptで動的に生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 編集ビュー -->
+            <div id="edit-view" style="display: none;">
+                <div class="edit-form-container">
+                    <div class="edit-form-header">
+                        <h2 id="form-title"><i class="fas fa-edit"></i> 新規活動報告</h2>
+                    </div>
+
+                    <form id="edit-form">
+                        <div class="form-group">
+                            <label for="report-date">
+                                日付 <span class="required">*</span>
+                            </label>
+                            <input type="text" id="report-date" placeholder="例: 2025.08.23" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="report-title">
+                                タイトル <span class="required">*</span>
+                            </label>
+                            <input type="text" id="report-title" placeholder="例: 第32回多摩大会B級 優勝！" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="report-description">説明</label>
+                            <textarea id="report-description" placeholder="活動の詳細を入力してください..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>画像</label>
+                            <div id="image-upload-area" class="image-upload-area">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>画像をドラッグ&ドロップ または</p>
+                                <span class="btn btn-secondary btn-sm">ファイルを選択</span>
+                                <p class="upload-hint">対応形式: JPG, PNG, GIF, WebP (最大10MB)</p>
+                                <input type="file" id="image-input" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
+                            </div>
+                            <div id="uploaded-images" class="uploaded-images">
+                                <!-- アップロード済み画像がここに表示される -->
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="cancel-btn" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> キャンセル
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> 保存
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- 削除確認モーダル -->
+    <div id="delete-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3><i class="fas fa-exclamation-triangle" style="color: #e74c3c;"></i> 削除の確認</h3>
+            <p>この活動報告を削除しますか？<br>この操作は取り消せません。</p>
+            <div class="modal-actions">
+                <button class="btn btn-secondary modal-cancel">キャンセル</button>
+                <button class="btn btn-danger modal-confirm">削除する</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/js/config.js"></script>
+    <script src="/js/supabase-client.js"></script>
+    <script src="/js/cloudinary-uploader.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+</html>
