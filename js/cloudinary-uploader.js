@@ -56,7 +56,15 @@ class CloudinaryUploader {
                             publicId: response.public_id
                         });
                     } else {
-                        reject(new Error('アップロードに失敗しました。'));
+                        let errorMessage = 'アップロードに失敗しました。';
+                        try {
+                            const errorResponse = JSON.parse(xhr.responseText);
+                            console.error('Cloudinary error response:', errorResponse);
+                            errorMessage += ` (${xhr.status}: ${errorResponse.error?.message || xhr.responseText})`;
+                        } catch (e) {
+                            console.error('Cloudinary raw response:', xhr.status, xhr.responseText);
+                        }
+                        reject(new Error(errorMessage));
                     }
                 });
 
