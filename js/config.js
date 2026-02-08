@@ -5,7 +5,7 @@
 // Supabase設定
 // Settings → API から取得してください
 const SUPABASE_URL = 'https://dzjuvzrcdmfurtnctpac.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6anV2enJjZG1mdXJ0bmN0cGFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0ODcxMDUsImV4cCI6MjA4NjA2MzEwNX0.OR-6MMRj6_m1Az32qcGmG57JIUW52wGflng4MCPu2_wY';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR6anV2enJjZG1mdXJ0bmN0cGFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzA0ODcxMDUsImV4cCI6MjA4NjA2MzEwNX0.OR-6MMRj6_m1Az32qcGmG57JIUW52wGflng4MCPu2_w';
 
 // Cloudinary設定
 // Dashboard から取得してください
