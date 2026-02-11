@@ -152,10 +152,10 @@
                 </div>
             </div>
             <h1>わすらもち会</h1>
-            <div class="subtitle">札幌市で活動する<br>競技かるたサークルです</div>
+            <div class="subtitle" id="hero-subtitle">札幌市で活動する<br>競技かるたサークルです</div>
             <div class="cta-buttons">
-                <a href="#contact" class="btn btn-primary">体験参加申し込み</a>
-                <a href="#about" class="btn btn-secondary">サークルについて</a>
+                <a href="#contact" class="btn btn-primary" id="hero-cta-primary">体験参加申し込み</a>
+                <a href="#about" class="btn btn-secondary" id="hero-cta-secondary">サークルについて</a>
             </div>
         </div>
     </section>
@@ -163,15 +163,15 @@
     <!-- わすらもち会について -->
     <section class="section about fade-in" id="about">
         <h2>わすらもち会について</h2>
-        <div class="intro-text">
+        <div class="intro-text" id="about-intro">
             札幌で競技かるたをしたい人達が集まるサークルです
         </div>
         <div class="about-content">
             <div class="about-text">
-                <p><span class="highlight">高校生から社会人まで、</span>たくさんの人達が一緒に競技かるたを楽しんでいます。現在<span class="highlight">約20名程で</span>活動しています。</p>
+                <p id="about-description"><span class="highlight">高校生から社会人まで、</span>たくさんの人達が一緒に競技かるたを楽しんでいます。現在<span class="highlight">約20名程で</span>活動しています。</p>
             </div>
             <div class="about-image">
-                <img src="/images/rensyuu_huukei.jpeg" alt="練習風景">
+                <img src="/images/rensyuu_huukei.jpeg" alt="練習風景" id="about-image">
             </div>
         </div>
     </section>
@@ -179,7 +179,7 @@
     <!-- 百人一首・競技かるたとは -->
  <section class="section karuta-explanation fade-in" id="karuta">
     <h2>百人一首・競技かるたとは？</h2>
-    <div class="explanation-grid">
+    <div class="explanation-grid" id="karuta-grid">
         <div class="explanation-card">
             <h3>小倉百人一首</h3>
             <div class="explanation-image">
@@ -200,7 +200,7 @@
     <!-- 活動内容 -->
     <section class="section activities fade-in" id="activities">
         <h2>活動内容</h2>
-        <div class="activities-grid">
+        <div class="activities-grid" id="activities-grid">
             <div class="activity-card">
                 <h3>📍 練習場所</h3>
                 <p><strong>かでる2・7</strong><br>中央区北2条西7丁目<br>17:00-21:00</p>
@@ -242,7 +242,7 @@
     <!-- よくある質問 -->
     <section class="section faq fade-in" id="faq">
         <h2>よくある質問</h2>
-        <div class="faq-list">
+        <div class="faq-list" id="faq-list">
             <div class="faq-item">
                 <div class="faq-question">
                     <span>百人一首を全く知らないのですが、参加できますか？</span>
@@ -296,16 +296,16 @@
         <h2>参加方法・お問い合わせ</h2>
         <p>百人一首に興味を持たれた方、ぜひお気軽にご連絡ください！<br>体験参加や見学も大歓迎です。</p>
         <div class="contact-methods">
-            <a href="https://line.me/ti/p/@721raufe" class="contact-btn line" target="_blank" rel="noopener">
+            <a href="https://line.me/ti/p/@721raufe" class="contact-btn line" target="_blank" rel="noopener" id="contact-line">
                 <i class="fab fa-line"></i> LINE公式アカウント
             </a>
-            <a href="https://www.instagram.com/wasuramochi_karuta/" class="contact-btn instagram" target="_blank" rel="noopener">
+            <a href="https://www.instagram.com/wasuramochi_karuta/" class="contact-btn instagram" target="_blank" rel="noopener" id="contact-instagram">
                 <i class="fab fa-instagram"></i> Instagram
             </a>
-            <a href="https://twitter.com/karuta12346" class="contact-btn twitter" target="_blank" rel="noopener">
+            <a href="https://twitter.com/karuta12346" class="contact-btn twitter" target="_blank" rel="noopener" id="contact-twitter">
     <i class="fab fa-x-twitter"></i> X (Twitter)
 </a>
-            <a href="mailto:poponta2020@gmail.com" class="contact-btn email">
+            <a href="mailto:poponta2020@gmail.com" class="contact-btn email" id="contact-email">
                 <i class="fas fa-envelope"></i> メールでお問い合わせ
             </a>
         </div>
@@ -316,11 +316,12 @@
         <p>&copy; 2025 わすらもち会（札幌百人一首サークル）. All rights reserved.</p>
     </footer>
 
-    <!-- 活動報告表示用JavaScript -->
+    <!-- JavaScript -->
     <script src="/js/config.js"></script>
     <script src="/js/supabase-client.js"></script>
     <script src="/js/utils.js"></script>
     <script src="/js/reports.js"></script>
+    <script src="/js/site-loader.js"></script>
 
     <script>
         // ハンバーガーメニュー制御
@@ -392,24 +393,25 @@
             });
         });
 
-        // FAQ アコーディオン
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const faqItem = question.parentElement;
-                const isActive = faqItem.classList.contains('active');
-                
-                // すべてのFAQアイテムを閉じる
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                    item.querySelector('.faq-question span:last-child').textContent = '+';
-                });
-                
-                // クリックされたアイテムのみ開く/閉じる
-                if (!isActive) {
-                    faqItem.classList.add('active');
-                    question.querySelector('span:last-child').textContent = '-';
-                }
+        // FAQ アコーディオン（イベント委任で動的FAQにも対応）
+        document.addEventListener('click', (e) => {
+            const question = e.target.closest('.faq-question');
+            if (!question) return;
+
+            const faqItem = question.parentElement;
+            const isActive = faqItem.classList.contains('active');
+
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                const toggle = item.querySelector('.faq-question span:last-child');
+                if (toggle) toggle.textContent = '+';
             });
+
+            if (!isActive) {
+                faqItem.classList.add('active');
+                const toggle = question.querySelector('span:last-child');
+                if (toggle) toggle.textContent = '-';
+            }
         });
 
         // カルーセルはutils.jsで初期化される（動的に読み込まれるため）
