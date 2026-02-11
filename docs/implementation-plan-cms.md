@@ -9,23 +9,23 @@
 
 | フェーズ | 内容 | ステータス |
 |---------|------|:----------:|
-| 1 | データベーステーブル作成 + 初期データ投入 | [ ] 未着手 |
-| 2 | SupabaseClient拡張 | [ ] 未着手 |
-| 3 | 公開ページの動的表示化 | [ ] 未着手 |
-| 4 | 管理画面UI改修（レイアウト + ナビゲーション） | [ ] 未着手 |
-| 5 | 管理画面ロジック実装 | [ ] 未着手 |
-| 6 | 動作確認 + 微調整 | [ ] 未着手 |
+| 1 | データベーステーブル作成 + 初期データ投入 | [x] 完了 |
+| 2 | SupabaseClient拡張 | [x] 完了 |
+| 3 | 公開ページの動的表示化 | [x] 完了 |
+| 4 | 管理画面UI改修（レイアウト + ナビゲーション） | [x] 完了 |
+| 5 | 管理画面ロジック実装 | [x] 完了 |
+| 6 | 動作確認 + 微調整 | [x] 完了 |
 
 ---
 
 ## フェーズ1: データベーステーブル作成 + 初期データ投入
 
 ### タスク一覧
-- [ ] 1-1. `update_updated_at` 関数の作成SQL
-- [ ] 1-2. 4テーブルの作成SQL（site_contents, karuta_cards, activity_cards, faq_items）
-- [ ] 1-3. 初期データ投入SQL
-- [ ] 1-4. SQLファイル `docs/sql/create-cms-tables.sql` として保存
-- [ ] 1-5. ユーザーがSupabase SQL Editorで実行
+- [x] 1-1. `update_updated_at` 関数の作成SQL
+- [x] 1-2. 4テーブルの作成SQL（site_contents, karuta_cards, activity_cards, faq_items）
+- [x] 1-3. 初期データ投入SQL
+- [x] 1-4. SQLファイル `docs/sql/create-cms-tables.sql` として保存
+- [x] 1-5. ユーザーがSupabase SQL Editorで実行
 
 ### 実行するSQL
 
@@ -61,10 +61,10 @@ $$ LANGUAGE plpgsql;
 ## フェーズ2: SupabaseClient拡張
 
 ### タスク一覧
-- [ ] 2-1. site_contents用メソッド追加（getSiteContents, updateSiteContents）
-- [ ] 2-2. karuta_cards用CRUDメソッド追加（get, create, update, delete）
-- [ ] 2-3. activity_cards用メソッド追加（get, update）
-- [ ] 2-4. faq_items用CRUDメソッド追加（get, create, update, delete）
+- [x] 2-1. site_contents用メソッド追加（getSiteContents, updateSiteContents）
+- [x] 2-2. karuta_cards用CRUDメソッド追加（get, create, update, delete）
+- [x] 2-3. activity_cards用メソッド追加（get, update）
+- [x] 2-4. faq_items用CRUDメソッド追加（get, create, update, delete）
 
 ### 作業内容
 `js/supabase-client.js` に以下のメソッドを追加する。
@@ -101,10 +101,10 @@ $$ LANGUAGE plpgsql;
 ## フェーズ3: 公開ページの動的表示化
 
 ### タスク一覧
-- [ ] 3-1. `js/site-loader.js` 新規作成（全セクション動的読み込み）
-- [ ] 3-2. `index.html` に動的更新対象のID付与
-- [ ] 3-3. `index.html` に `site-loader.js` のscriptタグ追加
-- [ ] 3-4. FAQアコーディオンをイベント委任方式に変更
+- [x] 3-1. `js/site-loader.js` 新規作成（全セクション動的読み込み）
+- [x] 3-2. `index.html` に動的更新対象のID付与
+- [x] 3-3. `index.html` に `site-loader.js` のscriptタグ追加
+- [x] 3-4. FAQアコーディオンをイベント委任方式に変更
 
 ### 作業内容
 
@@ -152,14 +152,14 @@ loadSiteContents()
 ## フェーズ4: 管理画面UI改修
 
 ### タスク一覧
-- [ ] 4-1. `admin/index.html` サイドバー付きレイアウトに変更
-- [ ] 4-2. ヒーロー編集ビューHTML追加
-- [ ] 4-3. サークル紹介編集ビューHTML追加
-- [ ] 4-4. 百人一首カード編集ビューHTML追加
-- [ ] 4-5. 活動内容編集ビューHTML追加
-- [ ] 4-6. FAQ編集ビューHTML追加
-- [ ] 4-7. お問い合わせ編集ビューHTML追加
-- [ ] 4-8. `css/admin.css` サイドバー + 各編集画面スタイル追加
+- [x] 4-1. `admin/index.html` サイドバー付きレイアウトに変更
+- [x] 4-2. ヒーロー編集ビューHTML追加
+- [x] 4-3. サークル紹介編集ビューHTML追加
+- [x] 4-4. 百人一首カード編集ビューHTML追加
+- [x] 4-5. 活動内容編集ビューHTML追加
+- [x] 4-6. FAQ編集ビューHTML追加
+- [x] 4-7. お問い合わせ編集ビューHTML追加
+- [x] 4-8. `css/admin.css` サイドバー + 各編集画面スタイル追加
 
 ### 作業内容
 
@@ -209,13 +209,13 @@ loadSiteContents()
 ## フェーズ5: 管理画面ロジック実装
 
 ### タスク一覧
-- [ ] 5-1. セクション切り替え機能
-- [ ] 5-2. ヒーロー編集ロジック（loadHeroEdit, saveHero）
-- [ ] 5-3. サークル紹介編集ロジック（loadAboutEdit, saveAbout + 画像アップロード）
-- [ ] 5-4. 百人一首カード管理ロジック（CRUD + 並び替え）
-- [ ] 5-5. 活動内容編集ロジック（loadActivitiesEdit, saveActivities）
-- [ ] 5-6. FAQ管理ロジック（CRUD + 並び替え）
-- [ ] 5-7. お問い合わせ編集ロジック（loadContactEdit, saveContact）
+- [x] 5-1. セクション切り替え機能
+- [x] 5-2. ヒーロー編集ロジック（loadHeroEdit, saveHero）
+- [x] 5-3. サークル紹介編集ロジック（loadAboutEdit, saveAbout + 画像アップロード）
+- [x] 5-4. 百人一首カード管理ロジック（CRUD + 並び替え）
+- [x] 5-5. 活動内容編集ロジック（loadActivitiesEdit, saveActivities）
+- [x] 5-6. FAQ管理ロジック（CRUD + 並び替え）
+- [x] 5-7. お問い合わせ編集ロジック（loadContactEdit, saveContact）
 
 ### 作業内容
 `js/admin.js` の `AdminPanel` クラスに各セクション管理機能を追加する。
@@ -261,10 +261,26 @@ loadSiteContents()
 
 ## フェーズ6: 動作確認 + 微調整
 
-### タスク一覧
+### コードレビュー実施結果
+
+#### 修正したバグ
+- [x] `js/site-loader.js` - 百人一首カードの画像が空の場合の処理を追加（壊れた画像アイコンが表示されるバグを修正）
+
+#### コードレビュー結果サマリー
+全ファイルのコードレビューを実施し、以下を確認しました：
+- ✅ データベーステーブル構造とRLSポリシーの整合性
+- ✅ Supabase REST APIの呼び出し方法（UPSERT、CRUD操作）
+- ✅ イベント委任パターン（FAQ、百人一首、FAQの動的生成対応）
+- ✅ HTMLエスケープ処理（XSS対策）
+- ✅ フォールバック処理（DB接続失敗時）
+- ✅ CSSセレクターと動的生成HTMLの整合性
+- ✅ レスポンシブデザイン（モバイル対応）
+- ✅ 既存の活動報告機能との統合
+
+### ユーザー側での動作確認タスク一覧
 - [ ] 6-1. Supabaseにテーブル・初期データが正しく作成されているか
 - [ ] 6-2. 公開ページで各セクションがDBからの値で表示されるか
-- [ ] 6-3. DB接続失敗時にHTMLのデフォルト値でフォールバック表示されるか
+- [ ] 6-3. DB接続失敗時にHTMLのデフォルト値でフォールバック表示されるか（ネットワークを切断してテスト）
 - [ ] 6-4. 管理画面のサイドバーで各セクションに切り替えできるか
 - [ ] 6-5. ヒーロー: サブタイトル・ボタンの編集・保存が反映されるか
 - [ ] 6-6. サークル紹介: テキスト・画像の編集・保存が反映されるか
@@ -274,6 +290,23 @@ loadSiteContents()
 - [ ] 6-10. お問い合わせ: SNS URL・メールの編集・保存が反映されるか
 - [ ] 6-11. モバイルでの管理画面レスポンシブ表示
 - [ ] 6-12. 既存の活動報告機能が影響を受けていないか
+
+### テスト時の注意事項
+
+#### 百人一首カード管理
+- 画像なしでカードを追加した場合、公開ページで画像エリアが表示されないことを確認してください（修正済み）
+- カード削除後、公開ページで即座に反映されることを確認してください
+
+#### FAQ管理
+- FAQは動的に生成されるため、アコーディオン動作が正しく機能するか確認してください
+
+#### ヒーロー・サークル紹介の編集
+- サブタイトルに`<br>`タグを入力すると改行されることを確認してください
+- サークル紹介の説明文に`<span class="highlight">`などのHTMLタグが使えることを確認してください
+
+#### 並び替え機能
+- 百人一首カードとFAQの並び替えボタン（↑↓）が正しく動作するか確認してください
+- 先頭のカードで↑ボタンが無効、末尾のカードで↓ボタンが無効になることを確認してください
 
 ---
 
