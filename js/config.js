@@ -14,7 +14,7 @@ const CLOUDINARY_UPLOAD_PRESET = 'wasuramochi-unsigned';
 
 // 管理画面パスワード
 // 本番環境では安全な値に変更してください
-const ADMIN_PASSWORD = 'wasuramochi2024';
+const ADMIN_PASSWORD = 'pass753';
 
 // 表示設定
 const REPORTS_PER_PAGE = 6;        // 一覧ページの1ページあたりの表示件数
