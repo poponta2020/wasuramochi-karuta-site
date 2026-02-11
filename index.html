@@ -316,7 +316,7 @@
         <p>&copy; 2025 わすらもち会（札幌百人一首サークル）. All rights reserved.</p>
     </footer>
 
-    <!-- 活動報告表示用JavaScript -->
+    <!-- JavaScript -->
     <script src="/js/config.js"></script>
     <script src="/js/supabase-client.js"></script>
     <script src="/js/utils.js"></script>
@@ -393,24 +393,24 @@
             });
         });
 
-        // FAQ アコーディオン（イベント委任方式 - 動的生成されたFAQにも対応）
-        document.getElementById('faq-list').addEventListener('click', (e) => {
+        // FAQ アコーディオン（イベント委任で動的FAQにも対応）
+        document.addEventListener('click', (e) => {
             const question = e.target.closest('.faq-question');
             if (!question) return;
 
             const faqItem = question.parentElement;
             const isActive = faqItem.classList.contains('active');
 
-            // すべてのFAQアイテムを閉じる
             document.querySelectorAll('.faq-item').forEach(item => {
                 item.classList.remove('active');
-                item.querySelector('.faq-question span:last-child').textContent = '+';
+                const toggle = item.querySelector('.faq-question span:last-child');
+                if (toggle) toggle.textContent = '+';
             });
 
-            // クリックされたアイテムのみ開く/閉じる
             if (!isActive) {
                 faqItem.classList.add('active');
-                question.querySelector('span:last-child').textContent = '-';
+                const toggle = question.querySelector('span:last-child');
+                if (toggle) toggle.textContent = '-';
             }
         });
 

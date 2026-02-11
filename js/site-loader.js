@@ -1,112 +1,76 @@
 // ==============================================
-// わすらもち会 公開ページ - 動的コンテンツ読み込み
+// わすらもち会 公開ページ - 動的コンテンツローダー
 // ==============================================
 
-/**
- * サイトコンテンツをDBから読み込み、DOMを更新する
- */
 class SiteLoader {
     constructor() {
-        this.siteContents = {};
+        this.client = supabaseClient;
+        this.loadAll();
     }
 
-    /**
-     * 全セクションの読み込みを開始
-     */
-    async load() {
-        try {
-            // 全データを並列取得
-            const [siteContentsRaw, karutaCards, activityCards, faqItems] = await Promise.all([
-                supabaseClient.getSiteContents(),
-                supabaseClient.getKarutaCards(),
-                supabaseClient.getActivityCards(),
-                supabaseClient.getFaqItems()
-            ]);
-
-            // site_contentsをセクション別に振り分け
-            this.siteContents = {};
-            siteContentsRaw.forEach(row => {
-                if (!this.siteContents[row.section_key]) {
-                    this.siteContents[row.section_key] = {};
-                }
-                this.siteContents[row.section_key][row.field_key] = row.field_value;
-            });
-
-            // 各セクションを更新（個別にtry-catchで囲む）
-            this.loadHeroSection();
-            this.loadAboutSection();
-            this.loadKarutaSection(karutaCards);
-            this.loadActivitiesSection(activityCards);
-            this.loadFaqSection(faqItems);
-            this.loadContactSection();
-
-        } catch (error) {
-            console.error('サイトコンテンツの読み込みに失敗しました:', error);
-            // フォールバック: HTMLのデフォルト値をそのまま表示
-        }
+    async loadAll() {
+        // 各セクションを並列で読み込み（失敗してもHTMLデフォルト値を表示）
+        await Promise.allSettled([
+            this.loadHeroSection(),
+            this.loadAboutSection(),
+            this.loadKarutaSection(),
+            this.loadActivitiesSection(),
+            this.loadFaqSection(),
+            this.loadContactSection()
+        ]);
     }
 
-    /**
-     * ヒーローセクションを更新
-     */
-    loadHeroSection() {
+    async loadHeroSection() {
         try {
-            const hero = this.siteContents['hero'];
-            if (!hero) return;
+            const data = await this.client.getSiteContents('hero');
+            if (!data || data.length === 0) return;
+
+            const fields = {};
+            data.forEach(row => { fields[row.field_key] = row.field_value; });
 
             const subtitle = document.getElementById('hero-subtitle');
-            if (subtitle && hero.subtitle) {
-                subtitle.innerHTML = hero.subtitle;
-            }
+            if (subtitle && fields.subtitle) subtitle.innerHTML = fields.subtitle;
 
             const ctaPrimary = document.getElementById('hero-cta-primary');
             if (ctaPrimary) {
-                if (hero.cta_primary_text) ctaPrimary.textContent = hero.cta_primary_text;
-                if (hero.cta_primary_link) ctaPrimary.href = hero.cta_primary_link;
+                if (fields.cta_primary_text) ctaPrimary.textContent = fields.cta_primary_text;
+                if (fields.cta_primary_link) ctaPrimary.href = fields.cta_primary_link;
             }
 
             const ctaSecondary = document.getElementById('hero-cta-secondary');
             if (ctaSecondary) {
-                if (hero.cta_secondary_text) ctaSecondary.textContent = hero.cta_secondary_text;
-                if (hero.cta_secondary_link) ctaSecondary.href = hero.cta_secondary_link;
+                if (fields.cta_secondary_text) ctaSecondary.textContent = fields.cta_secondary_text;
+                if (fields.cta_secondary_link) ctaSecondary.href = fields.cta_secondary_link;
             }
         } catch (error) {
-            console.error('ヒーローセクションの更新に失敗:', error);
+            console.warn('ヒーローセクション読み込みスキップ:', error);
         }
     }
 
-    /**
-     * サークル紹介セクションを更新
-     */
-    loadAboutSection() {
+    async loadAboutSection() {
         try {
-            const about = this.siteContents['about'];
-            if (!about) return;
+            const data = await this.client.getSiteContents('about');
+            if (!data || data.length === 0) return;
+
+            const fields = {};
+            data.forEach(row => { fields[row.field_key] = row.field_value; });
 
             const intro = document.getElementById('about-intro');
-            if (intro && about.intro_text) {
-                intro.textContent = about.intro_text;
-            }
+            if (intro && fields.intro) intro.textContent = fields.intro;
 
             const description = document.getElementById('about-description');
-            if (description && about.description) {
-                description.innerHTML = about.description;
-            }
+            if (description && fields.description) description.innerHTML = fields.description;
 
             const image = document.getElementById('about-image');
-            if (image && about.image) {
-                image.src = about.image;
-            }
+            if (image && fields.image) image.src = fields.image;
         } catch (error) {
-            console.error('サークル紹介セクションの更新に失敗:', error);
+            console.warn('サークル紹介セクション読み込みスキップ:', error);
         }
     }
 
-    /**
-     * 百人一首セクションを更新
-     */
-    loadKarutaSection(cards) {
+    async loadKarutaSection() {
         try {
+            const cards = await this.client.getKarutaCards();
             if (!cards || cards.length === 0) return;
 
             const grid = document.getElementById('karuta-grid');
@@ -115,24 +79,18 @@ class SiteLoader {
             grid.innerHTML = cards.map(card => `
                 <div class="explanation-card">
                     <h3>${this.escapeHtml(card.title)}</h3>
-                    ${card.image ? `
-                    <div class="explanation-image">
-                        <img src="${this.escapeHtml(card.image)}" alt="${this.escapeHtml(card.title)}">
-                    </div>
-                    ` : ''}
+                    ${card.image ? `<div class="explanation-image"><img src="${card.image}" alt="${this.escapeHtml(card.title)}"></div>` : ''}
                     <p>${this.escapeHtml(card.description)}</p>
                 </div>
             `).join('');
         } catch (error) {
-            console.error('百人一首セクションの更新に失敗:', error);
+            console.warn('百人一首セクション読み込みスキップ:', error);
         }
     }
 
-    /**
-     * 活動内容セクションを更新
-     */
-    loadActivitiesSection(cards) {
+    async loadActivitiesSection() {
         try {
+            const cards = await this.client.getActivityCards();
             if (!cards || cards.length === 0) return;
 
             const grid = document.getElementById('activities-grid');
@@ -140,20 +98,18 @@ class SiteLoader {
 
             grid.innerHTML = cards.map(card => `
                 <div class="activity-card">
-                    <h3>${this.escapeHtml(card.icon)} ${this.escapeHtml(card.title)}</h3>
-                    ${card.content}
+                    <h3>${this.escapeHtml(card.icon || '')} ${this.escapeHtml(card.title)}</h3>
+                    <p>${card.body || ''}</p>
                 </div>
             `).join('');
         } catch (error) {
-            console.error('活動内容セクションの更新に失敗:', error);
+            console.warn('活動内容セクション読み込みスキップ:', error);
         }
     }
 
-    /**
-     * FAQセクションを更新
-     */
-    loadFaqSection(items) {
+    async loadFaqSection() {
         try {
+            const items = await this.client.getFaqItems();
             if (!items || items.length === 0) return;
 
             const list = document.getElementById('faq-list');
@@ -171,45 +127,34 @@ class SiteLoader {
                 </div>
             `).join('');
         } catch (error) {
-            console.error('FAQセクションの更新に失敗:', error);
+            console.warn('FAQセクション読み込みスキップ:', error);
         }
     }
 
-    /**
-     * お問い合わせセクションを更新
-     */
-    loadContactSection() {
+    async loadContactSection() {
         try {
-            const contact = this.siteContents['contact'];
-            if (!contact) return;
+            const data = await this.client.getSiteContents('contact');
+            if (!data || data.length === 0) return;
+
+            const fields = {};
+            data.forEach(row => { fields[row.field_key] = row.field_value; });
 
             const line = document.getElementById('contact-line');
-            if (line && contact.line_url) {
-                line.href = contact.line_url;
-            }
+            if (line && fields.line_url) line.href = fields.line_url;
 
             const instagram = document.getElementById('contact-instagram');
-            if (instagram && contact.instagram_url) {
-                instagram.href = contact.instagram_url;
-            }
+            if (instagram && fields.instagram_url) instagram.href = fields.instagram_url;
 
             const twitter = document.getElementById('contact-twitter');
-            if (twitter && contact.twitter_url) {
-                twitter.href = contact.twitter_url;
-            }
+            if (twitter && fields.twitter_url) twitter.href = fields.twitter_url;
 
             const email = document.getElementById('contact-email');
-            if (email && contact.email) {
-                email.href = `mailto:${contact.email}`;
-            }
+            if (email && fields.email) email.href = `mailto:${fields.email}`;
         } catch (error) {
-            console.error('お問い合わせセクションの更新に失敗:', error);
+            console.warn('お問い合わせセクション読み込みスキップ:', error);
         }
     }
 
-    /**
-     * HTMLエスケープ
-     */
     escapeHtml(str) {
         if (!str) return '';
         const div = document.createElement('div');
@@ -218,8 +163,7 @@ class SiteLoader {
     }
 }
 
-// ページ読み込み時に実行
+// DOM読み込み完了後に実行
 document.addEventListener('DOMContentLoaded', () => {
-    const siteLoader = new SiteLoader();
-    siteLoader.load();
+    new SiteLoader();
 });

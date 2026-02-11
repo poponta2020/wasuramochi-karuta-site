@@ -1,5 +1,5 @@
 // ==============================================
-// わすらもち会 サイト管理システム - Supabaseクライアント
+// わすらもち会 活動報告システム - Supabaseクライアント
 // ==============================================
 
 /**
@@ -207,11 +207,6 @@ class SupabaseClient {
     // site_contents テーブル操作
     // ==============================================
 
-    /**
-     * 指定セクションのサイトコンテンツを取得
-     * @param {string} [sectionKey] - セクションキー（省略時は全セクション取得）
-     * @returns {Promise<Array>}
-     */
     async getSiteContents(sectionKey) {
         try {
             let url = `${this.url}/rest/v1/site_contents?select=*`;
@@ -222,11 +217,9 @@ class SupabaseClient {
                 method: 'GET',
                 headers: this.headers
             });
-
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-
             return await response.json();
         } catch (error) {
             console.error('サイトコンテンツの取得に失敗しました:', error);
@@ -234,12 +227,6 @@ class SupabaseClient {
         }
     }
 
-    /**
-     * サイトコンテンツを一括更新（UPSERT）
-     * @param {string} sectionKey - セクションキー
-     * @param {Object} fields - フィールドのキーバリューオブジェクト
-     * @returns {Promise<Array>}
-     */
     async updateSiteContents(sectionKey, fields) {
         try {
             const rows = Object.entries(fields).map(([fieldKey, fieldValue]) => ({
@@ -247,7 +234,6 @@ class SupabaseClient {
                 field_key: fieldKey,
                 field_value: fieldValue
             }));
-
             const response = await fetch(
                 `${this.url}/rest/v1/site_contents?on_conflict=section_key,field_key`,
                 {
@@ -259,12 +245,10 @@ class SupabaseClient {
                     body: JSON.stringify(rows)
                 }
             );
-
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
-
             return await response.json();
         } catch (error) {
             console.error('サイトコンテンツの更新に失敗しました:', error);
@@ -276,24 +260,13 @@ class SupabaseClient {
     // karuta_cards テーブル操作
     // ==============================================
 
-    /**
-     * 百人一首カード一覧を取得（sort_order順）
-     * @returns {Promise<Array>}
-     */
     async getKarutaCards() {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/karuta_cards?select=*&order=sort_order.asc`,
-                {
-                    method: 'GET',
-                    headers: this.headers
-                }
+                { method: 'GET', headers: this.headers }
             );
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
         } catch (error) {
             console.error('百人一首カードの取得に失敗しました:', error);
@@ -301,27 +274,16 @@ class SupabaseClient {
         }
     }
 
-    /**
-     * 百人一首カードを作成
-     * @param {Object} data - { title, image, description, sort_order }
-     * @returns {Promise<Object>}
-     */
     async createKarutaCard(data) {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/karuta_cards`,
-                {
-                    method: 'POST',
-                    headers: this.headers,
-                    body: JSON.stringify(data)
-                }
+                { method: 'POST', headers: this.headers, body: JSON.stringify(data) }
             );
-
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
-
             const result = await response.json();
             return result[0];
         } catch (error) {
@@ -330,28 +292,16 @@ class SupabaseClient {
         }
     }
 
-    /**
-     * 百人一首カードを更新
-     * @param {string} id - カードID
-     * @param {Object} data - 更新データ
-     * @returns {Promise<Object>}
-     */
     async updateKarutaCard(id, data) {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/karuta_cards?id=eq.${id}`,
-                {
-                    method: 'PATCH',
-                    headers: this.headers,
-                    body: JSON.stringify(data)
-                }
+                { method: 'PATCH', headers: this.headers, body: JSON.stringify(data) }
             );
-
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
-
             const result = await response.json();
             return result[0];
         } catch (error) {
@@ -360,25 +310,13 @@ class SupabaseClient {
         }
     }
 
-    /**
-     * 百人一首カードを削除
-     * @param {string} id - カードID
-     * @returns {Promise<boolean>}
-     */
     async deleteKarutaCard(id) {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/karuta_cards?id=eq.${id}`,
-                {
-                    method: 'DELETE',
-                    headers: this.headers
-                }
+                { method: 'DELETE', headers: this.headers }
             );
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return true;
         } catch (error) {
             console.error('百人一首カードの削除に失敗しました:', error);
@@ -390,24 +328,13 @@ class SupabaseClient {
     // activity_cards テーブル操作
     // ==============================================
 
-    /**
-     * 活動内容カード一覧を取得（sort_order順）
-     * @returns {Promise<Array>}
-     */
     async getActivityCards() {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/activity_cards?select=*&order=sort_order.asc`,
-                {
-                    method: 'GET',
-                    headers: this.headers
-                }
+                { method: 'GET', headers: this.headers }
             );
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
         } catch (error) {
             console.error('活動内容カードの取得に失敗しました:', error);
@@ -415,28 +342,16 @@ class SupabaseClient {
         }
     }
 
-    /**
-     * 活動内容カードを更新
-     * @param {string} id - カードID
-     * @param {Object} data - 更新データ { icon, title, content }
-     * @returns {Promise<Object>}
-     */
     async updateActivityCard(id, data) {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/activity_cards?id=eq.${id}`,
-                {
-                    method: 'PATCH',
-                    headers: this.headers,
-                    body: JSON.stringify(data)
-                }
+                { method: 'PATCH', headers: this.headers, body: JSON.stringify(data) }
             );
-
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
-
             const result = await response.json();
             return result[0];
         } catch (error) {
@@ -449,24 +364,13 @@ class SupabaseClient {
     // faq_items テーブル操作
     // ==============================================
 
-    /**
-     * FAQ一覧を取得（sort_order順）
-     * @returns {Promise<Array>}
-     */
     async getFaqItems() {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/faq_items?select=*&order=sort_order.asc`,
-                {
-                    method: 'GET',
-                    headers: this.headers
-                }
+                { method: 'GET', headers: this.headers }
             );
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
         } catch (error) {
             console.error('FAQの取得に失敗しました:', error);
@@ -474,27 +378,16 @@ class SupabaseClient {
         }
     }
 
-    /**
-     * FAQを作成
-     * @param {Object} data - { question, answer, sort_order }
-     * @returns {Promise<Object>}
-     */
     async createFaqItem(data) {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/faq_items`,
-                {
-                    method: 'POST',
-                    headers: this.headers,
-                    body: JSON.stringify(data)
-                }
+                { method: 'POST', headers: this.headers, body: JSON.stringify(data) }
             );
-
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
-
             const result = await response.json();
             return result[0];
         } catch (error) {
@@ -503,28 +396,16 @@ class SupabaseClient {
         }
     }
 
-    /**
-     * FAQを更新
-     * @param {string} id - FAQ ID
-     * @param {Object} data - 更新データ
-     * @returns {Promise<Object>}
-     */
     async updateFaqItem(id, data) {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/faq_items?id=eq.${id}`,
-                {
-                    method: 'PATCH',
-                    headers: this.headers,
-                    body: JSON.stringify(data)
-                }
+                { method: 'PATCH', headers: this.headers, body: JSON.stringify(data) }
             );
-
             if (!response.ok) {
                 const errorData = await response.json();
                 throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
             }
-
             const result = await response.json();
             return result[0];
         } catch (error) {
@@ -533,25 +414,13 @@ class SupabaseClient {
         }
     }
 
-    /**
-     * FAQを削除
-     * @param {string} id - FAQ ID
-     * @returns {Promise<boolean>}
-     */
     async deleteFaqItem(id) {
         try {
             const response = await fetch(
                 `${this.url}/rest/v1/faq_items?id=eq.${id}`,
-                {
-                    method: 'DELETE',
-                    headers: this.headers
-                }
+                { method: 'DELETE', headers: this.headers }
             );
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return true;
         } catch (error) {
             console.error('FAQの削除に失敗しました:', error);
