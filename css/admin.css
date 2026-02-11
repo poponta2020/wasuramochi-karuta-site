@@ -1,5 +1,5 @@
 /* ==============================================
-   わすらもち会 活動報告システム - 管理画面スタイル
+   わすらもち会 サイト管理システム - 管理画面スタイル
    ============================================== */
 
 * {
@@ -163,11 +163,92 @@ body {
     background: rgba(255, 255, 255, 0.3) !important;
 }
 
+/* サイドバーレイアウト */
+.admin-layout {
+    display: flex;
+    min-height: calc(100vh - 60px);
+}
+
+/* サイドバー */
+.admin-sidebar {
+    width: 240px;
+    background: var(--white);
+    border-right: 1px solid var(--light-gray);
+    flex-shrink: 0;
+    position: sticky;
+    top: 60px;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    color: var(--dark);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-nav a:hover {
+    background: var(--bg-green);
+    color: var(--primary-green);
+}
+
+.sidebar-nav a.active {
+    background: var(--bg-green);
+    color: var(--primary-green);
+    border-left-color: var(--primary-green);
+    font-weight: 600;
+}
+
+.sidebar-nav a i {
+    width: 20px;
+    text-align: center;
+}
+
+/* モバイル用サイドバートグル */
+.sidebar-toggle {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--primary-green);
+    color: var(--white);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 200;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* セクション表示制御 */
+.admin-section {
+    display: none;
+}
+
+.admin-section.active {
+    display: block;
+}
+
 /* メインコンテンツ */
 .admin-main {
-    max-width: 1200px;
-    margin: 0 auto;
+    flex: 1;
     padding: 30px 20px;
+    max-width: 960px;
 }
 
 /* ダッシュボード */
@@ -341,9 +422,137 @@ body {
     border-color: var(--secondary-green);
 }
 
+.form-group input[type="url"],
+.form-group input[type="email"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--light-gray);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+.form-group input[type="url"]:focus,
+.form-group input[type="email"]:focus {
+    outline: none;
+    border-color: var(--secondary-green);
+}
+
 .form-group textarea {
     min-height: 150px;
     resize: vertical;
+}
+
+/* フォームヒント */
+.form-hint {
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-top: 5px;
+}
+
+/* 現在の画像プレビュー */
+.current-image-preview {
+    margin-bottom: 15px;
+}
+
+.current-image-preview img {
+    max-width: 300px;
+    max-height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* カード一覧（百人一首・FAQ共通） */
+.card-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.card-list-item {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.card-list-item .card-list-thumbnail {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.card-list-item .card-list-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-list-item .card-list-info h4 {
+    color: var(--primary-green);
+    margin-bottom: 5px;
+}
+
+.card-list-item .card-list-info p {
+    color: var(--gray);
+    font-size: 0.9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-list-item .card-list-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.card-list-item .card-list-actions .btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* 並び替えボタン */
+.btn-move {
+    background: var(--bg-green);
+    color: var(--primary-green);
+    border: 1px solid var(--accent-green);
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+}
+
+.btn-move:hover {
+    background: var(--accent-green);
+}
+
+.btn-move:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* 活動内容カードフォーム */
+.activity-card-form {
+    background: var(--bg-green);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.activity-card-form h3 {
+    color: var(--primary-green);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
 }
 
 /* 画像アップロードエリア */
@@ -581,6 +790,48 @@ body {
         justify-content: center;
     }
 
+    /* サイドバーをオーバーレイに変更 */
+    .admin-sidebar {
+        position: fixed;
+        top: 0;
+        left: -260px;
+        width: 260px;
+        height: 100vh;
+        z-index: 300;
+        transition: left 0.3s;
+        box-shadow: none;
+    }
+
+    .admin-sidebar.open {
+        left: 0;
+        box-shadow: 5px 0 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 250;
+        display: none;
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+    }
+
+    .admin-main {
+        padding: 20px 15px;
+    }
+
     .dashboard-header {
         flex-direction: column;
         gap: 15px;
@@ -611,6 +862,15 @@ body {
 
     .uploaded-images {
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+
+    .card-list-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .card-list-item .card-list-actions {
+        justify-content: flex-end;
     }
 }
 

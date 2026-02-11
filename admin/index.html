@@ -68,88 +68,350 @@
         <!-- アラートコンテナ -->
         <div id="alert-container" style="position: fixed; top: 80px; right: 20px; z-index: 1000; width: 300px;"></div>
 
-        <!-- メインコンテンツ -->
-        <main class="admin-main">
-            <!-- ダッシュボードビュー -->
-            <div id="dashboard-view">
-                <div class="dashboard-header">
-                    <h2><i class="fas fa-list"></i> 活動報告一覧</h2>
-                    <button id="create-new-btn" class="btn btn-primary">
-                        <i class="fas fa-plus"></i> 新規作成
-                    </button>
-                </div>
+        <!-- サイドバー + メインコンテンツ -->
+        <div class="admin-layout">
+            <!-- サイドバー -->
+            <aside class="admin-sidebar" id="admin-sidebar">
+                <nav class="sidebar-nav">
+                    <a href="#" data-section="reports" class="active">
+                        <i class="fas fa-newspaper"></i> 活動報告
+                    </a>
+                    <a href="#" data-section="hero">
+                        <i class="fas fa-image"></i> ヒーロー
+                    </a>
+                    <a href="#" data-section="about">
+                        <i class="fas fa-users"></i> サークル紹介
+                    </a>
+                    <a href="#" data-section="karuta">
+                        <i class="fas fa-layer-group"></i> 百人一首・競技かるた
+                    </a>
+                    <a href="#" data-section="activities">
+                        <i class="fas fa-calendar-alt"></i> 活動内容
+                    </a>
+                    <a href="#" data-section="faq">
+                        <i class="fas fa-question-circle"></i> よくある質問
+                    </a>
+                    <a href="#" data-section="contact">
+                        <i class="fas fa-envelope"></i> お問い合わせ
+                    </a>
+                </nav>
+            </aside>
 
-                <div class="reports-table-container">
-                    <table class="reports-table">
-                        <thead>
-                            <tr>
-                                <th style="width: 80px;">画像</th>
-                                <th style="width: 120px;">日付</th>
-                                <th>タイトル</th>
-                                <th>説明</th>
-                                <th style="width: 180px;">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody id="reports-table-body">
-                            <!-- JavaScriptで動的に生成 -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- モバイル用サイドバートグル -->
+            <button class="sidebar-toggle" id="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
 
-            <!-- 編集ビュー -->
-            <div id="edit-view" style="display: none;">
-                <div class="edit-form-container">
-                    <div class="edit-form-header">
-                        <h2 id="form-title"><i class="fas fa-edit"></i> 新規活動報告</h2>
+            <!-- メインコンテンツ -->
+            <main class="admin-main">
+
+                <!-- ===== 活動報告セクション ===== -->
+                <div id="section-reports" class="admin-section active">
+                    <!-- ダッシュボードビュー -->
+                    <div id="dashboard-view">
+                        <div class="dashboard-header">
+                            <h2><i class="fas fa-list"></i> 活動報告一覧</h2>
+                            <button id="create-new-btn" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> 新規作成
+                            </button>
+                        </div>
+
+                        <div class="reports-table-container">
+                            <table class="reports-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 80px;">画像</th>
+                                        <th style="width: 120px;">日付</th>
+                                        <th>タイトル</th>
+                                        <th>説明</th>
+                                        <th style="width: 180px;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reports-table-body">
+                                    <!-- JavaScriptで動的に生成 -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <form id="edit-form">
-                        <div class="form-group">
-                            <label for="report-date">
-                                日付 <span class="required">*</span>
-                            </label>
-                            <input type="text" id="report-date" placeholder="例: 2025.08.23" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="report-title">
-                                タイトル <span class="required">*</span>
-                            </label>
-                            <input type="text" id="report-title" placeholder="例: 第32回多摩大会B級 優勝！" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="report-description">説明</label>
-                            <textarea id="report-description" placeholder="活動の詳細を入力してください..."></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>画像</label>
-                            <div id="image-upload-area" class="image-upload-area">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                <p>画像をドラッグ&ドロップ または</p>
-                                <span class="btn btn-secondary btn-sm">ファイルを選択</span>
-                                <p class="upload-hint">対応形式: JPG, PNG, GIF, WebP (最大10MB)</p>
-                                <input type="file" id="image-input" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
+                    <!-- 編集ビュー -->
+                    <div id="edit-view" style="display: none;">
+                        <div class="edit-form-container">
+                            <div class="edit-form-header">
+                                <h2 id="form-title"><i class="fas fa-edit"></i> 新規活動報告</h2>
                             </div>
-                            <div id="uploaded-images" class="uploaded-images">
-                                <!-- アップロード済み画像がここに表示される -->
-                            </div>
-                        </div>
 
-                        <div class="form-actions">
-                            <button type="button" id="cancel-btn" class="btn btn-secondary">
-                                <i class="fas fa-times"></i> キャンセル
-                            </button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> 保存
-                            </button>
+                            <form id="edit-form">
+                                <div class="form-group">
+                                    <label for="report-date">
+                                        日付 <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="report-date" placeholder="例: 2025.08.23" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="report-title">
+                                        タイトル <span class="required">*</span>
+                                    </label>
+                                    <input type="text" id="report-title" placeholder="例: 第32回多摩大会B級 優勝！" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="report-description">説明</label>
+                                    <textarea id="report-description" placeholder="活動の詳細を入力してください..."></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>画像</label>
+                                    <div id="image-upload-area" class="image-upload-area">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>画像をドラッグ&ドロップ または</p>
+                                        <span class="btn btn-secondary btn-sm">ファイルを選択</span>
+                                        <p class="upload-hint">対応形式: JPG, PNG, GIF, WebP (最大10MB)</p>
+                                        <input type="file" id="image-input" accept="image/jpeg,image/png,image/gif,image/webp" multiple>
+                                    </div>
+                                    <div id="uploaded-images" class="uploaded-images">
+                                        <!-- アップロード済み画像がここに表示される -->
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button type="button" id="cancel-btn" class="btn btn-secondary">
+                                        <i class="fas fa-times"></i> キャンセル
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> 保存
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-        </main>
+
+                <!-- ===== ヒーロー編集セクション ===== -->
+                <div id="section-hero" class="admin-section" style="display: none;">
+                    <div class="edit-form-container">
+                        <div class="edit-form-header">
+                            <h2><i class="fas fa-image"></i> ヒーローセクション編集</h2>
+                        </div>
+                        <form id="hero-form">
+                            <div class="form-group">
+                                <label for="hero-subtitle-input">サブタイトル</label>
+                                <textarea id="hero-subtitle-input" placeholder="札幌市で活動する&#10;競技かるたサークルです" rows="3"></textarea>
+                                <p class="form-hint">改行は &lt;br&gt; タグで入力できます</p>
+                            </div>
+                            <div class="form-group">
+                                <label for="hero-cta-primary-text">主ボタン テキスト</label>
+                                <input type="text" id="hero-cta-primary-text" placeholder="体験参加申し込み">
+                            </div>
+                            <div class="form-group">
+                                <label for="hero-cta-primary-link">主ボタン リンク先</label>
+                                <input type="text" id="hero-cta-primary-link" placeholder="#contact">
+                            </div>
+                            <div class="form-group">
+                                <label for="hero-cta-secondary-text">副ボタン テキスト</label>
+                                <input type="text" id="hero-cta-secondary-text" placeholder="サークルについて">
+                            </div>
+                            <div class="form-group">
+                                <label for="hero-cta-secondary-link">副ボタン リンク先</label>
+                                <input type="text" id="hero-cta-secondary-link" placeholder="#about">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> 保存
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ===== サークル紹介編集セクション ===== -->
+                <div id="section-about" class="admin-section" style="display: none;">
+                    <div class="edit-form-container">
+                        <div class="edit-form-header">
+                            <h2><i class="fas fa-users"></i> サークル紹介編集</h2>
+                        </div>
+                        <form id="about-form">
+                            <div class="form-group">
+                                <label for="about-intro-input">紹介文</label>
+                                <input type="text" id="about-intro-input" placeholder="札幌で競技かるたをしたい人達が集まるサークルです">
+                            </div>
+                            <div class="form-group">
+                                <label for="about-description-input">説明文</label>
+                                <textarea id="about-description-input" rows="4" placeholder="HTML対応"></textarea>
+                                <p class="form-hint">HTMLタグが使えます（&lt;span class="highlight"&gt;など）</p>
+                            </div>
+                            <div class="form-group">
+                                <label>画像</label>
+                                <div class="current-image-preview" id="about-image-preview">
+                                    <!-- 現在の画像プレビュー -->
+                                </div>
+                                <div id="about-image-upload" class="image-upload-area">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>画像をドラッグ&ドロップ または</p>
+                                    <span class="btn btn-secondary btn-sm">ファイルを選択</span>
+                                    <p class="upload-hint">対応形式: JPG, PNG, GIF, WebP (最大10MB)</p>
+                                    <input type="file" id="about-image-input" accept="image/jpeg,image/png,image/gif,image/webp">
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> 保存
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ===== 百人一首カード編集セクション ===== -->
+                <div id="section-karuta" class="admin-section" style="display: none;">
+                    <div class="dashboard-header">
+                        <h2><i class="fas fa-layer-group"></i> 百人一首・競技かるたカード</h2>
+                        <button id="karuta-add-btn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> 新規カード追加
+                        </button>
+                    </div>
+                    <div id="karuta-list" class="card-list">
+                        <!-- JavaScriptで動的に生成 -->
+                    </div>
+
+                    <!-- カード編集フォーム -->
+                    <div id="karuta-form-container" class="edit-form-container" style="display: none;">
+                        <div class="edit-form-header">
+                            <h2 id="karuta-form-title"><i class="fas fa-edit"></i> カード追加</h2>
+                        </div>
+                        <form id="karuta-form">
+                            <input type="hidden" id="karuta-edit-id">
+                            <div class="form-group">
+                                <label for="karuta-title-input">タイトル <span class="required">*</span></label>
+                                <input type="text" id="karuta-title-input" placeholder="例: 小倉百人一首" required>
+                            </div>
+                            <div class="form-group">
+                                <label>画像</label>
+                                <div class="current-image-preview" id="karuta-image-preview"></div>
+                                <div id="karuta-image-upload" class="image-upload-area">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>画像をドラッグ&ドロップ または</p>
+                                    <span class="btn btn-secondary btn-sm">ファイルを選択</span>
+                                    <input type="file" id="karuta-image-input" accept="image/jpeg,image/png,image/gif,image/webp">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="karuta-description-input">説明文 <span class="required">*</span></label>
+                                <textarea id="karuta-description-input" rows="4" required></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" id="karuta-cancel-btn" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> キャンセル
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> 保存
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ===== 活動内容編集セクション ===== -->
+                <div id="section-activities" class="admin-section" style="display: none;">
+                    <div class="edit-form-container">
+                        <div class="edit-form-header">
+                            <h2><i class="fas fa-calendar-alt"></i> 活動内容編集</h2>
+                        </div>
+                        <form id="activities-form">
+                            <div id="activities-cards-container">
+                                <!-- JavaScriptで3枚のカードフォームを生成 -->
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> 保存
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ===== FAQ編集セクション ===== -->
+                <div id="section-faq" class="admin-section" style="display: none;">
+                    <div class="dashboard-header">
+                        <h2><i class="fas fa-question-circle"></i> よくある質問</h2>
+                        <button id="faq-add-btn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> 新規FAQ追加
+                        </button>
+                    </div>
+                    <div id="faq-list-admin" class="card-list">
+                        <!-- JavaScriptで動的に生成 -->
+                    </div>
+
+                    <!-- FAQ編集フォーム -->
+                    <div id="faq-form-container" class="edit-form-container" style="display: none;">
+                        <div class="edit-form-header">
+                            <h2 id="faq-form-title"><i class="fas fa-edit"></i> FAQ追加</h2>
+                        </div>
+                        <form id="faq-form">
+                            <input type="hidden" id="faq-edit-id">
+                            <div class="form-group">
+                                <label for="faq-question-input">質問 <span class="required">*</span></label>
+                                <input type="text" id="faq-question-input" placeholder="例: 百人一首を全く知らないのですが、参加できますか？" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="faq-answer-input">回答 <span class="required">*</span></label>
+                                <textarea id="faq-answer-input" rows="4" required></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" id="faq-cancel-btn" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> キャンセル
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> 保存
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ===== お問い合わせ編集セクション ===== -->
+                <div id="section-contact" class="admin-section" style="display: none;">
+                    <div class="edit-form-container">
+                        <div class="edit-form-header">
+                            <h2><i class="fas fa-envelope"></i> お問い合わせ編集</h2>
+                        </div>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="contact-line-input">
+                                    <i class="fab fa-line"></i> LINE URL
+                                </label>
+                                <input type="url" id="contact-line-input" placeholder="https://line.me/ti/p/@...">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-instagram-input">
+                                    <i class="fab fa-instagram"></i> Instagram URL
+                                </label>
+                                <input type="url" id="contact-instagram-input" placeholder="https://www.instagram.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-twitter-input">
+                                    <i class="fab fa-x-twitter"></i> X (Twitter) URL
+                                </label>
+                                <input type="url" id="contact-twitter-input" placeholder="https://twitter.com/...">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-email-input">
+                                    <i class="fas fa-envelope"></i> メールアドレス
+                                </label>
+                                <input type="email" id="contact-email-input" placeholder="example@example.com">
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> 保存
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </main>
+        </div>
     </div>
 
     <!-- 削除確認モーダル -->
