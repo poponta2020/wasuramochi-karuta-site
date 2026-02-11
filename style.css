@@ -946,3 +946,197 @@ body {
  .date-picture{
   font-family: cursive;
 }
+
+/* ==============================================
+   活動報告システム追加スタイル
+   ============================================== */
+
+/* 「もっと見る」ボタン */
+.reports-more {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.reports-more .btn {
+    padding: 12px 30px;
+}
+
+/* ローディング表示 */
+.loading {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--light-gray, #dfe6e9);
+    border-top-color: var(--secondary-green, #4a7c59);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading p {
+    color: var(--gray, #636e72);
+}
+
+/* エラー・空メッセージ */
+.error-message,
+.empty-message {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--gray, #636e72);
+}
+
+.error-message .btn {
+    margin-top: 15px;
+}
+
+/* 画像なしプレースホルダー */
+.no-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--light-gray, #dfe6e9);
+    color: var(--gray, #636e72);
+    font-size: 1rem;
+}
+
+/* ==============================================
+   活動報告一覧ページ用スタイル
+   ============================================== */
+
+.reports-page {
+    padding-top: 60px;
+}
+
+/* ページヘッダー */
+.page-header {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--white);
+}
+
+.page-header h1 {
+    font-size: clamp(2rem, 6vw, 3rem);
+    margin-bottom: 1rem;
+    font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+}
+
+.page-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* 一覧セクション */
+.reports-list-section {
+    padding: 40px 20px 60px;
+}
+
+/* トップに戻るセクション */
+.back-to-top-section {
+    text-align: center;
+    padding: 0 20px 60px;
+}
+
+.back-to-top-section .btn i {
+    margin-right: 8px;
+}
+
+/* ==============================================
+   ページネーション
+   ============================================== */
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.pagination-btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    background: var(--white);
+    color: var(--secondary-green);
+    border: 2px solid var(--secondary-green);
+}
+
+.pagination-btn:hover:not(.disabled) {
+    background: var(--secondary-green);
+    color: var(--white);
+}
+
+.pagination-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-numbers {
+    display: flex;
+    gap: 5px;
+}
+
+.pagination-number {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s;
+    background: var(--white);
+    color: var(--dark);
+    border: 1px solid var(--light-gray, #dfe6e9);
+}
+
+.pagination-number:hover:not(.active) {
+    background: var(--bg-green);
+    border-color: var(--secondary-green);
+}
+
+.pagination-number.active {
+    background: var(--primary-green);
+    color: var(--white);
+    border-color: var(--primary-green);
+}
+
+.pagination-ellipsis {
+    padding: 0 5px;
+    color: var(--gray);
+}
+
+/* モバイル対応 */
+@media (max-width: 768px) {
+    .pagination {
+        gap: 5px;
+    }
+
+    .pagination-btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .pagination-number {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!-- favicon -->
+    <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO基本設定 -->
+    <title>活動報告 | わすらもち会 - 札幌の競技かるたサークル</title>
+    <meta name="description" content="わすらもち会の活動報告一覧です。大会結果や練習会、イベントの様子をご紹介します。">
+    <link rel="canonical" href="https://wasuramochi-karuta.com/reports.html">
+
+    <!-- OGP設定 -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="活動報告 | わすらもち会">
+    <meta property="og:description" content="わすらもち会の活動報告一覧です。大会結果や練習会、イベントの様子をご紹介します。">
+    <meta property="og:url" content="https://wasuramochi-karuta.com/reports.html">
+    <meta property="og:site_name" content="わすらもち会">
+    <meta property="og:image" content="https://wasuramochi-karuta.com/images/wasuramochi-logo.png">
+    <meta property="og:locale" content="ja_JP">
+
+    <!-- フォント読み込み最適化 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Zen+Maru+Gothic:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome for SNS icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- メインのスタイルシート -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- iOSのホーム追加用 -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+    <!-- オーバーレイ -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+
+    <!-- モバイルメニュー -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="/#about">サークル紹介</a></li>
+            <li><a href="/#karuta">百人一首とは</a></li>
+            <li><a href="/#activities">活動内容</a></li>
+            <li><a href="/reports.html">活動報告</a></li>
+            <li><a href="/#faq">よくある質問</a></li>
+            <li><a href="/#contact">参加方法</a></li>
+        </ul>
+    </div>
+
+    <!-- ナビゲーション -->
+    <nav class="navbar show" id="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <img src="/images/wasuramochi-logo.png" alt="わすらもち会ロゴ">
+                </div>
+                わすらもち会
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/#about">サークル紹介</a></li>
+                <li><a href="/#karuta">百人一首とは</a></li>
+                <li><a href="/#activities">活動内容</a></li>
+                <li><a href="/reports.html">活動報告</a></li>
+                <li><a href="/#faq">よくある質問</a></li>
+                <li><a href="/#contact">参加方法</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <main class="reports-page">
+        <!-- ページヘッダー -->
+        <section class="page-header">
+            <div class="page-header-content">
+                <h1>活動報告</h1>
+                <p>わすらもち会の活動の様子をご紹介します</p>
+            </div>
+        </section>
+
+        <!-- 活動報告一覧 -->
+        <section class="section reports-list-section">
+            <div class="events-grid" id="reports-list-container">
+                <!-- JavaScriptで動的に生成 -->
+            </div>
+
+            <!-- ページネーション -->
+            <div id="pagination-container">
+                <!-- JavaScriptで動的に生成 -->
+            </div>
+        </section>
+
+        <!-- トップに戻る -->
+        <section class="back-to-top-section">
+            <a href="/" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> トップページに戻る
+            </a>
+        </section>
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <p>&copy; 2025 わすらもち会（札幌百人一首サークル）. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/js/config.js"></script>
+    <script src="/js/supabase-client.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/reports.js"></script>
+    <script>
+        // ハンバーガーメニュー制御
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+
+        // モバイルメニューのリンククリック時にメニューを閉じる
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    </script>
+</body>
+</html>
