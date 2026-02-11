@@ -99,7 +99,7 @@ class SiteLoader {
             grid.innerHTML = cards.map(card => `
                 <div class="activity-card">
                     <h3>${this.escapeHtml(card.icon || '')} ${this.escapeHtml(card.title)}</h3>
-                    <p>${card.body || ''}</p>
+                    <p>${card.content || ''}</p>
                 </div>
             `).join('');
         } catch (error) {
