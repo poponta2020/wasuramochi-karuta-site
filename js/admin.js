@@ -825,7 +825,7 @@ class AdminPanel {
                     </div>
                     <div class="form-group">
                         <label>本文</label>
-                        <textarea class="activity-body-input" rows="3">${this.escapeHtml(card.body || '')}</textarea>
+                        <textarea class="activity-body-input" rows="3">${this.escapeHtml(card.content || '')}</textarea>
                         <p class="form-hint">HTMLタグが使えます</p>
                     </div>
                 </div>
@@ -846,7 +846,7 @@ class AdminPanel {
                 return supabaseClient.updateActivityCard(id, {
                     icon: form.querySelector('.activity-icon-input').value,
                     title: form.querySelector('.activity-title-input').value,
-                    body: form.querySelector('.activity-body-input').value
+                    content: form.querySelector('.activity-body-input').value
                 });
             });
 
